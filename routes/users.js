@@ -8,7 +8,7 @@ router.get('/', function(req, resp) {
 		if (err) {
 			_handleServerError(resp, err);
 		} else {
-			resp.render('users', {'layout': 'myLayout', users: allUsersArray});
+			resp.render('users', {'layout': 'generalLayout', users: allUsersArray});
 		}
 	});
 });
