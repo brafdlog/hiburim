@@ -1,0 +1,23 @@
+<!-- Custom styles for this template -->
+<link href="/stylesheets/userDetails.css" rel="stylesheet">
+
+<div class="row userInfo">
+  <div id="userDetailImageDiv" class="col-lg-2 col-lg-offset-2">
+    {{#if user.portraitImagePath}}
+    <img src="{{user.portraitImagePath}}" alt="Portrait image">
+    {{else}}
+    <img src="/images/portrait_placeholder.jpg" alt="Portrait image">
+    {{/if}}
+  </div>
+
+  <div class="col-lg-6">
+    <h4>Username</h4>
+    <p>{{user.username}}</p>
+
+    <h4>Password</h4>
+    <p>{{user.password}}</p>
+  </div>
+</div>
+
+
+{{!-- <h1 style="display:none;">{{user.username}}</h1> --}}
