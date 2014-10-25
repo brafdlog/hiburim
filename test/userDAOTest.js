@@ -13,7 +13,7 @@ describe("UserDAO", function() {
 		usernamesToDelete = [];
 	});
 
-	it("should add a user to the db", function(done) {
+	it("should ADD a user to the db", function(done) {
 		var randUsername = _generateRandomUsername();
 		var userToCreate = {username: randUsername, password: '123456'};
 
@@ -27,7 +27,7 @@ describe("UserDAO", function() {
 
 	});
 
-	it("should create a user and get then load it", function(done) {
+	it("should create a user and then LOAD it", function(done) {
 		var randUsername = _generateRandomUsername();
 		var userToCreate = {username: randUsername, password: '123456'};
 
@@ -53,10 +53,10 @@ describe("UserDAO", function() {
 		userDAO.createUser(userToCreate1, function(error, createdUser) {
 			userDAO.createUser(userToCreate2, function(error, createdUser) {
 				userDAO.getAllUsers(function(error, allUsersArray) {
-					
+
 					should.not.exist(error);
 					should.exist(allUsersArray);
-					
+
 					var firstUser = _.find(allUsersArray, function(user) {
 						return user.username === randUsername1;
 					});
@@ -73,7 +73,21 @@ describe("UserDAO", function() {
 				});
 			});
 		});
+	});
 
+	it("should create a user and then DELETE it and verify it was deleted", function(done) {
+		var randUsername = _generateRandomUsername();
+		var userToCreate = {username: randUsername, password: '123456'};
+
+		userDAO.createUser(userToCreate, function(error, createdUser) {
+			userDAO.deleteUser(randUsername, function(error) {
+				should.not.exist(error);
+				userDAO.getUser(randUsername, function(foundUsersArray) {
+					foundUsersArray.should.be.empty;
+					done();
+				});
+			});
+		});
 	});
 });
 
