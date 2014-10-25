@@ -35,7 +35,6 @@ router.post('/', function(req, resp) {
 		if (err) {
 			_handleError(resp, err);
 		} else {
-			console.log("Created user" + createdUser);
 			resp.send(createdUser);
 			resp.end();
 		}

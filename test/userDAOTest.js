@@ -32,11 +32,11 @@ describe("UserDAO", function() {
 		var userToCreate = {username: randUsername, password: '123456'};
 
 		userDAO.createUser(userToCreate, function(error, createdUser) {
-			userDAO.getUser(randUsername, function(foundUsersArray) {
-				should.not.exist(error);
-				should.exist(foundUsersArray);
-				foundUsersArray.should.have.length(1);
-				foundUsersArray[0].should.eql(createdUser);
+			should.not.exist(error);
+			userDAO.getUser(randUsername, function(err, foundUser) {
+				should.not.exist(err);	
+				should.exist(foundUser);
+				foundUser.should.eql(createdUser);
 
 				done();
 			});
@@ -82,8 +82,9 @@ describe("UserDAO", function() {
 		userDAO.createUser(userToCreate, function(error, createdUser) {
 			userDAO.deleteUser(randUsername, function(error) {
 				should.not.exist(error);
-				userDAO.getUser(randUsername, function(foundUsersArray) {
-					foundUsersArray.should.be.empty;
+				userDAO.getUser(randUsername, function(err, foundUser) {
+					should.not.exist(err);
+					should.not.exist(foundUser);
 					done();
 				});
 			});

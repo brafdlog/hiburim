@@ -16,9 +16,19 @@ function getUser(usrname, callback) {
 	var userCollection = db.get("users");
 	userCollection.find({username: usrname}, function(err, foundUsersArray) {
 		logMsg(err, "Loaded user " + usrname, "Failed loading user " + usrname + ". Error ");
-		
+
 		if (_isFunction(callback)) {
-			callback(foundUsersArray);
+			if (foundUsersArray && foundUsersArray.length === 1) {
+				callback(err, foundUsersArray[0]);	
+				return;
+			}
+			if (foundUsersArray.length > 1) {
+				err = "Found more than one user for username " + usrname;
+				console.log(err);
+				callback(err);
+			} else { // if there is no user with the given username
+				callback(err);	
+			}
 		}
 	});
 }
@@ -27,7 +37,7 @@ function createUser(userToCreate, callback) {
 	var userCollection = db.get("users");
 	userCollection.insert(userToCreate, function (err, createdUser) {
 		logMsg(err, "Created user " + createdUser.username, "Failed creating user. Error ");
-		
+
 		if (_isFunction(callback)) {
 			callback(err, createdUser);
 		}
