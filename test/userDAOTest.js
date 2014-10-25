@@ -53,24 +53,24 @@ describe("UserDAO", function() {
 		userDAO.createUser(userToCreate1, function(error, createdUser) {
 			userDAO.createUser(userToCreate2, function(error, createdUser) {
 				userDAO.getAllUsers(function(error, allUsersArray) {
-				
-				should.not.exist(error);
-				should.exist(allUsersArray);
-				
-				var firstUser = _.find(allUsersArray, function(user) {
-					return user.username === randUsername1;
+					
+					should.not.exist(error);
+					should.exist(allUsersArray);
+					
+					var firstUser = _.find(allUsersArray, function(user) {
+						return user.username === randUsername1;
+					});
+
+					should.exist(firstUser);
+
+					var secondUser = _.find(allUsersArray, function(user) {
+						return user.username === randUsername2;
+					});
+
+					should.exist(secondUser);
+
+					done();
 				});
-
-				should.exist(firstUser);
-
-				var secondUser = _.find(allUsersArray, function(user) {
-					return user.username === randUsername2;
-				});
-
-				should.exist(secondUser);
-
-				done();
-			});
 			});
 		});
 

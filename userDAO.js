@@ -16,7 +16,7 @@ function getUser(usrname, callback) {
 	var userCollection = db.get("users");
 	userCollection.find({username: usrname}, function(err, foundUsersArray) {
 		logMsg(err, "Loaded user " + usrname, "Failed loading user " + usrname + ". Error ");
-	
+		
 		if (_isFunction(callback)) {
 			callback(foundUsersArray);
 		}
@@ -27,7 +27,7 @@ function createUser(userToCreate, callback) {
 	var userCollection = db.get("users");
 	userCollection.insert(userToCreate, function (err, createdUser) {
 		logMsg(err, "Created user " + createdUser.username, "Failed creating user. Error ");
-	
+		
 		if (_isFunction(callback)) {
 			callback(err, createdUser);
 		}
