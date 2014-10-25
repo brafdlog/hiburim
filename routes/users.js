@@ -3,13 +3,12 @@ var express = require('express');
 var router = express.Router();
 
 // Get all users
-router.get('/', function(req, resp) {
-	userDAO.getAllUsers(function(err, data) {
+router.get('/', function(req, resp) {	
+	userDAO.getAllUsers(function(err, allUsersArray) {
 		if (err) {
 			_handleError(resp, err);
 		} else {
-			resp.send(data);
-			resp.end();
+			resp.render('users', {'layout': 'myLayout', users: allUsersArray});
 		}
 	});
 });
