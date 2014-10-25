@@ -6,7 +6,7 @@ var router = express.Router();
 router.get('/', function(req, resp) {	
 	userDAO.getAllUsers(function(err, allUsersArray) {
 		if (err) {
-			_handleError(resp, err);
+			_handleServerError(resp, err);
 		} else {
 			resp.render('users', {'layout': 'myLayout', users: allUsersArray});
 		}
@@ -18,7 +18,7 @@ router.get('/:username', function(req, resp) {
 	var username = req.params.username;
 	userDAO.getUser(username, function(err, user) {
 		if (err) {
-			_handleError(resp, err);
+			_handleServerError(resp, err);
 		} else {
 			if (user) {
 				resp.send(user);	
@@ -36,7 +36,7 @@ router.post('/', function(req, resp) {
 	var userToCreate = {username: req.body.username, password: req.body.password};
 	userDAO.createUser(userToCreate, function(err, createdUser) {
 		if (err) {
-			_handleError(resp, err);
+			_handleServerError(resp, err);
 		} else {
 			resp.send(createdUser);
 			resp.end();
@@ -44,7 +44,7 @@ router.post('/', function(req, resp) {
 	});
 });
 
-function _handleError(resp, error) {
+function _handleServerError(resp, error) {
 	console.log("Error:" + error);
 	resp.status(500).end(error);
 }
