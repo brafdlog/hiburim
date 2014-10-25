@@ -17,11 +17,15 @@ router.get('/', function(req, resp) {
 // Get specific user
 router.get('/:username', function(req, resp) {
 	var username = req.params.username;
-	userDAO.getUser(username, function(err, data) {
+	userDAO.getUser(username, function(err, user) {
 		if (err) {
 			_handleError(resp, err);
 		} else {
-			resp.send(data);
+			if (user) {
+				resp.send(user);	
+			} else {
+				resp.send("User with username " + username + " was not found");
+			}
 			resp.end();
 		}
 	});
