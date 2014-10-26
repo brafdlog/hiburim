@@ -1,5 +1,6 @@
 var carDAO = require("../carDAO");
 var express = require('express');
+var _ = require("underscore");
 var router = express.Router();
 
 // Get all cars
@@ -8,6 +9,10 @@ router.get('/', function(req, resp) {
 		if (err) {
 			_handleServerError(resp, err);
 		} else {
+			// Set flag for handlebars to know which icon to display
+			_.each(allCarsArray, function(element, index, list) {
+				element.van = element.carType === 'van';
+			});
 			resp.render('cars', {'layout': 'generalLayout', cars: allCarsArray});
 		}
 	});

@@ -10,7 +10,6 @@
 				<table id="carsTable" class="table table-striped">
 					<thead>
 						<tr>
-							<th>Car id</th>
 							<th>Car type</th>
 							<th>Driver name</th>
 							<th>Driver phone number</th>
@@ -21,11 +20,12 @@
 					<tbody>
 						{{#each cars}}
 						<tr carId={{_id}}>
-							<td class="carIdColumn">
-								<a href="/cars/{{_id}}"> {{_id}} </a>
-							</td>
-							<td>
-								{{carType}}
+							<td class="carTypeIconColumn">
+								{{#if van}}
+									<img src="/images/van.png" alt="Van" width="40px">
+								{{else}}
+									<img src="/images/privateCar.png" alt="Private" width="40px">
+								{{/if}}
 							</td>
 							<td>
 								{{driverName}}
