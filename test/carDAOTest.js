@@ -98,6 +98,26 @@ describe("carDAO", function() {
 			});
 		});
 	});
+
+	it("should call delete with non existing car Id and verify that not all cars are deleted", function(done) {
+		var carToCreate = _createCarObject();
+
+		carDAO.createCar(carToCreate, function(error, createdCar) {
+			should.not.exist(error);
+			should.exist(createdCar);
+			// Calling delete with a null parameter should be an error and should NOT delete all the cars
+			carDAO.deleteCar(null, function(error) {
+				should.exist(error);
+				carDAO.getCar(createdCar._id, function(err, foundCar) {
+					should.not.exist(err);	
+					should.exist(foundCar);
+
+					carDAO.deleteCar(createdCar._id);
+					done();
+				});
+			});
+		});
+	});
 });
 
 function _createCarObject() {

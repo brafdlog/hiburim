@@ -48,11 +48,21 @@ function deleteCar(carIdToDelete, callback) {
 	var carCollection = db.get("cars");
 
 	getCar(carIdToDelete, function(err, carToDelete) {
+		// Need to check this. If carToDelete is undefined the delete call will delete the whole collection!
+		if (!carToDelete) {
+			var errorString = "Failed deleting car with id " + carIdToDelete + ". Get car on that id did not return a car";
+			console.log(errorString);
+			if (!err) {
+				err = "Failed deleting car with id " + carIdToDelete + ". Get car on that id did not return a car";
+			}
+			callback(err);
+			return;
+		}
 		carCollection.remove(carToDelete, function (err) {
 			logMsg(err, "Deleted car with id " + carIdToDelete, "Failed deleteing car with id " + carIdToDelete + ". ");
 			if(_isFunction(callback)) {
 				callback(err);
-			}
+			}				
 		});
 	});
 }
