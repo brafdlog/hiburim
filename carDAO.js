@@ -67,10 +67,6 @@ function deleteCar(carIdToDelete, callback) {
 	});
 }
 
-function getId(car) {
-	return db.get("cars").id(car);
-}
-
 function _isFunction(varToCheck) {
 	return (typeof(varToCheck) == "function");
 }
@@ -87,4 +83,3 @@ exports.getAllCars = getAllCars;
 exports.getCar = getCar;
 exports.createCar = createCar;
 exports.deleteCar = deleteCar;
-exports.getId = getId;
