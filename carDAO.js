@@ -46,14 +46,14 @@ function createCar(carToCreate, callback) {
 
 function deleteCar(carIdToDelete, callback) {
 	var carCollection = db.get("cars");
-	var carToDelete = getCar(carIdToDelete);
-	carCollection.remove(carToDelete, function (err) {
-		logMsg(err, "Deleted car with id " + carIdToDelete, "Failed deleteing car with id " + carIdToDelete + ". ");
-		
-		if(_isFunction(callback)) {
-			callback(err);
-		}
-		
+
+	getCar(carIdToDelete, function(err, carToDelete) {
+		carCollection.remove(carToDelete, function (err) {
+			logMsg(err, "Deleted car with id " + carIdToDelete, "Failed deleteing car with id " + carIdToDelete + ". ");
+			if(_isFunction(callback)) {
+				callback(err);
+			}
+		});
 	});
 }
 

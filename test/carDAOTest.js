@@ -70,16 +70,30 @@ describe("carDAO", function() {
 		});
 	});
 
-	it("should create a car and then DELETE it and verify it was deleted", function(done) {
-		var carToCreate = _createCarObject();
+	it("should create two cars DELETE one and verify that it (and only it) was deleted", function(done) {
+		var carToCreate1 = _createCarObject();
+		var carToCreate2 = _createCarObject();
 
-		carDAO.createCar(carToCreate, function(error, createdCar) {
-			carDAO.deleteCar(carToCreate._id, function(error) {
-				should.not.exist(error);
-				carDAO.getCar(createdCar._id, function(err, foundCar) {
-					should.not.exist(err);
-					should.not.exist(foundCar);
-					done();
+		carDAO.createCar(carToCreate1, function(error, createdCar1) {
+			carDAO.createCar(carToCreate2, function(error, createdCar2) {
+				should.exist(createdCar1);
+				should.exist(createdCar1._id);
+				should.exist(createdCar2);
+				should.exist(createdCar2._id);
+				carDAO.deleteCar(createdCar1._id, function(error) {
+					should.not.exist(error);
+					carDAO.getCar(createdCar1._id, function(err, foundCar1) {
+						should.not.exist(err);
+						should.not.exist(foundCar1);
+						carDAO.getCar(createdCar2._id, function(err, foundCar2) {
+							should.not.exist(err);
+							// This was not yet deleted so it should exist
+							should.exist(foundCar2, "This car was not deleted yet and should exist in the DB");
+							carDAO.deleteCar(foundCar2._id, function(error) {
+								done();
+							});
+						});
+					});
 				});
 			});
 		});
