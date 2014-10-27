@@ -4,40 +4,40 @@
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-			<h1 class="page-header">Cars</h1>
+			<h1 class="page-header pull-right">רכבים</h1>
 
 			<div class="table-responsive">
 				<table id="carsTable" class="table table-striped">
 					<thead>
 						<tr>
-							<th>Car type</th>
-							<th>Driver name</th>
-							<th>Driver phone number</th>
-							<th>Available from</th>
-							<th>Available until</th>
+							<th>זמין עד</th>
+							<th>זמין מ</th>
+							<th>טלפון של הנהג</th>
+							<th>שם הנהג</th>
+							<th>סוג רכב</th>
 						</tr>
 					</thead>
 					<tbody>
 						{{#each cars}}
 						<tr carId={{_id}}>
+							<td>
+								{{availableUntil}}
+							</td>
+							<td>
+								{{availableFrom}}
+							</td>
+							<td>
+								{{driverNumber}}
+							</td>
+							<td>
+								{{driverName}}
+							</td>
 							<td class="carTypeIconColumn">
 								{{#if van}}
 									<img src="/images/van.png" alt="Van" width="40px">
 								{{else}}
 									<img src="/images/privateCar.png" alt="Private" width="40px">
 								{{/if}}
-							</td>
-							<td>
-								{{driverName}}
-							</td>
-							<td>
-								{{driverNumber}}
-							</td>
-							<td>
-								{{availableFrom}}
-							</td>
-							<td>
-								{{availableUntil}}
 							</td>
 						</tr>
 						{{/each}}

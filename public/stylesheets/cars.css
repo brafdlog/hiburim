@@ -1,3 +1,7 @@
+th, tr {
+  text-align: right;
+}
+
 .carTypeIconColumn {
   width: 80px;
 }
