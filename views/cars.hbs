@@ -65,6 +65,13 @@
 			var epochDate = jqueryElement.attr('epoch');
 			jqueryElement.datetimepicker();
 			jqueryElement.data("DateTimePicker").setDate(moment.unix(epochDate));
+
+			jqueryElement.off("dp.change").on("dp.change", _onDatePickerBlur);
 		});
 	});
+
+	function _onDatePickerBlur() {
+		var updatedEpoch = $(this).data("DateTimePicker").getDate().valueOf();
+		$(this).attr('epoch', updatedEpoch);
+	}
 </script>
