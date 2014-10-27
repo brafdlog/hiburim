@@ -1,5 +1,6 @@
 <!-- Custom styles for this template -->
-<link href="stylesheets/cars.css" rel="stylesheet">
+<link href="/stylesheets/cars.css" rel="stylesheet">
+<link href="/stylesheets/bootstrap-datetimepicker.css" rel="stylesheet">
 
 <div class="container-fluid">
 	<div class="row">
@@ -21,10 +22,10 @@
 						{{#each cars}}
 						<tr carId={{_id}}>
 							<td class="epochDateColumn">
-								{{availableUntil}}
+								<input type='text' class="datetimepicker" epoch="{{availableUntil}}" data-date-format="D/M, H:mm"/>
 							</td>
 							<td class="epochDateColumn">
-								{{availableFrom}}
+								<input type='text' class="datetimepicker" epoch="{{availableFrom}}" data-date-format="D/M, H:mm"/>
 							</td>
 							<td>
 								{{driverNumber}}
@@ -50,24 +51,20 @@
 
 <script src="/javascripts/jquery.tablesorter.min.js"></script>
 <script src="/javascripts/moment.js"></script>
+<script src="/javascripts/bootstrap-datetimepicker.js"></script>
 
 <script>
-	
-	function _toDateString(dateEpoch) {
-		var date = moment.unix(dateEpoch);
-		return date.format("D/M, H:mm");
-	}
-
 	// When page loads attach the table sorter to the table.
 	// It is possible to pass parameters to decide which columns he will sort by in the beginning.
 	$(function(){
 		$("#carsTable").tablesorter();
 
-		// Translate epoch date to string
-		var elementsWithEpochDate = $(".epochDateColumn");
-		$.each(elementsWithEpochDate, function(index, element) {
-			var dateString = _toDateString($(element).text());
-			$(element).text(dateString);
+		var dateTimeElements = $('.datetimepicker');
+		$.each(dateTimeElements, function(index, element) {
+			var jqueryElement = $(element);
+			var epochDate = jqueryElement.attr('epoch');
+			jqueryElement.datetimepicker();
+			jqueryElement.data("DateTimePicker").setDate(moment.unix(epochDate));
 		});
 	});
 </script>

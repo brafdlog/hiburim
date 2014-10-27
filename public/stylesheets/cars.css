@@ -1,9 +1,13 @@
-th, tr {
+th, tr, .datetimepicker {
   text-align: center;
 }
 
 .carTypeIconColumn {
   width: 80px;
+}
+
+.datetimepicker {
+    border: 0px;
 }
 
 /*
