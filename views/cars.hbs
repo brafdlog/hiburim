@@ -20,10 +20,10 @@
 					<tbody>
 						{{#each cars}}
 						<tr carId={{_id}}>
-							<td>
+							<td class="epochDateColumn">
 								{{availableUntil}}
 							</td>
-							<td>
+							<td class="epochDateColumn">
 								{{availableFrom}}
 							</td>
 							<td>
@@ -49,11 +49,25 @@
 </div>
 
 <script src="/javascripts/jquery.tablesorter.min.js"></script>
+<script src="/javascripts/moment.js"></script>
 
 <script>
+	
+	function _toDateString(dateEpoch) {
+		var date = moment.unix(dateEpoch);
+		return date.format("D/M, H:mm");
+	}
+
 	// When page loads attach the table sorter to the table.
 	// It is possible to pass parameters to decide which columns he will sort by in the beginning.
 	$(function(){
 		$("#carsTable").tablesorter();
+
+		// Translate epoch date to string
+		var elementsWithEpochDate = $(".epochDateColumn");
+		$.each(elementsWithEpochDate, function(index, element) {
+			var dateString = _toDateString($(element).text());
+			$(element).text(dateString);
+		});
 	});
 </script>
