@@ -1,6 +1,11 @@
 <!-- Custom styles for this template -->
 <link href="/stylesheets/cars.css" rel="stylesheet">
-<link href="/stylesheets/bootstrap-datetimepicker.css" rel="stylesheet">
+
+<!-- Pickadate stylesheets -->
+<link href="/stylesheets/pickadate/classic.css" rel="stylesheet">
+<link href="/stylesheets/pickadate/classic.date.css" rel="stylesheet">
+<link href="/stylesheets/pickadate/classic.time.css" rel="stylesheet">
+{{!-- <link href="/stylesheets/pickadate/rtl.css" rel="stylesheet"> --}}
 
 <div class="container-fluid">
 	<div class="row">
@@ -51,27 +56,32 @@
 
 <script src="/javascripts/jquery.tablesorter.min.js"></script>
 <script src="/javascripts/moment.js"></script>
-<script src="/javascripts/bootstrap-datetimepicker.js"></script>
+<script src="/javascripts/pickadate/picker.js"></script>
+<script src="/javascripts/pickadate/picker.date.js"></script>
+<script src="/javascripts/pickadate/picker.time.js"></script>
 
 <script>
-	// When page loads attach the table sorter to the table.
-	// It is possible to pass parameters to decide which columns he will sort by in the beginning.
 	$(function(){
+		// When page loads attach the table sorter to the table.
+		// It is possible to pass parameters to decide which columns he will sort by in the beginning.
 		$("#carsTable").tablesorter();
 
 		var dateTimeElements = $('.datetimepicker');
 		$.each(dateTimeElements, function(index, element) {
 			var jqueryElement = $(element);
 			var epochDate = jqueryElement.attr('epoch');
-			jqueryElement.datetimepicker();
-			jqueryElement.data("DateTimePicker").setDate(moment.unix(epochDate));
-
-			jqueryElement.off("dp.change").on("dp.change", _onDatePickerBlur);
+			jqueryElement.pickadate({ 
+				onClose: _onDatePickerClose,
+				format: "yyyy-mm-dd"
+			});
 		});
 	});
 
-	function _onDatePickerBlur() {
-		var updatedEpoch = $(this).data("DateTimePicker").getDate().valueOf();
-		$(this).attr('epoch', updatedEpoch);
+	function _onDatePickerClose() {
+		var dateString = this.get();
+		var date = moment(dateString);
+		var dateInputElementId = this.get('id');
+		var dateInputElement = $('#'+dateInputElementId);
+		dateInputElement.attr('epoch', date.unix());
 	}
 </script>
