@@ -9,9 +9,12 @@
 
 <div class="container-fluid">
 	<div class="row">
-		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-			<h1 class="page-header pull-right">רכבים</h1>
-
+		<div class="col-md-1 col-md-offset-11">
+			<h1 class="page-header">רכבים</h1>	
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-8 col-sm-offset-4 col-md-9 col-md-offset-3 main">
 			<div class="table-responsive">
 				<table id="carsTable" class="table table-striped">
 					<thead>
@@ -71,13 +74,13 @@
 			var jqueryElement = $(element);
 			var epochDate = jqueryElement.attr('epoch');
 			jqueryElement.pickadate({ 
-				onClose: _onDatePickerClose,
+				onClose: _updateEpochAttribute,
 				format: "yyyy-mm-dd"
 			});
 		});
 	});
 
-	function _onDatePickerClose() {
+	function _updateEpochAttribute() {
 		var dateString = this.get();
 		var date = moment(dateString);
 		var dateInputElementId = this.get('id');
