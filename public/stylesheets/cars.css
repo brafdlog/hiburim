@@ -11,6 +11,10 @@ th, tr, .datetimepicker {
     background-color: transparent;
 }
 
+.page-header {
+  text-align: right;
+  right: 0px;
+}
 /*
  * Global add-ons
  */
@@ -18,6 +22,12 @@ th, tr, .datetimepicker {
 .sub-header {
   padding-bottom: 10px;
   border-bottom: 1px solid #eee;
+}
+
+span:focus[contenteditable=true] {
+  padding: 3px;
+  border-width: 1px;
+  border-style: solid;
 }
 
 /*
