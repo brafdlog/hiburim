@@ -19,8 +19,9 @@
 				<table id="carsTable" class="table table-striped">
 					<thead>
 						<tr>
-							<th>זמין עד</th>
-							<th>זמין מ</th>
+							<th>זמין למשך</th>
+							<th>זמין משעה</th>
+							<th>זמין מתאריך</th>
 							<th>טלפון של הנהג</th>
 							<th>שם הנהג</th>
 							<th>סוג רכב</th>
@@ -29,8 +30,12 @@
 					<tbody>
 						{{#each cars}}
 						<tr carId={{_id}}>
-							<td class="epochDateColumn">
-								<input type='text' class="datetimepicker" epoch="{{availableUntil}}" data-date-format="D/M, H:mm"/>
+							<td>
+								שעות 
+								<input type='number' class="availableDuration" min="1" max="24"/>
+							</td>
+							<td>
+								<input type="time" />
 							</td>
 							<td class="epochDateColumn">
 								<input type='text' class="datetimepicker" epoch="{{availableFrom}}" data-date-format="D/M, H:mm"/>

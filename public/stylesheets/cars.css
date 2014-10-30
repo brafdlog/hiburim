@@ -6,6 +6,10 @@ th, tr, .datetimepicker {
   width: 80px;
 }
 
+.availableDuration {
+  width: 40px;
+}
+
 .datetimepicker {
     border: 0px;
     background-color: transparent;
