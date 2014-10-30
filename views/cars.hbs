@@ -29,7 +29,7 @@
 					</thead>
 					<tbody>
 						{{#each cars}}
-						<tr carId={{_id}}>
+						<tr carId={{_id}} id="{{_id}}" epoch="{{availableFrom}}" date="" hours="" minutes="">
 							<td>
 								שעות 
 								<input type='number' class="availableDuration" min="1" max="24"/>
@@ -37,8 +37,8 @@
 							<td>
 								<input type="text" class="timePicker" />
 							</td>
-							<td class="epochDateColumn">
-								<input type='text' class="datePicker" epoch="{{availableFrom}}" data-date-format="D/M"/>
+							<td>
+								<input type='text' class="datePicker" carId={{_id}} data-date-format="D/M"/>
 							</td>
 							<td>
 								<span contentEditable="true"> {{driverNumber}} </span>
@@ -76,34 +76,51 @@
 
 		var datePickerElements = $('.datePicker');
 		$.each(datePickerElements, function(index, element) {
-			var jqueryElement = $(element);
-			var epochDate = jqueryElement.attr('epoch');
-			jqueryElement.pickadate({ 
-				onClose: _updateEpochAttribute,
-				format: "yyyy-mm-dd"
-			});
+			_setUpDatePicker(element);
 		});
 
 		var timePickerElements = $('.timePicker');
 		$.each(timePickerElements, function(index, element) {
-			var jqueryElement = $(element);
-			jqueryElement.pickatime({
-				min: [6,0],
-    			max: [23,0],
-    			onSet: _onSetTime
-			});
+			_setUpTimePicker(element);
 		});
 	});
 
-	function _updateEpochAttribute() {
-		var dateString = this.get();
-		var date = moment(dateString);
-		var dateInputElementId = this.get('id');
-		var dateInputElement = $('#'+dateInputElementId);
-		dateInputElement.attr('epoch', date.unix());
+	function _setUpDatePicker(datePickerElement) {
+		$(datePickerElement).pickadate({ 
+			onClose: _updateRowDateAttribute,
+			format: "yyyy-mm-dd"
+		});
+		var epoch = $(datePickerElement).closest('tr').attr('epoch');
+		$(datePickerElement).pickadate('set', 'select', epoch);
 	}
 
-	function _onSetTime(minutesSinceMidnight) {
-        console.log('Just set stuff:', minutesSinceMidnight);
+	function _setUpTimePicker(timePickerElement) {
+		var jqueryElement = $(timePickerElement);
+		jqueryElement.pickatime({
+			min: [6,0],
+			max: [23,0],
+			onSet: _updateRowHoursAndMinutesAttributes
+		});
+		var epoch = jqueryElement.closest('tr').attr('epoch');
+		jqueryElement.pickatime('set', 'select', epoch);
+	}
+
+	function _updateRowDateAttribute() {
+		var dateString = this.get();
+		// var date = moment(dateString);
+		var dateInputElementId = this.get('id');
+		var dateInputElement = $('#'+dateInputElementId);
+		var carId = dateInputElement.attr('carId');
+		var rowElement = $('#' + carId);
+		rowElement.attr('date', dateString);
+	}
+
+	function _updateRowHoursAndMinutesAttributes(selectElement) {
+		var minutesSinceMidnight = selectElement.select;
+		var parentRow = $('#' + this.get('id')).closest('tr');
+		var hours = Math.floor(minutesSinceMidnight / 60);
+		var minutes = minutesSinceMidnight % 60;
+		parentRow.attr("hours", hours);
+		parentRow.attr("minutes", minutes);
     }
 </script>
