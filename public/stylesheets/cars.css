@@ -1,4 +1,4 @@
-th, tr, .datetimepicker {
+th, tr, .datePicker {
   text-align: center;
 }
 
@@ -10,7 +10,7 @@ th, tr, .datetimepicker {
   width: 40px;
 }
 
-.datetimepicker {
+.datePicker {
     border: 0px;
     background-color: transparent;
 }

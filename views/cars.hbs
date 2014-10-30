@@ -35,10 +35,10 @@
 								<input type='number' class="availableDuration" min="1" max="24"/>
 							</td>
 							<td>
-								<input type="time" />
+								<input type="text" class="timePicker" />
 							</td>
 							<td class="epochDateColumn">
-								<input type='text' class="datetimepicker" epoch="{{availableFrom}}" data-date-format="D/M, H:mm"/>
+								<input type='text' class="datePicker" epoch="{{availableFrom}}" data-date-format="D/M, H:mm"/>
 							</td>
 							<td>
 								<span contentEditable="true"> {{driverNumber}} </span>
@@ -74,7 +74,7 @@
 		// It is possible to pass parameters to decide which columns he will sort by in the beginning.
 		$("#carsTable").tablesorter();
 
-		var dateTimeElements = $('.datetimepicker');
+		var dateTimeElements = $('.datePicker');
 		$.each(dateTimeElements, function(index, element) {
 			var jqueryElement = $(element);
 			var epochDate = jqueryElement.attr('epoch');
