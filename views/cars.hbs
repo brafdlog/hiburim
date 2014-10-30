@@ -38,7 +38,7 @@
 								<input type="text" class="timePicker" />
 							</td>
 							<td class="epochDateColumn">
-								<input type='text' class="datePicker" epoch="{{availableFrom}}" data-date-format="D/M, H:mm"/>
+								<input type='text' class="datePicker" epoch="{{availableFrom}}" data-date-format="D/M"/>
 							</td>
 							<td>
 								<span contentEditable="true"> {{driverNumber}} </span>
@@ -74,13 +74,23 @@
 		// It is possible to pass parameters to decide which columns he will sort by in the beginning.
 		$("#carsTable").tablesorter();
 
-		var dateTimeElements = $('.datePicker');
-		$.each(dateTimeElements, function(index, element) {
+		var datePickerElements = $('.datePicker');
+		$.each(datePickerElements, function(index, element) {
 			var jqueryElement = $(element);
 			var epochDate = jqueryElement.attr('epoch');
 			jqueryElement.pickadate({ 
 				onClose: _updateEpochAttribute,
 				format: "yyyy-mm-dd"
+			});
+		});
+
+		var timePickerElements = $('.timePicker');
+		$.each(timePickerElements, function(index, element) {
+			var jqueryElement = $(element);
+			jqueryElement.pickatime({
+				min: [6,0],
+    			max: [23,0],
+    			onSet: _onSetTime
 			});
 		});
 	});
@@ -92,4 +102,8 @@
 		var dateInputElement = $('#'+dateInputElementId);
 		dateInputElement.attr('epoch', date.unix());
 	}
+
+	function _onSetTime(minutesSinceMidnight) {
+        console.log('Just set stuff:', minutesSinceMidnight);
+    }
 </script>

@@ -10,9 +10,14 @@ th, tr, .datePicker {
   width: 40px;
 }
 
+.timePicker {
+  width: 75px;
+}
+
 .datePicker {
-    border: 0px;
-    background-color: transparent;
+    /*border: 0px;*/
+    /*background-color: transparent;*/
+    width: 85px;
 }
 
 .page-header {
