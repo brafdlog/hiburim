@@ -1,3 +1,4 @@
+var routesCommon = require("./routesCommon");
 var carDAO = require("../DAOs/carDAO");
 var express = require('express');
 var _ = require("underscore");
@@ -7,7 +8,7 @@ var router = express.Router();
 router.get('/', function(req, resp) {	
 	carDAO.getAllCars(function(err, allCarsArray) {
 		if (err) {
-			_handleServerError(resp, err);
+			routesCommon.handleServerError(resp, err);
 		} else {
 			// Set flag for handlebars to know which icon to display
 			_.each(allCarsArray, function(element, index, list) {
@@ -23,7 +24,7 @@ router.get('/:carId', function(req, resp) {
 	var carId = req.params.carId;
 	carDAO.getCar(carId, function(err, carFromDB) {
 		if (err) {
-			_handleServerError(resp, err);
+			routesCommon.handleServerError(resp, err);
 		} else {
 			if (carFromDB) {
 				resp.send(carFromDB);
@@ -41,18 +42,13 @@ router.post('/', function(req, resp) {
 	var carToCreate = _createCarObject(req.body.carType, req.body.driverName, req.body.driverNumber, req.body.availableFrom, req.body.availableUntil);
 	carDAO.createCar(carToCreate, function(err, createdCar) {
 		if (err) {
-			_handleServerError(resp, err);
+			routesCommon.handleServerError(resp, err);
 		} else {
 			resp.send(createdCar);
 			resp.end();
 		}
 	});
 });
-
-function _handleServerError(resp, error) {
-	console.log("Error:" + error);
-	resp.status(500).end(error);
-}
 
 function _createCarObject(carType, driverName, driverNumber, availableFrom, availableUntil) {
 	return {carType: carType, driverName: driverName, driverNumber: driverNumber, availableFrom: availableFrom, availableUntil: availableUntil};
