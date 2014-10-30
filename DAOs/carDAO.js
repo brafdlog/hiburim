@@ -1,12 +1,13 @@
 var monk = require("monk");
+var DAOCommon = require("./DAOCommon");
 
 var db = monk('localhost:27017/mydb');
 
 function getAllCars(callback) {
 	var carCollection = db.get("cars");
 	carCollection.find({}, function(err, allCars) {
-		logMsg(err, "Loaded all cars", "Failed loading all cars. ");
-		if (_isFunction(callback)) {
+		DAOCommon.logMsg(err, "Loaded all cars", "Failed loading all cars. ");
+		if (DAOCommon.isFunction(callback)) {
 			callback(err, allCars);
 		}
 	});
@@ -15,9 +16,9 @@ function getAllCars(callback) {
 function getCar(carId, callback) {
 	var carCollection = db.get("cars");
 	carCollection.find({_id: carId}, function(err, foundCarsArray) {
-		logMsg(err, "Loaded car " + carId, "Failed loading car " + carId + ". Error ");
+		DAOCommon.logMsg(err, "Loaded car " + carId, "Failed loading car " + carId + ". Error ");
 
-		if (_isFunction(callback)) {
+		if (DAOCommon.isFunction(callback)) {
 			if (foundCarsArray && foundCarsArray.length === 1) {
 				callback(err, foundCarsArray[0]);	
 				return;
@@ -36,9 +37,9 @@ function getCar(carId, callback) {
 function createCar(carToCreate, callback) {
 	var carCollection = db.get("cars");
 	carCollection.insert(carToCreate, function (err, createdCar) {
-		logMsg(err, "Created car " + createdCar._id, "Failed creating car. Error ");
+		DAOCommon.logMsg(err, "Created car " + createdCar._id, "Failed creating car. Error ");
 
-		if (_isFunction(callback)) {
+		if (DAOCommon.isFunction(callback)) {
 			callback(err, createdCar);
 		}
 	});
@@ -59,24 +60,12 @@ function deleteCar(carIdToDelete, callback) {
 			return;
 		}
 		carCollection.remove(carToDelete, function (err) {
-			logMsg(err, "Deleted car with id " + carIdToDelete, "Failed deleteing car with id " + carIdToDelete + ". ");
-			if(_isFunction(callback)) {
+			DAOCommon.logMsg(err, "Deleted car with id " + carIdToDelete, "Failed deleteing car with id " + carIdToDelete + ". ");
+			if(DAOCommon.isFunction(callback)) {
 				callback(err);
 			}				
 		});
 	});
-}
-
-function _isFunction(varToCheck) {
-	return (typeof(varToCheck) == "function");
-}
-
-function logMsg(err, successMsg, errorMsg) {
-	if (err) {
-		console.log(errorMsg + err);
-	} else {
-		console.log(successMsg);
-	}
 }
 
 exports.getAllCars = getAllCars;
