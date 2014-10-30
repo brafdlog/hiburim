@@ -1,5 +1,6 @@
 var should = require("should");
 var carDAO = require("../carDAO");
+var _ = require("underscore");
 
 var carIdsToDelete = [];
 
