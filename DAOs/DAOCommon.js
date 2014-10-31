@@ -14,8 +14,8 @@ function getAllElementsOfCollection(collectionName, callback) {
 function getSingleElementOfCollection(collectionName, elementId, callback) {
 	var collection = db.get(collectionName);
 	collection.find({_id: elementId}, function(err, foundElementsArray) {
-		_logMsg(err, "Loaded element with id: " + elementId + " from collection" + collectionName, 
-			"Failed loading element with id: " + elementId + " from collection" + collectionName + ". Error ");
+		_logMsg(err, "Loaded element with id: " + elementId + " from collection " + collectionName, 
+			"Failed loading element with id: " + elementId + " from collection " + collectionName + ". Error ");
 
 		if (_isFunction(callback)) {
 			if (foundElementsArray && foundElementsArray.length === 1) {

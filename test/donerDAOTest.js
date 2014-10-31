@@ -49,13 +49,13 @@ describe("donorDAO", function() {
 					should.exist(allDonorsArray);
 
 					var firstDonor = _.find(allDonorsArray, function(donor) {
-						return donor.driverName === createdDonor1.driverName;
+						return donor.name === createdDonor1.name;
 					});
 
 					should.exist(firstDonor);
 
 					var secondDonor = _.find(allDonorsArray, function(donor) {
-						return donor.driverName === createdDonor2.driverName;
+						return donor.name === createdDonor2.name;
 					});
 
 					should.exist(secondDonor);
@@ -119,10 +119,10 @@ it("should call delete with non existing donor Id and verify that not all donors
 });
 
 function _createDonorObject() {
-	var randDriverName = Math.random().toString(36).substring(7);
+	var randString = Math.random().toString(36).substring(7);
 	
 	return {
-		name: "Moshe " + randDriverName, 
+		name: "Moshe " + randString, 
 		phoneNumber: "057-456732",
 		convenientDates: [456345634564],
 		item: {
