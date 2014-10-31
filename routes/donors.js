@@ -48,6 +48,18 @@ router.post('/', function(req, resp) {
 	});
 });
 
+// Delete specific donor
+router.delete('/:donorId', function(req, resp) {
+	var donorId = req.params.donorId;
+	donorDAO.deleteDonor(donorId, function(err) {
+		if (err) {
+			routesCommon.handleServerError(resp, err);
+		} else {
+			resp.status(200).end();
+		}
+	});
+});
+
 function _createDonorObject(name, phoneNumber, convenientDates, itemDetails, addressDetails) {
 	return {name: name, phoneNumber: phoneNumber, convenientDates: convenientDates, item: itemDetails, address: addressDetails};
 }

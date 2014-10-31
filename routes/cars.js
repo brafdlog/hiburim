@@ -50,6 +50,18 @@ router.post('/', function(req, resp) {
 	});
 });
 
+// Delete specific car
+router.delete('/:carId', function(req, resp) {
+	var carId = req.params.carId;
+	carDAO.deleteCar(carId, function(err) {
+		if (err) {
+			routesCommon.handleServerError(resp, err);
+		} else {
+			resp.status(200).end();
+		}
+	});
+});
+
 function _createCarObject(carType, driverName, driverNumber, availableFrom, availableUntil) {
 	return {carType: carType, driverName: driverName, driverNumber: driverNumber, availableFrom: availableFrom, availableUntil: availableUntil};
 }
