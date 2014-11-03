@@ -6,10 +6,6 @@ input, textarea {
 	text-align: right;
 }
 
-select {
-	direction: rtl;
-}
-
 .hiddenInput {
 	display: none;
 }

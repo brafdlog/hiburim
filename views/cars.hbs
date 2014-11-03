@@ -19,39 +19,39 @@
 				<table id="carsTable" class="table table-striped">
 					<thead>
 						<tr>
-							<th>זמין למשך</th>
-							<th>זמין משעה</th>
-							<th>זמין מתאריך</th>
-							<th>טלפון של הנהג</th>
-							<th>שם הנהג</th>
 							<th>סוג רכב</th>
+							<th>שם הנהג</th>
+							<th>טלפון של הנהג</th>
+							<th>זמין מתאריך</th>
+							<th>זמין משעה</th>
+							<th>זמין למשך</th>
 						</tr>
 					</thead>
 					<tbody>
 						{{#each cars}}
 						<tr carId={{_id}} id="{{_id}}" epoch="{{availableFrom}}" date="" hours="" minutes="">
-							<td>
-								שעות 
-								<input type='number' class="availableDuration" min="1" max="24"/>
-							</td>
-							<td>
-								<input type="text" class="timePicker" />
-							</td>
-							<td>
-								<input type='text' class="datePicker" carId={{_id}} data-date-format="D/M"/>
-							</td>
-							<td>
-								<span contentEditable="true"> {{driverNumber}} </span>
-							</td>
-							<td>
-								<span contentEditable="true"> {{driverName}} </span>
-							</td>
 							<td class="carTypeIconColumn">
 								{{#if van}}
 									<img src="/images/van.png" alt="Van" width="40px">
 								{{else}}
 									<img src="/images/privateCar.png" alt="Private" width="40px">
 								{{/if}}
+							</td>
+							<td>
+								<span contentEditable="true"> {{driverName}} </span>
+							</td>
+							<td>
+								<span contentEditable="true"> {{driverNumber}} </span>
+							</td>
+							<td>
+								<input type='text' class="datePicker" carId={{_id}} data-date-format="D/M"/>
+							</td>
+							<td>
+								<input type="text" class="timePicker" />
+							</td>
+							<td>
+								<input type='number' class="availableDuration" min="1" max="24"/>
+								שעות 
 							</td>
 						</tr>
 						{{/each}}
