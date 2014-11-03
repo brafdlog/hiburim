@@ -17,6 +17,11 @@ router.get('/', function(req, resp) {
 	});
 });
 
+// Get all consumers
+router.get('/createConsumerForm', function(req, resp) {	
+	resp.render('addConsumer', {'layout': 'generalLayout'});
+});
+
 // Get specific consumer
 router.get('/:consumerId', function(req, resp) {
 	var consumerId = req.params.consumerId;

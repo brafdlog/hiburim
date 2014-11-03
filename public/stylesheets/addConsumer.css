@@ -1,0 +1,15 @@
+.container {
+	margin-top: 15px;
+}
+
+input, textarea {
+	text-align: right;
+}
+
+select {
+	direction: rtl;
+}
+
+.hiddenInput {
+	display: none;
+}
