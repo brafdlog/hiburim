@@ -49,7 +49,11 @@
 								{{item.description}}
 							</td>
 							<td>
-								{{address.geoDisplayString}}
+								{{#if address.latitude}}
+									<a href="http://maps.google.com/?q={{address.latitude}},{{address.longitude}}" target="_blank">{{address.geoDisplayString}}</a>
+								{{else}}
+									{{address.geoDisplayString}}
+								{{/if}}
 							</td>
 							<td>
 								{{address.floor}}
