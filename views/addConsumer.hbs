@@ -149,20 +149,15 @@
       }
     }
 
-    $.ajax({
-      type: "POST",
-      url: "/consumers",
-      data: JSON.stringify(consumerToCreate),
-      contentType: 'application/json;charset=UTF-8',
-      success: function(data) {
-        console.log("Created consumer successfully");
-      },
-      error: function(request, errorString) {
-        alert("Failed creating consumer. Error: " + errorString);
-      },
-      dataType: 'json'
-    });
-    console.log(JSON.stringify(consumerToCreate));
+    function _createConsumerSuccess(data) {
+      console.log("Created consumer successfully");
+    }
+
+    function _createConsumerError(request, errorString) {
+      alert("Failed creating consumer. Error: " + errorString);
+    }
+
+    $.myPost("/consumers", consumerToCreate, _createConsumerSuccess, _createConsumerError);
 
   });
 
