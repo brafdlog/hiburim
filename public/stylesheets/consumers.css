@@ -1,0 +1,12 @@
+th, tr {
+  text-align: center;
+}
+
+tr td:last-child{
+    width:1%;
+    white-space:nowrap;
+}
+
+.addressNotesTableHeader {
+  min-width: 150px;
+}

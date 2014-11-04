@@ -10,9 +10,9 @@ router.get('/', function(req, resp) {
 		if (err) {
 			routesCommon.handleServerError(resp, err);
 		} else {
-			resp.send(allConsumersArray);
-			resp.end();
-			//resp.render('consumers', {'layout': 'generalLayout', consumers: allConsumersArray});
+			// resp.send(allConsumersArray);
+			// resp.end();
+			resp.render('consumers', {'layout': 'generalLayout', consumers: allConsumersArray});
 		}
 	});
 });

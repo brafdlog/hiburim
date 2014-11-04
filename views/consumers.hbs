@@ -1,0 +1,93 @@
+<!-- Custom styles for this template -->
+<link href="/stylesheets/consumers.css" rel="stylesheet">
+
+<div class="container">
+	<div class="row">
+		<div class="col-md-1">
+			<h1 class="page-header">פניות</h1>	
+		</div>
+		<div class="col-md-1 col-md-offset-10">
+			<button type="button" id="addConsumerButton" class="btn btn-primary page-header">פניה חדשה</button>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-8 col-md-12 main">
+			<div class="table-responsive">
+				<table id="consumerTable" class="table table-striped">
+					<thead>
+						<tr>
+							<th>שם</th>
+							<th>טלפון</th>
+							<th class="addressNotesTableHeader">תאריכים פנויים</th>
+							<th class="addressNotesTableHeader">סוג הפריט</th>
+							<th class="addressNotesTableHeader">תיאור הפריט</th>
+							<th class="addressNotesTableHeader">כתובת הפונה</th>
+							<th>קומה</th>
+							<th class="addressNotesTableHeader">מספר דירה</th>
+							<th>מעלית</th>
+							<th>חניה</th>
+							<th class="addressNotesTableHeader">הערות על הכתובת</th>
+						</tr>
+					</thead>
+					<tbody>
+						{{#each consumers}}
+						<tr consumerId={{_id}} >
+							<td>
+								{{name}}
+							</td>
+							<td>
+								{{phoneNumber}}
+							</td>
+							<td>
+								{{convenientDates}}
+							</td>
+							<td>
+								{{item.category}}
+							</td>
+							<td>
+								{{item.description}}
+							</td>
+							<td>
+								{{address.geoDisplayString}}
+							</td>
+							<td>
+								{{address.floor}}
+							</td>
+							<td>
+								{{address.flatNumber}}
+							</td>
+							<td>
+								{{#if address.hasElavator}}
+								כן
+								{{/if}}
+								{{#else}}
+								לא
+								{{/else}}
+							</td>
+							<td>
+								{{#if address.hasParking}}
+								כן
+								{{/if}}
+								{{#else}}
+								לא
+								{{/else}}
+							</td>
+							<td>
+								{{address.description}}
+							</td>
+						</tr>
+						{{/each}}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+	$(function() {
+		$('#addConsumerButton').off('click').on('click', function() {
+			window.location.href = 'consumers/createConsumerForm';
+		});
+	});
+</script>
