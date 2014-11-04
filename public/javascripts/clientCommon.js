@@ -9,4 +9,4 @@ $.myPost = function(url, data, success, error) {
 		contentType: 'application/json;charset=UTF-8',
 		dataType: 'json'
 	});
-}
+};
