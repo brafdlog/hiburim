@@ -82,12 +82,12 @@
               </div>
               <div class="checkbox">
                 <label>
-                  <input type="checkbox" name="hasElevator"> מעלית
+                  <input type="checkbox" name="hasElevator" id="hasElevator"> מעלית
                 </label>
               </div>
               <div class="checkbox">
                 <label>
-                  <input type="checkbox" name="hasParking"> חניה
+                  <input type="checkbox" name="hasParking" id="hasParking"> חניה
                 </label>
               </div>
 
@@ -106,7 +106,7 @@
           </div>
         </div>
       </div>
-      <button type="submit" class="btn btn-default">הוסף פניה</button>
+      <button type="button" id="submitButton" class="btn btn-default">הוסף פניה</button>
     </form>
   </div>
 </div>
@@ -125,28 +125,45 @@
     $('#lon').val(lon);
     $('#geoCompleteAddress').val(geoCompleteAddress);
   });
-</script>
 
-
-{{!-- Consumer object:
-   {
-    name: "Moshe ", 
-    phoneNumber: "057-456732",
-    convenientDates: [456345634564],
-    item: {
-      category: "ארון",
-      requiresDismanteling: true,
-      description: "זה ארון מאוד יפה"
-    },
-    address: {
-      geoQueryString: "Even Shmuel 33, Jerusalem, Israel",
-      geoDisplayString: "אבן שמואל 33, ירושלים",
-      latitude: "4536364.534",
-      longitude: "645645645.3423",
-      floor: "3",
-      flatNumber: "7",
-      hasElavator: false,
-      hasParking: true,
-      description: "מקום יפה"
+  $('#submitButton').off('click').on('click', function() {
+    var consumerToCreate = {
+      name: $('#consumerName').val(), 
+      phoneNumber: $('#consumerPhoneNumber').val(),
+      convenientDates: $('#datesAvailable').val(),
+      item: {
+        category: $('#itemCategory').val(),
+        //requiresDismanteling: true,
+        description: $('#itemNotesTextArea').val()
+      },
+      address: {
+        geoQueryString: $('#geoCompleteAddress').val(),
+        geoDisplayString: $('#address').val(),
+        latitude: $('#lat').val(),
+        longitude: $('#lon').val(),
+        floor: $('#floor').val(),
+        flatNumber: $('#apartmentNumber').val(),
+        hasElavator: $('#hasElevator').is(":checked"),
+        hasParking: $('#hasParking').is(":checked"),
+        description: $('#addressNotesTextArea').val()
+      }
     }
-  }; --}}
+
+    $.ajax({
+      type: "POST",
+      url: "/consumers",
+      data: JSON.stringify(consumerToCreate),
+      contentType: 'application/json;charset=UTF-8',
+      success: function(data) {
+        console.log("Created consumer successfully");
+      },
+      error: function(request, errorString) {
+        alert("Failed creating consumer. Error: " + errorString);
+      },
+      dataType: 'json'
+    });
+    console.log(JSON.stringify(consumerToCreate));
+
+  });
+
+</script>

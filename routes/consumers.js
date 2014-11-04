@@ -42,7 +42,7 @@ router.get('/:consumerId', function(req, resp) {
 // Create consumer
 router.post('/', function(req, resp) {
 	console.log("Got request to create a consumer");
-	var consumerToCreate = _createConsumerObject(req.body.name, req.body.phoneNumber, req.body.convenientDates, req.body.itemDetails, req.body.addressDetails);
+	var consumerToCreate = req.body;
 	consumerDAO.createConsumer(consumerToCreate, function(err, createdConsumer) {
 		if (err) {
 			routesCommon.handleServerError(resp, err);
@@ -64,11 +64,6 @@ router.delete('/:consumerId', function(req, resp) {
 		}
 	});
 });
-
-
-function _createConsumerObject(name, phoneNumber, convenientDates, itemDetails, addressDetails) {
-	return {name: name, phoneNumber: phoneNumber, convenientDates: convenientDates, item: itemDetails, address: addressDetails};
-}
 
 module.exports = router;
 
