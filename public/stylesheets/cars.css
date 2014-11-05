@@ -24,9 +24,3 @@ th, tr, .datePicker {
   text-align: right;
   right: 0px;
 }
-
-span:focus[contenteditable=true] {
-  padding: 3px;
-  border-width: 1px;
-  border-style: solid;
-}

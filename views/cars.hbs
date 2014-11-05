@@ -9,12 +9,12 @@
 
 <div class="container">
 	<div class="row">
-		<div class="col-md-1 col-md-offset-3">
+		<div class="col-md-1 col-md-offset-1">
 			<h1 class="page-header">רכבים</h1>	
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-sm-8 col-sm-offset-4 col-md-9 col-md-offset-3 main">
+		<div class="col-sm-8 col-sm-offset-4 col-md-10 col-md-offset-1 main">
 			<div class="table-responsive">
 				<table id="carsTable" class="table table-striped">
 					<thead>
@@ -25,33 +25,39 @@
 							<th>זמין מתאריך</th>
 							<th>זמין משעה</th>
 							<th>זמין למשך</th>
+							<th></th>
 						</tr>
 					</thead>
 					<tbody>
 						{{#each cars}}
-						<tr carId={{_id}} id="{{_id}}" epoch="{{availableFrom}}" date="" hours="" minutes="">
-							<td class="carTypeIconColumn">
+						<tr id="{{_id}}" class="nonHeaderTableRow" epoch="{{availableFrom}}" date="" hours="" minutes="">
+							<td class="carTypeIconColumn nonEditable">
 								{{#if van}}
-									<img src="/images/van.png" alt="Van" width="40px">
+								<img src="/images/van.png" alt="Van" width="40px">
 								{{else}}
-									<img src="/images/privateCar.png" alt="Private" width="40px">
+								<img src="/images/privateCar.png" alt="Private" width="40px">
 								{{/if}}
 							</td>
 							<td>
-								<span contentEditable="true"> {{driverName}} </span>
+								<span> {{driverName}} </span>
 							</td>
 							<td>
-								<span contentEditable="true"> {{driverNumber}} </span>
+								<span> {{driverNumber}} </span>
 							</td>
-							<td>
-								<input type='text' class="datePicker" carId={{_id}} data-date-format="D/M"/>
+							<td class="nonEditable">
+								<input disabled="true" type='text' class="datePicker" carId={{_id}} data-date-format="D/M"/>
 							</td>
-							<td>
-								<input type="text" class="timePicker" />
+							<td class="nonEditable">
+								<input disabled="true" type="text" class="timePicker" />
 							</td>
-							<td>
-								<input type='number' class="availableDuration" min="1" max="24"/>
+							<td class="nonEditable">
+								<input disabled="true" type='number' class="availableDuration" min="1" max="24"/>
 								שעות 
+							</td>
+							<td class="nonEditable">
+								<span title="ערוך" class="glyphicon glyphicon-pencil editIcon"></span>
+								<span title="מחק" class="glyphicon glyphicon-remove deleteIcon"></span>
+								<span class="glyphicon glyphicon-ok finishedEditingIcon"></span>
 							</td>
 						</tr>
 						{{/each}}
@@ -83,7 +89,22 @@
 		$.each(timePickerElements, function(index, element) {
 			_setUpTimePicker(element);
 		});
+
+		$.hib.makeTableRowsEditable("car", _makeRowEditableAdditionalActions, _makeRowNonEditableAdditionalActions);	
+		
 	});
+
+	function _makeRowEditableAdditionalActions(rowElement) {
+		rowElement.find('.datePicker').attr('disabled', false);
+		rowElement.find('.timePicker').attr('disabled', false);
+		rowElement.find('.availableDuration').attr('disabled', false);
+	}
+
+	function _makeRowNonEditableAdditionalActions(rowElement) {
+		rowElement.find('.datePicker').attr('disabled', true);
+		rowElement.find('.timePicker').attr('disabled', true);
+		rowElement.find('.availableDuration').attr('disabled', true);
+	}
 
 	function _setUpDatePicker(datePickerElement) {
 		$(datePickerElement).pickadate({ 
@@ -122,5 +143,5 @@
 		var minutes = minutesSinceMidnight % 60;
 		parentRow.attr("hours", hours);
 		parentRow.attr("minutes", minutes);
-    }
+	}
 </script>

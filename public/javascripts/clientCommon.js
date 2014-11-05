@@ -22,8 +22,10 @@ $.hib.post = function(url, data, success, error) {
 			nonHeaderTableRow
 		2. Each table row has the id of the element it represents
 		3. Has a td that has the three icons for delete, edit and approve changes
+
+	The two last parameters are functions for additional actions to run on rowEditable or rowNonEditable events
  */
-$.hib.makeTableRowsEditable = function(modelName) {
+$.hib.makeTableRowsEditable = function(modelName, makeRowEditableAdditionalActions, makeRowNonEditableAdditionalActions) {
 	$('.finishedEditingIcon').hide();
 
 	$('.deleteIcon').off('click').on('click', function() {
@@ -90,11 +92,17 @@ $.hib.makeTableRowsEditable = function(modelName) {
 		rowElement.addClass("rowBeingEdited");
 		rowElement.children('td').not('.nonEditable').attr('contenteditable', true);
 		_detectClickOutsideRowAndMakeItNotEditable(rowElement);
+		if (makeRowEditableAdditionalActions) {
+			makeRowEditableAdditionalActions(rowElement);
+		}
 	}
 
 	function _makeRowNotEditable(rowElement) {
 		rowElement.removeClass("rowBeingEdited");
 		rowElement.children('td').not('.nonEditable').removeAttr('contenteditable');
+		if (makeRowNonEditableAdditionalActions) {
+			makeRowNonEditableAdditionalActions(rowElement);
+		}
 	}
 
 	// When clicking outside a row we want to make it not editable
