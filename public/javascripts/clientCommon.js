@@ -15,7 +15,7 @@ $.hib.post = function(url, data, success, error) {
 /*
 	Makes the table editable if:
 		1. The table has the following classes in the right places:  
-			iconsTd
+			nonEditable
 			finishedEditingIcon
 			deleteIcon
 			editIcon
@@ -88,13 +88,13 @@ $.hib.makeTableRowsEditable = function(modelName) {
 
 	function _makeRowEditable(rowElement) {
 		rowElement.addClass("rowBeingEdited");
-		rowElement.children('td').not('.iconsTd').attr('contenteditable', true);
+		rowElement.children('td').not('.nonEditable').attr('contenteditable', true);
 		_detectClickOutsideRowAndMakeItNotEditable(rowElement);
 	}
 
 	function _makeRowNotEditable(rowElement) {
 		rowElement.removeClass("rowBeingEdited");
-		rowElement.children('td').not('.iconsTd').removeAttr('contenteditable');
+		rowElement.children('td').not('.nonEditable').removeAttr('contenteditable');
 	}
 
 	// When clicking outside a row we want to make it not editable
