@@ -12,6 +12,17 @@ $.hib.post = function(url, data, success, error) {
 	});
 };
 
+$.hib.put = function(url, data, success, error) {
+	$.ajax({
+		type: "PUT",
+		url: url,
+		data: JSON.stringify(data),
+		success: success,
+		error: error,
+		contentType: 'application/json;charset=UTF-8'
+	});
+};
+
 /*
 	Makes the table editable if:
 		1. The table has the following classes in the right places:  
@@ -25,7 +36,7 @@ $.hib.post = function(url, data, success, error) {
 
 	The two last parameters are functions for additional actions to run on rowEditable or rowNonEditable events
  */
-$.hib.makeTableRowsEditable = function(modelName, makeRowEditableAdditionalActions, makeRowNonEditableAdditionalActions) {
+$.hib.makeTableRowsEditable = function(modelName, buildObjectToUpdateFunc, makeRowEditableAdditionalActions, makeRowNonEditableAdditionalActions) {
 	$('.finishedEditingIcon').hide();
 
 	$('.deleteIcon').off('click').on('click', function() {
@@ -74,6 +85,24 @@ $.hib.makeTableRowsEditable = function(modelName, makeRowEditableAdditionalActio
 
 		var parentRowElement = finishedEditingIconElement.closest('tr');
 		_makeRowNotEditable(parentRowElement);
+
+		// Update server
+		if (buildObjectToUpdateFunc) {
+			var objectToUpdateId = parentRowElement.attr('id');
+			var url = '/' + modelName + 's/' + objectToUpdateId;
+			var objectToUpdate = buildObjectToUpdateFunc(parentRowElement);
+
+			var success = function() {
+				console.log("Updated " + modelName + " with id " + objectToUpdateId);
+				parentRowElement.removeClass('italicText');
+			};
+			var error = function() {
+				alert('failed updating ' + modelName + " with id " + objectToUpdateId);
+			};
+
+			parentRowElement.addClass('.italicText');
+			$.hib.put(url, objectToUpdate, success, error);
+		}
 
 	});
 
