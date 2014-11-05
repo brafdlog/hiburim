@@ -63,12 +63,16 @@
 							</td>
 							<td>
 								{{#if address.hasElavator}}
-								כן
+									<input type="checkbox" class="hasElevatorCheckbox" checked="true">
+								{{else}}
+									<input type="checkbox" class="hasElevatorCheckbox">
 								{{/if}}
 							</td>
 							<td>
 								{{#if address.hasParking}}
-								כן
+									<input type="checkbox" class="hasParkingCheckbox" checked="true">
+								{{else}}
+									<input type="checkbox" class="hasParkingCheckbox">
 								{{/if}}
 							</td>
 							<td>
