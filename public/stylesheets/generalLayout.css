@@ -5,6 +5,14 @@ body {
   direction: rtl;
 }
 
+/*
+ * Top navigation
+ * Hide default border to remove 1px line.
+ */
+.navbar-fixed-top {
+  border: 0;
+}
+
 .editIcon {
 	margin-left: 10px;
 }
