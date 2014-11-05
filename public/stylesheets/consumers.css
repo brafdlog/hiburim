@@ -10,17 +10,3 @@ tr td:last-child{
 .addressNotesTableHeader {
   min-width: 150px;
 }
-
-.editIcon {
-	margin-left: 10px;
-}
-
-td:focus {
-    background-color: pink !important;
-}
-
-.rowBeingEdited {
-	border-width: 3px;
-	border-color: green;
-	border-style: double;
-}

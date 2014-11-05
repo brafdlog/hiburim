@@ -4,3 +4,17 @@ body {
   
   direction: rtl;
 }
+
+.editIcon {
+	margin-left: 10px;
+}
+
+td:focus {
+    background-color: pink !important;
+}
+
+.rowBeingEdited {
+	border-width: 3px;
+	border-color: green;
+	border-style: double;
+}
