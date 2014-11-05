@@ -45,6 +45,18 @@ function createElement(collectionName, elementToCreate, callback) {
 	});
 }
 
+function updateElement(collectionName, updatedElement, callback) {
+	var collection = db.get(collectionName);
+
+	collection.updateById(updatedElement._id, updatedElement, function(err) {
+		_logMsg(err, "Updated element with id " + updatedElement._id + " from collection " + collectionName, 
+			"Failed updating element with id " + updatedElement._id + " from collection " + collectionName);
+		if(_isFunction(callback)) {
+			callback(err);
+		}	
+	});
+}
+
 function deleteElement(collectionName, elementIdToDelete, callback) {
 	var collection = db.get(collectionName);
 
@@ -52,7 +64,7 @@ function deleteElement(collectionName, elementIdToDelete, callback) {
 		// Need to check this. If elementToDelete is undefined the delete call will delete the whole collection!
 		if (!elementToDelete) {
 			var errorString = "Failed deleting element with id " + elementIdToDelete + " from collection " + collectionName + 
-				". getElement on that id did not return an element";
+			". getElement on that id did not return an element";
 			console.log(errorString);
 			if (!err) {
 				err = errorString;
@@ -69,7 +81,7 @@ function deleteElement(collectionName, elementIdToDelete, callback) {
 		});
 	});
 }
-	
+
 function _isFunction(varToCheck) {
 	return (typeof(varToCheck) == "function");
 }
@@ -86,3 +98,4 @@ exports.getAllElementsOfCollection = getAllElementsOfCollection;
 exports.getSingleElementOfCollection = getSingleElementOfCollection;
 exports.createElement = createElement;
 exports.deleteElement = deleteElement;
+exports.updateElement = updateElement;

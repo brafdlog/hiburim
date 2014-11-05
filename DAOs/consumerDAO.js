@@ -16,7 +16,12 @@ function deleteConsumer(consumerIdToDelete, callback) {
 	DAOCommon.deleteElement("consumers", consumerIdToDelete, callback);
 }
 
+function updateConsumer(consumerObjectToUpdate, callback) {
+	DAOCommon.updateElement("consumers", consumerObjectToUpdate, callback);
+}
+
 exports.getAllConsumers = getAllConsumers;
 exports.getConsumer = getConsumer;
 exports.createConsumer = createConsumer;
 exports.deleteConsumer = deleteConsumer;
+exports.updateConsumer = updateConsumer;
