@@ -32,7 +32,7 @@
 					</thead>
 					<tbody>
 						{{#each consumers}}
-						<tr consumerId={{_id}} >
+						<tr consumerId={{_id}} id={{_id}} class="nonHeaderTableRow" >
 							<td>
 								{{name}}
 							</td>
@@ -48,11 +48,11 @@
 							<td>
 								{{item.description}}
 							</td>
-							<td>
+							<td class="addressTd">
 								{{#if address.latitude}}
-									<a href="http://maps.google.com/?q={{address.latitude}},{{address.longitude}}" target="_blank">{{address.geoDisplayString}}</a>
+								<a href="http://maps.google.com/?q={{address.latitude}},{{address.longitude}}" target="_blank">{{address.geoDisplayString}}</a>
 								{{else}}
-									{{address.geoDisplayString}}
+								{{address.geoDisplayString}}
 								{{/if}}
 							</td>
 							<td>
@@ -147,14 +147,38 @@
 
 		});
 
+		// Double click on row will be like clicking the edit icon of that row
+		$('.nonHeaderTableRow').off('click').on('dblclick', function(event) {
+			var tableRowElement = $(this);
+			// If we are not already editing this row, make it editable
+			if (!tableRowElement.hasClass('rowBeingEdited')) {
+				tableRowElement.find('.editIcon').click();
+			}
+			// focus on the clicked cell in the table
+			$(event.target).focus();
+		});
+
 		function _makeRowEditable(rowElement) {
 			rowElement.addClass("rowBeingEdited");
 			rowElement.children('td').not('.iconsTd').attr('contenteditable', true);
+			_detectClickOutsideRowAndMakeItNotEditable(rowElement);
 		}
 
 		function _makeRowNotEditable(rowElement) {
 			rowElement.removeClass("rowBeingEdited");
 			rowElement.children('td').not('.iconsTd').removeAttr('contenteditable');
+		}
+
+		// When clicking outside a row we want to make it not editable
+		function _detectClickOutsideRowAndMakeItNotEditable(rowElement) {
+			$(document).off('click').on('click', function(event) { 
+				var rowId = rowElement.attr('id');
+				// If event target is not a child of the row, make row uneditable
+				if(!$(event.target).closest('#' + rowId).length) {
+					rowElement.find('.finishedEditingIcon').click();
+					$(document).unbind('click');
+				}      
+			});
 		}
 	});
 </script>
