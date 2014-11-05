@@ -74,9 +74,11 @@
 							<td>
 								{{address.description}}
 							</td>
-							<td>
-								<span class="glyphicon glyphicon-remove deleteButton"></span>
-								{{!-- <button type="button" class="btn btn-danger btn-xs deleteButton">מחק</button> --}}
+							<td class="iconsTd">
+								<span title="ערוך" class="glyphicon glyphicon-pencil editIcon"></span>
+								<span title="מחק" class="glyphicon glyphicon-remove deleteIcon"></span>
+								<span class="glyphicon glyphicon-ok finishedEditingIcon"></span>
+								{{!-- <button type="button" class="btn btn-danger btn-xs deleteIcon">מחק</button> --}}
 							</td>
 						</tr>
 						{{/each}}
@@ -89,11 +91,13 @@
 
 <script>
 	$(function() {
+		$('.finishedEditingIcon').hide();
+
 		$('#addConsumerButton').off('click').on('click', function() {
 			window.location.href = 'consumers/createConsumerForm';
 		});
 
-		$('.deleteButton').off('click').on('click', function() {
+		$('.deleteIcon').off('click').on('click', function() {
 			var parentRowElement = $(this).closest('tr');
 			bootbox.confirm('למחוק את הפניה?', function(userWantsToDelete) {
 				if (userWantsToDelete) {
@@ -112,5 +116,45 @@
 				}
 			});
 		});
+
+		$('.editIcon').off('click').on('click', function() {
+			var editIconElement = $(this);
+			var deleteIconElement = editIconElement.siblings('.deleteIcon');
+			var finishedEditingIconElement = editIconElement.siblings('.finishedEditingIcon');
+
+			editIconElement.hide();
+			deleteIconElement.hide();
+			finishedEditingIconElement.show();
+
+			//$('td').not(this).block({message: null});
+
+			var parentRowElement = editIconElement.closest('tr');
+			_makeRowEditable(parentRowElement);
+			
+		});
+
+		$('.finishedEditingIcon').off('click').on('click', function() {
+			var finishedEditingIconElement = $(this);
+			var deleteIconElement = finishedEditingIconElement.siblings('.deleteIcon');
+			var editIconElement = finishedEditingIconElement.siblings('.editIcon');
+
+			finishedEditingIconElement.hide();
+			deleteIconElement.show();
+			editIconElement.show();
+
+			var parentRowElement = finishedEditingIconElement.closest('tr');
+			_makeRowNotEditable(parentRowElement);
+
+		});
+
+		function _makeRowEditable(rowElement) {
+			rowElement.addClass("rowBeingEdited");
+			rowElement.children('td').not('.iconsTd').attr('contenteditable', true);
+		}
+
+		function _makeRowNotEditable(rowElement) {
+			rowElement.removeClass("rowBeingEdited");
+			rowElement.children('td').not('.iconsTd').removeAttr('contenteditable');
+		}
 	});
 </script>
