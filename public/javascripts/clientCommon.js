@@ -1,5 +1,6 @@
+$.hib = {};
 
-$.myPost = function(url, data, success, error) {
+$.hib.post = function(url, data, success, error) {
 	$.ajax({
 		type: "POST",
 		url: url,

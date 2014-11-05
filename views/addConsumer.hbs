@@ -158,7 +158,7 @@
       alert("Failed creating consumer. Error: " + errorString);
     }
 
-    $.myPost("/consumers", consumerToCreate, _createConsumerSuccess, _createConsumerError);
+    $.hib.post("/consumers", consumerToCreate, _createConsumerSuccess, _createConsumerError);
 
   });
 
