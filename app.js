@@ -4,6 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var compression = require('compression');
 
 var routes = require('./routes/index');
 var cars = require('./routes/cars');
@@ -21,6 +22,12 @@ app.set('view options', { layout: false });
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
+
+// gzip compression of static resources with size larger than 256kb
+app.use(compression({
+  threshold: 256
+}));
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
