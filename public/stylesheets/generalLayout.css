@@ -26,3 +26,7 @@ td:focus {
 	border-color: green;
 	border-style: double;
 }
+
+.italicText {
+	font-style: italic;
+}

@@ -10,3 +10,8 @@ tr td:last-child{
 .addressNotesTableHeader {
   min-width: 150px;
 }
+
+/* Prevent the changed cursor when hovering over disabled checkboxes */
+input[type="checkbox"][disabled="true"], input[type="checkbox"][disabled="disabled"] {
+    cursor: default;
+}

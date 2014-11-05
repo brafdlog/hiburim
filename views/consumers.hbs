@@ -33,49 +33,49 @@
 					<tbody>
 						{{#each consumers}}
 						<tr id={{_id}} class="nonHeaderTableRow" >
-							<td>
+							<td class="nameTd">
 								{{name}}
 							</td>
-							<td>
+							<td class="phoneNumberTd">
 								{{phoneNumber}}
 							</td>
-							<td>
+							<td class="convenientDatesTd">
 								{{convenientDates}}
 							</td>
-							<td>
+							<td class="itemCategoryTd">
 								{{item.category}}
 							</td>
-							<td>
+							<td class="itemDescriptionTd">
 								{{item.description}}
 							</td>
-							<td class="addressTd">
+							<td class="addressTd" lat="{{address.latitude}}" lon="{{address.longitude}}" geoQueryString="{{address.geoQueryString}}" geoDisplayString="{{address.geoDisplayString}}">
 								{{#if address.latitude}}
 								<a href="http://maps.google.com/?q={{address.latitude}},{{address.longitude}}" target="_blank">{{address.geoDisplayString}}</a>
 								{{else}}
 								{{address.geoDisplayString}}
 								{{/if}}
 							</td>
-							<td>
+							<td class="addressFloorTd">
 								{{address.floor}}
 							</td>
-							<td>
+							<td class="addressFlatNumberTd">
 								{{address.flatNumber}}
 							</td>
-							<td>
+							<td class="nonEditable">
 								{{#if address.hasElavator}}
-									<input type="checkbox" class="hasElevatorCheckbox" checked="true">
+								<input type="checkbox" class="hasElevatorCheckbox" checked="true" disabled="true">
 								{{else}}
-									<input type="checkbox" class="hasElevatorCheckbox">
+								<input type="checkbox" class="hasElevatorCheckbox" disabled="true">
 								{{/if}}
 							</td>
-							<td>
+							<td class="nonEditable">
 								{{#if address.hasParking}}
-									<input type="checkbox" class="hasParkingCheckbox" checked="true">
+								<input type="checkbox" class="hasParkingCheckbox" checked="true" disabled="true">
 								{{else}}
-									<input type="checkbox" class="hasParkingCheckbox">
+								<input type="checkbox" class="hasParkingCheckbox" disabled="true">
 								{{/if}}
 							</td>
-							<td>
+							<td class="addressDescriptionTd">
 								{{address.description}}
 							</td>
 							<td class="nonEditable">
@@ -99,6 +99,65 @@
 			window.location.href = 'consumers/createConsumerForm';
 		});
 
-		$.hib.makeTableRowsEditable("consumer");
-	});
+		$.hib.makeTableRowsEditable("consumer", _buildObjectToUpdateFunc, _makeRowEditableAdditionalActions, _makeRowNonEditableAdditionalActions);
+
+		function _makeRowEditableAdditionalActions(rowElement) {
+			rowElement.find(':checkbox').attr('disabled', false);
+		}
+
+		function _makeRowNonEditableAdditionalActions(rowElement) {
+			rowElement.find(':checkbox').attr('disabled', true);
+		}
+
+		function _buildObjectToUpdateFunc(rowElement) {
+			var addressTdElement = rowElement.find('.addressTd');
+			var geoDisplayString = $.trim(_getDeepestChild(addressTdElement).text());
+
+			var hasAddressChanged = geoDisplayString !== addressTdElement.attr('geoDisplayString');
+
+			var geoQueryString, lat, lon;
+			if (hasAddressChanged) {
+				geoQueryString = lat = lon = undefined;
+			} else {
+				geoQueryString = addressTdElement.attr('geoQueryString');
+				lat = addressTdElement.attr('lat');
+				lon = addressTdElement.attr('lon');
+			}
+
+			var consumerToCreate = {
+				_id: rowElement.attr('id'),
+				name: $.trim(rowElement.find('.nameTd').text()), 
+				phoneNumber: $.trim(rowElement.find('.phoneNumberTd').text()),
+				convenientDates: $.trim(rowElement.find('.convenientDatesTd').text()),
+				item: {
+					category: $.trim(rowElement.find('.itemCategoryTd').text()),
+        			//requiresDismanteling: true,
+        			description: $.trim(rowElement.find('.itemDescriptionTd').text())
+        		},
+        		address: {
+        			geoQueryString: geoQueryString,
+        			geoDisplayString: geoDisplayString,
+        			latitude: lat,
+        			longitude: lon,
+        			floor: $.trim(rowElement.find('.addressFloorTd').text()),
+        			flatNumber: $.trim(rowElement.find('.addressFlatNumberTd').text()),
+        			hasElavator: rowElement.find('.hasElevatorCheckbox').is(":checked"),
+        			hasParking: rowElement.find('.hasParkingCheckbox').is(":checked"),
+        			description: $.trim(rowElement.find('.addressDescriptionTd').text())
+        		}
+        	}
+
+        	return consumerToCreate;
+        }
+
+        function _getDeepestChild(element) {
+        	var target = $(element).children();
+
+        	while(target.length && !target.is('a') && !target.is('span')) {
+        		target = target.children();
+        	}
+
+        	return target;
+        }
+    });
 </script>

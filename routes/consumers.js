@@ -53,6 +53,18 @@ router.post('/', function(req, resp) {
 	});
 });
 
+// Update consumer
+router.put('/:consumerId', function(req, resp) {
+	var updatedConsumer = req.body;
+	consumerDAO.updateConsumer(updatedConsumer, function(err) {
+		if (err) {
+			routesCommon.handleServerError(resp, err);
+		} else {
+			resp.send(updatedConsumer).end();
+		}
+	});
+});
+
 // Delete specific consumer
 router.delete('/:consumerId', function(req, resp) {
 	var consumerId = req.params.consumerId;
