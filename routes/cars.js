@@ -50,6 +50,18 @@ router.post('/', function(req, resp) {
 	});
 });
 
+// Update car
+router.put('/:carId', function(req, resp) {
+	var updatedCar = req.body;
+	carDAO.updateCar(updatedCar, function(err) {
+		if (err) {
+			routesCommon.handleServerError(resp, err);
+		} else {
+			resp.send(updatedCar).end();
+		}
+	});
+});
+
 // Delete specific car
 router.delete('/:carId', function(req, resp) {
 	var carId = req.params.carId;

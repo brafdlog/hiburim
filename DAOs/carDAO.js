@@ -16,7 +16,12 @@ function deleteCar(carIdToDelete, callback) {
 	DAOCommon.deleteElement("cars", carIdToDelete, callback);
 }
 
+function updateCar(carObjectToUpdate, callback) {
+	DAOCommon.updateElement("cars", carObjectToUpdate, callback);
+}
+
 exports.getAllCars = getAllCars;
 exports.getCar = getCar;
 exports.createCar = createCar;
 exports.deleteCar = deleteCar;
+exports.updateCar = updateCar;
