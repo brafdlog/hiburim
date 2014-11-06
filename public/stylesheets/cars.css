@@ -24,3 +24,7 @@ th, tr, .datePicker {
   text-align: right;
   right: 0px;
 }
+
+.hiddenRow {
+	display: none;
+}

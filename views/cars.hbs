@@ -9,8 +9,11 @@
 
 <div class="container">
 	<div class="row">
-		<div class="col-md-1 col-md-offset-1">
+		<div class="col-md-1">
 			<h1 class="page-header">רכבים</h1>	
+		</div>
+		<div class="col-md-1 col-md-offset-9">
+			<button type="button" id="addCarButton" class="btn btn-primary page-header">רכב חדש</button>
 		</div>
 	</div>
 	<div class="row">
@@ -30,7 +33,7 @@
 					</thead>
 					<tbody>
 						{{#each cars}}
-						<tr id="{{_id}}" class="nonHeaderTableRow" epoch="{{availableFrom}}" date="" hours="" minutes="">
+						<tr id="{{_id}}" class="nonHeaderTableRow {{#unless _id}}hiddenRow{{/unless}}" date="{{availableFromDate}}" time="{{availableFromTime}}" carType="van">
 							<td class="carTypeIconColumn nonEditable">
 								{{#if van}}
 								<img src="/images/van.png" alt="Van" width="40px">
@@ -38,20 +41,20 @@
 								<img src="/images/privateCar.png" alt="Private" width="40px">
 								{{/if}}
 							</td>
-							<td>
-								<span> {{driverName}} </span>
+							<td class="nameTd">
+								{{driverName}}
 							</td>
-							<td>
-								<span> {{driverNumber}} </span>
+							<td class="phoneNumberTd">
+								{{driverNumber}}
 							</td>
 							<td class="nonEditable">
-								<input disabled="true" type='text' class="datePicker" carId={{_id}} data-date-format="D/M"/>
+								<input disabled="true" type='text' class="datePicker" data-date-format="D/M"/>
 							</td>
 							<td class="nonEditable">
 								<input disabled="true" type="text" class="timePicker" />
 							</td>
 							<td class="nonEditable">
-								<input disabled="true" type='number' class="availableDuration" min="1" max="24"/>
+								<input disabled="true" type='number' class="availableDuration" min="1" max="24" value="{{availableDurationInHours}}" />
 								שעות 
 							</td>
 							<td class="nonEditable">
@@ -78,7 +81,7 @@
 	$(function(){
 		// When page loads attach the table sorter to the table.
 		// It is possible to pass parameters to decide which columns he will sort by in the beginning.
-		$("#carsTable").tablesorter();
+		//$("#carsTable").tablesorter();
 
 		var datePickerElements = $('.datePicker');
 		$.each(datePickerElements, function(index, element) {
@@ -90,9 +93,33 @@
 			_setUpTimePicker(element);
 		});
 
-		$.hib.makeTableRowsEditable("car", _makeRowEditableAdditionalActions, _makeRowNonEditableAdditionalActions);	
+		$.hib.makeTableRowsEditable("car", _buildObjectToUpdateFunc, _makeRowEditableAdditionalActions, _makeRowNonEditableAdditionalActions);
+
+		$('#addCarButton').off('click').on('click', _addEmptyRow);
 		
 	});
+
+	function _buildObjectToUpdateFunc(rowElement) {
+		var dateString = rowElement.attr('date');
+		var timeString = rowElement.attr('time');
+
+		var carToUpdate = {
+			_id: rowElement.attr('id'),
+			carType: rowElement.attr('carType'), 
+			driverName: $.trim(rowElement.find('.nameTd').text()), 
+			driverNumber: $.trim(rowElement.find('.phoneNumberTd').text()), 
+			availableFromDate: dateString,
+			availableFromTime: timeString,
+			availableDurationInHours: rowElement.find('.availableDuration').val()
+		};
+
+		// If this is just an empty row, no need to update server
+		if (_isCarObjectEmpty(carToUpdate)) {
+			return undefined;
+		}
+
+		return carToUpdate;
+	}
 
 	function _makeRowEditableAdditionalActions(rowElement) {
 		rowElement.find('.datePicker').attr('disabled', false);
@@ -106,13 +133,24 @@
 		rowElement.find('.availableDuration').attr('disabled', true);
 	}
 
+	function _addEmptyRow() {
+		var hiddenRow = $('.hiddenRow');
+		// parameter true for also cloning data and events
+		var newRow = hiddenRow.clone(true);
+		newRow.removeClass('hiddenRow');
+		newRow.insertBefore('.hiddenRow');
+	}
+
 	function _setUpDatePicker(datePickerElement) {
 		$(datePickerElement).pickadate({ 
 			onClose: _updateRowDateAttribute,
-			format: "yyyy-mm-dd"
+			format: $.hib.consts.pickATimeDateFormat // dd-mm-yyyy
 		});
-		var epoch = $(datePickerElement).closest('tr').attr('epoch');
-		$(datePickerElement).pickadate('set', 'select', epoch);
+		var dateString = $(datePickerElement).closest('tr').attr('date');
+		if (dateString) {
+			var date = moment(dateString, $.hib.consts.momentDateFormat); // dd-mm-yyyy
+			$(datePickerElement).pickadate('picker').set('select', [date.year(), date.month(), date.date()]);	
+		}
 	}
 
 	function _setUpTimePicker(timePickerElement) {
@@ -120,28 +158,34 @@
 		jqueryElement.pickatime({
 			min: [6,0],
 			max: [23,0],
-			onSet: _updateRowHoursAndMinutesAttributes
+			onSet: _updateRowTimeAttribute,
+			format: $.hib.consts.pickATimeTimeFormat // 23:30 or 9:40
 		});
-		var epoch = jqueryElement.closest('tr').attr('epoch');
-		jqueryElement.pickatime('set', 'select', epoch);
+		var timeString = jqueryElement.closest('tr').attr('time');
+		if (timeString) {
+			var time = moment(timeString, $.hib.consts.momentTimeFormat);
+			jqueryElement.pickatime('picker').set('select', [time.hours(), time.minutes()]);
+		}
 	}
 
 	function _updateRowDateAttribute() {
 		var dateString = this.get();
-		// var date = moment(dateString);
 		var dateInputElementId = this.get('id');
 		var dateInputElement = $('#'+dateInputElementId);
-		var carId = dateInputElement.attr('carId');
-		var rowElement = $('#' + carId);
+		var rowElement = dateInputElement.closest('tr');
 		rowElement.attr('date', dateString);
 	}
 
-	function _updateRowHoursAndMinutesAttributes(selectElement) {
+	function _updateRowTimeAttribute(selectElement) {
 		var minutesSinceMidnight = selectElement.select;
 		var parentRow = $('#' + this.get('id')).closest('tr');
 		var hours = Math.floor(minutesSinceMidnight / 60);
 		var minutes = minutesSinceMidnight % 60;
-		parentRow.attr("hours", hours);
-		parentRow.attr("minutes", minutes);
+		var timeString = hours + ":" + minutes;
+		parentRow.attr("time", timeString);
+	}
+
+	function _isCarObjectEmpty(car) {
+		return !car._id && !car.driverName && !car.driverNumber;
 	}
 </script>

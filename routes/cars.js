@@ -14,6 +14,10 @@ router.get('/', function(req, resp) {
 			_.each(allCarsArray, function(element, index, list) {
 				element.van = element.carType === 'van';
 			});
+
+			// Add an empty element so we will have an empty hidden row at the end of the table
+			allCarsArray.push({});
+
 			resp.render('cars', {'layout': 'generalLayout', cars: allCarsArray});
 		}
 	});

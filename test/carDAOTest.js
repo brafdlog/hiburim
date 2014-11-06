@@ -122,5 +122,12 @@ describe("carDAO", function() {
 
 function _createCarObject() {
 	var randDriverName = Math.random().toString(36).substring(7);
-	return {carType: "van", driverName: "Moshe " + randDriverName, driverNumber: "052-5776933", availableFrom: 1414312088, availableUntil: 1414326488};
+	return {
+		carType: "van", 
+		driverName: "Moshe " + randDriverName, 
+		driverNumber: "052-5776933", 
+		availableFromDate: "07-11-2014", 
+		availableFromTime: "23:00", 
+		availableDurationInHours: 3
+	};
 }
