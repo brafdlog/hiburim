@@ -32,7 +32,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 // Cache static resources for one year
-app.use(express.static(path.join(__dirname, 'public'), {maxage: "31557600000"}));
+var oneYear = "31557600000";
+app.use(express.static(path.join(__dirname, 'public'), {maxage: oneYear}));
 
 app.use('/', routes);
 app.use('/cars', cars);
