@@ -9,3 +9,7 @@ input, textarea {
 .hiddenInput {
 	display: none;
 }
+
+#addressNotesDiv {
+	margin-top: 5px;
+}
