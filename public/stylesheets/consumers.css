@@ -7,6 +7,10 @@ tr td:last-child{
     white-space:nowrap;
 }
 
+.phoneNumberTd, .nameTd {
+	min-width: 100px;	
+}
+
 .addressNotesTableHeader {
   min-width: 150px;
 }
