@@ -96,14 +96,14 @@
           {{#link-to 'car' car}}
           <li class="list-group-item">
             <div class="row">
-              <div class="col-md-3">
+              <div class="col-xs-3">
                 {{#if car.van}}
                 <img src="/images/van.png" alt="Van" width="40px">
                 {{else}}
                 <img src="/images/privateCar.png" alt="Private" width="40px">
                 {{/if}}
               </div>
-              <div class="col-md-4">
+              <div class="col-xs-4">
                 {{input class="dateInput" type="text" disabled="true" value=car.availableFromDate}}
               </div>
             </div>
