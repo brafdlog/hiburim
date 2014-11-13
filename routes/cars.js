@@ -23,6 +23,24 @@ router.get('/', function(req, resp) {
 	});
 });
 
+// Get all cars
+router.get('/api', function(req, resp) {	
+	carDAO.getAllCars(function(err, allCarsArray) {
+		if (err) {
+			routesCommon.handleServerError(resp, err);
+		} else {
+			// Set flag for handlebars to know which icon to display
+			_.each(allCarsArray, function(element, index, list) {
+				element.van = element.carType === 'van';
+				element.id = element._id;
+			});
+
+			resp.json(allCarsArray);
+			resp.end();
+		}
+	});
+});
+
 // Get specific car
 router.get('/:carId', function(req, resp) {
 	var carId = req.params.carId;
@@ -31,6 +49,7 @@ router.get('/:carId', function(req, resp) {
 			routesCommon.handleServerError(resp, err);
 		} else {
 			if (carFromDB) {
+				carFromDB.id = carFromDB._id;
 				resp.send(carFromDB);
 			} else {
 				resp.send("Car with id " + carId + " was not found");

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<link rel="icon" href="../../favicon.ico">
+
+	<!-- Bootstrap core and theme CSS -->
+	<link href="/stylesheets/bootstrap/bootstrap.css" rel="stylesheet">
+	<link href="/stylesheets/bootstrap/bootstrap-theme.css" rel="stylesheet">
+
+	<link href="/stylesheets/ember.css" rel="stylesheet">
+
+  <!-- Bootstrap right to left extension -->
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-rtl/3.2.0-rc2/css/bootstrap-rtl.min.css">
+
+  <link href="/stylesheets/generalLayout.css" rel="stylesheet">
+  <link href="/stylesheets/cars.css" rel="stylesheet">
+
+  <!-- Pickadate stylesheets -->
+  <link href="/stylesheets/pickadate/classic.css" rel="stylesheet">
+  <link href="/stylesheets/pickadate/classic.date.css" rel="stylesheet">
+  <link href="/stylesheets/pickadate/classic.time.css" rel="stylesheet">
+  <!-- <link href="/stylesheets/pickadate/rtl.css" rel="stylesheet"> -->
+
+  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.js"></script>
+  <script src="/javascripts/ember/handlebars-v1.3.0.js"></script>
+  <script src="/javascripts/ember/ember-1.8.1.js"></script>
+  
+  <script src="/javascripts/bootstrap/bootstrap.js"></script>
+
+  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+  <script src="/javascripts/bootstrap/ie10-viewport-bug-workaround.js"></script>
+
+  <script src="/javascripts/bootbox/bootbox.min.js"></script>
+  <script src="/javascripts/underscore/underscore.js"></script>
+
+  <script src="/javascripts/clientCommon.js"></script>
+  <script src="/javascripts/myEmber.js"></script>
+
+  <script src="/javascripts/jquery.tablesorter.min.js"></script>
+  <script src="/javascripts/moment.js"></script>
+  <script src="/javascripts/pickadate/picker.js"></script>
+  <script src="/javascripts/pickadate/picker.date.js"></script>
+  <script src="/javascripts/pickadate/picker.time.js"></script>
+  <script src="/javascripts/cars.js"></script>
+</head>
+
+<body>
+  <script type="text/x-handlebars">
+   <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+     <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+       <span class="sr-only">Toggle navigation</span>
+       <span class="icon-bar"></span>
+       <span class="icon-bar"></span>
+       <span class="icon-bar"></span>
+     </button>
+     <a class="navbar-brand" href="#">חיבורים</a>
+   </div>
+   <div class="navbar-collapse collapse">
+    <ul class="nav navbar-nav navbar-right">
+      <li>{{#link-to 'cars'}}רכבים{{/link-to}}</li>
+      <li>{{#link-to 'consumers'}}פניות{{/link-to}}</a></li>
+    </ul>
+  </div>
+</div>
+</div>
+
+{{outlet}}
+
+</body>
+</script>
+
+<script type="text/x-handlebars" id="cars">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-1">
+        <h1 class="page-header">רכבים</h1>  
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4 main">
+        <div class="table-responsive">
+          <table id="carsTable" class="table table-striped">
+            <thead>
+              <tr>
+                <th>סוג רכב</th>
+                <th>זמין מתאריך</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#each car in model}}
+              <tr {{bind-attr id=car._id}} class="nonHeaderTableRow" {{bind-attr date=car.availableFromDate}} {{bind-attr time=car.availableFromTime}} carType="van">
+                <td class="carTypeIconColumn nonEditable">
+                  {{#link-to 'car' car}}
+                  {{#if car.van}}
+                  <img src="/images/van.png" alt="Van" width="40px">
+                  {{else}}
+                  <img src="/images/privateCar.png" alt="Private" width="40px">
+                  {{/if}}
+                  {{/link-to}}
+                </td>
+                <td class="nonEditable">
+                  {{#link-to 'car' car}}
+                  <input disabled="true" {{bind-attr value=car.availableFromDate }}/>
+                  {{/link-to}}
+                </td>
+              </tr>
+              {{/each}}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="col-md-8">
+        {{outlet}}
+      </div>
+    </div>
+  </div>
+</script>
+
+<script type="text/x-handlebars" id="car">
+  <h1>{{availableFromDate}}</h1>
+</script>
+
+</html>
