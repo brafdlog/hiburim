@@ -90,37 +90,27 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-md-4 main">
-        <div class="table-responsive">
-          <table id="carsTable" class="table table-striped">
-            <thead>
-              <tr>
-                <th>סוג רכב</th>
-                <th>זמין מתאריך</th>
-              </tr>
-            </thead>
-            <tbody>
-              {{#each car in model}}
-              <tr {{bind-attr id=car._id}} class="nonHeaderTableRow" {{bind-attr date=car.availableFromDate}} {{bind-attr time=car.availableFromTime}} carType="van">
-                <td class="carTypeIconColumn nonEditable">
-                  {{#link-to 'car' car}}
-                  {{#if car.van}}
-                  <img src="/images/van.png" alt="Van" width="40px">
-                  {{else}}
-                  <img src="/images/privateCar.png" alt="Private" width="40px">
-                  {{/if}}
-                  {{/link-to}}
-                </td>
-                <td class="nonEditable">
-                  {{#link-to 'car' car}}
-                  <input disabled="true" {{bind-attr value=car.availableFromDate }}/>
-                  {{/link-to}}
-                </td>
-              </tr>
-              {{/each}}
-            </tbody>
-          </table>
-        </div>
+      <div class="col-md-2 main">
+        <ul class="list-group">
+          {{#each car in model}}
+          {{#link-to 'car' car}}
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-md-3">
+                {{#if car.van}}
+                <img src="/images/van.png" alt="Van" width="40px">
+                {{else}}
+                <img src="/images/privateCar.png" alt="Private" width="40px">
+                {{/if}}
+              </div>
+              <div class="col-md-4">
+                {{input class="dateInput" type="text" disabled="true" value=car.availableFromDate}}
+              </div>
+            </div>
+          </li>
+          {{/link-to}}
+          {{/each}}
+        </ul>
       </div>
       <div class="col-md-8">
         {{outlet}}
@@ -130,7 +120,46 @@
 </script>
 
 <script type="text/x-handlebars" id="car">
-  <h1>{{availableFromDate}}</h1>
+ <div class="row" id="carDetailsRow">
+  <div class="col-md-7">
+    <form class="form-horizontal" role="form">
+      <div class="form-group">
+       <label for="driverNameInput" class="col-sm-2 control-label">שם:</label>
+       <div class="col-sm-3">
+        {{input id="driverNameInput" type="text" class="form-control-static" value=driverName}}
+      </div>
+    </div>
+    <div class="form-group">
+     <label for="driverNumberInput" class="col-sm-2 control-label">טלפון:</label>
+     <div class="col-sm-3">
+       {{input id="driverNumberInput" type="text" class="form-control-static" value=driverNumber}}
+     </div>
+   </div>
+   <div class="form-group">
+     <label for="driverDate" class="col-sm-2 control-label">תאריך:</label>
+     <div class="col-sm-3">
+       {{input id="driverDate" type="text" class="form-control-static" value=availableFromDate}}
+     </div>
+   </div>
+   <div class="form-group">
+     <label for="driverTime" class="col-sm-2 control-label">שעה:</label>
+     <div class="col-sm-3">
+       {{input id="driverTime" type="text" class="form-control-static" value=availableFromTime}}
+     </div>
+   </div>
+   <div class="form-group">
+     <label for="driverAvailableDuration" class="col-sm-2 control-label">זמין למשך:</label>
+     <div class="col-sm-3">
+       {{input id="driverAvailableDuration" type="text" class="form-control-static" value=availableDurationInHours}}
+     </div>
+   </div>
+ </form>
+</div>
+<div class="col-md-5">
+
+</div>
+
+</div>
 </script>
 
 </html>

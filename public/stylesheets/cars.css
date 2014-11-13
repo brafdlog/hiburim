@@ -34,3 +34,18 @@ tr[hiddenRow]:not([hiddenRow=""]) {
   border-left-width: 2px;
   border-left-color: black;
 }
+
+#carDetailsRow .row {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+input {
+  border: 0;
+  color: black;
+  background-color: transparent;
+}
+
+label {
+  text-align: right !important;
+}
