@@ -35,7 +35,7 @@ router.get('/', function(req, resp) {
 				element.id = element._id;
 			});
 
-			resp.json(allCarsArray);
+			resp.json({cars: allCarsArray});
 			resp.end();
 		}
 	});
