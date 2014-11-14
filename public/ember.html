@@ -99,23 +99,28 @@
     </div>
   </div>
   <div class="row">
+    <div class="col-md-2 col-md-offset-1">
+      {{input type='text' value=filter placeholder='חיפוש'}}
+    </div>
+  </div>
+  <div class="row">
     <div class="col-md-10 col-md-offset-1 main">
       <div class="hidden-xs deskopTableView">
         <div class="table-responsive">
           <table id="carsTable" class="table table-striped">
             <thead>
               <tr>
-                <th>סוג רכב</th>
-                <th>שם הנהג</th>
-                <th>טלפון של הנהג</th>
-                <th>זמין מתאריך</th>
-                <th>זמין משעה</th>
-                <th>זמין למשך</th>
+                <th {{action 'sortBy' 'carType'}}>סוג רכב</th>
+                <th {{action 'sortBy' 'driverName'}}>שם הנהג</th>
+                <th {{action 'sortBy' 'driverNumber'}}>טלפון של הנהג</th>
+                <th {{action 'sortBy' 'availableFromDate'}}>זמין מתאריך</th>
+                <th {{action 'sortBy' 'availableFromTime'}}>זמין משעה</th>
+                <th {{action 'sortBy' 'availableDurationInHours'}}>זמין למשך</th>
                 <th></th>
               </tr>
             </thead>
             <tbody>
-              {{#each car in model}}
+              {{#each car in filteredCars}}
               <tr {{bind-attr id=car.id}} class="nonHeaderTableRow" {{bind-attr time=car.availableFromTime}} carType="van">
                 <td class="carTypeIconColumn nonEditable">
                   <img {{bind-attr src=car.carTypeUrl}} {{bind-attr alt=car.carType}} width="40px">
@@ -220,9 +225,6 @@
      </div>
    </div>
  </form>
-</div>
-<div class="col-md-5">
-
 </div>
 
 </div>
