@@ -41,6 +41,7 @@
   <script src="/javascripts/ember/router.js"></script>
   <script src="/javascripts/ember/routes.js"></script>
   <script src="/javascripts/ember/models.js"></script>
+  <script src="/javascripts/ember/controllers.js"></script>
 
   <script src="/javascripts/bootstrap/bootstrap.js"></script>
 
@@ -88,6 +89,74 @@
 </script>
 
 <script type="text/x-handlebars" id="cars">
+  <div class="row">
+  <div class="col-md-1 col-md-offset-1">
+      <h1 class="page-header">רכבים</h1>  
+    </div>
+    <div class="col-md-1 col-md-offset-8">
+      <button type="button" id="addCarButton" class="btn btn-primary page-header">רכב חדש</button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-8 col-sm-offset-4 col-md-10 col-md-offset-1 main">
+      <div class="table-responsive">
+        <table id="carsTable" class="table table-striped">
+          <thead>
+            <tr>
+              <th>סוג רכב</th>
+              <th>שם הנהג</th>
+              <th>טלפון של הנהג</th>
+              <th>זמין מתאריך</th>
+              <th>זמין משעה</th>
+              <th>זמין למשך</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each car in model}}
+            <tr {{bind-attr id=car.id}} class="nonHeaderTableRow" {{bind-attr time=car.availableFromTime}} carType="van">
+              <td class="carTypeIconColumn nonEditable">
+                {{#if car.van}}
+                <img src="/images/van.png" alt="Van" width="40px">
+                {{else}}
+                <img src="/images/privateCar.png" alt="Private" width="40px">
+                {{/if}}
+              </td>
+              <td class="nameTd">
+                {{car.driverName}}
+              </td>
+              <td class="phoneNumberTd">
+                {{car.driverNumber}}
+              </td>
+              <td class="nonEditable">
+                <input disabled="true" type='text' class="datePicker" data-date-format="D/M"/>
+              </td>
+              <td class="nonEditable">
+                <input disabled="true" type="text" class="timePicker" />
+              </td>
+              <td class="nonEditable">
+                <input disabled="true" type='number' class="availableDuration" min="1" max="24" {{bind-attr value=car.availableDurationInHours}} />
+                שעות 
+              </td>
+              <td class="nonEditable">
+                <span title="ערוך" class="glyphicon glyphicon-pencil editIcon"></span>
+                <span title="מחק" {{action 'delete' car._id}} class="glyphicon glyphicon-remove deleteIcon"></span>
+                <span class="glyphicon glyphicon-ok finishedEditingIcon"></span>
+              </td>
+            </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</script>
+
+<!-- <script type="text/x-handlebars" id="cars">
+  {{partial 'carsList'}}
+</script> -->
+
+<script type="text/x-handlebars" id="_carsList">
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-1">
