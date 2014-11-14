@@ -5,7 +5,7 @@ var _ = require("underscore");
 var router = express.Router();
 
 // Get all cars
-router.get('/', function(req, resp) {	
+router.get('/render', function(req, resp) {	
 	carDAO.getAllCars(function(err, allCarsArray) {
 		if (err) {
 			routesCommon.handleServerError(resp, err);
@@ -24,7 +24,7 @@ router.get('/', function(req, resp) {
 });
 
 // Get all cars
-router.get('/api', function(req, resp) {	
+router.get('/', function(req, resp) {	
 	carDAO.getAllCars(function(err, allCarsArray) {
 		if (err) {
 			routesCommon.handleServerError(resp, err);
