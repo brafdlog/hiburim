@@ -25,16 +25,6 @@ th, tr, .datePicker {
   right: 0px;
 }
 
-tr[hiddenRow]:not([hiddenRow=""]) {
-  display: none;
-}
-
-#carsTable {
-  border-left: solid;
-  border-left-width: 2px;
-  border-left-color: black;
-}
-
 #carDetailsRow .row {
   margin-top: 10px;
   margin-bottom: 10px;
