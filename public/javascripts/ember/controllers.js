@@ -5,8 +5,17 @@ App.CarsController = Ember.ArrayController.extend({
 		var filter = this.get('filter');
 		var regEx = new RegExp(filter, 'gi');
 		var cars = this.get('arrangedContent');
+		if (!filter) {
+			return cars;
+		}
 		return cars.filter(function(car) {
-			return car.get('carType').match(regEx) || car.get('driverName').match(regEx);
+			if (car.get('carType')) {
+				return car.get('carType').match(regEx);	
+			} 
+			if (car.get('driverName')) {
+				return car.get('driverName').match(regEx);
+			}
+			return false;
 		});
 	}.property('filter', 'arrangedContent', 'arrangedContent.@each.isDeleted'),
 	actions: {
