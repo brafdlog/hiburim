@@ -29,9 +29,7 @@ router.get('/', function(req, resp) {
 		if (err) {
 			routesCommon.handleServerError(resp, err);
 		} else {
-			// Set flag for handlebars to know which icon to display
 			_.each(allCarsArray, function(element, index, list) {
-				element.van = element.carType === 'van';
 				element.id = element._id;
 			});
 
