@@ -10,6 +10,9 @@ App.CarsController = Ember.ArrayController.extend({
 		});
 	}.property('filter', 'arrangedContent', 'arrangedContent.@each.isDeleted'),
 	actions: {
+		newCar: function() {
+			this.store.createRecord('car', {carType: 'van'});
+		},
 		delete: function(carId) {
 			var that = this;
 			bootbox.confirm('האם למחוק?', function(userWantsToDelete) {
