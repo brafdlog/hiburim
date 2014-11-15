@@ -121,7 +121,7 @@
             </thead>
             <tbody>
             {{#each car in filteredElements}}
-              <tr {{bind-attr id=car.id}} {{bind-attr class=":nonHeaderTableRow car.isBeingEdited:rowBeingEdited"}} {{bind-attr time=car.availableFromTime}} carType="van">
+              <tr {{bind-attr id=car.id}} {{bind-attr class=":nonHeaderTableRow car.isBeingEdited:rowBeingEdited"}} {{bind-attr time=car.availableFromTime}} {{action 'editCar' car on="doubleClick"}} carType="van">
                 <td class="carTypeIconColumn">
                   <img {{bind-attr src=car.carTypeUrl}} {{bind-attr alt=car.carType}} width="40px">
                 </td>
