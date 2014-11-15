@@ -13,7 +13,8 @@ App.Car = DS.Model.extend({
 			return '/images/privateCar.png';
 		}
 	}.property('carType'),
-	isBeingEdited: false
+	isBeingEdited: false,
+	isNotEdited: Ember.computed.not('isBeingEdited')
 });
 
 App.Car.reopenClass({

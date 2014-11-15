@@ -10,8 +10,12 @@ th, tr, .datePicker {
   width: 40px;
 }
 
-.timePicker {
+.timePicker, .nameTd {
   width: 75px;
+}
+
+.availableDurationInput {
+  width: 20px;
 }
 
 .datePicker {
@@ -33,6 +37,10 @@ th, tr, .datePicker {
 .carSearchRow {
   margin-top: 10px;
   margin-bottom: 20px; 
+}
+
+#carsTable input {
+  text-align: center;
 }
 
 input {

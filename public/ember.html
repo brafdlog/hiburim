@@ -122,26 +122,26 @@
             <tbody>
             {{#each car in filteredElements}}
               <tr {{bind-attr id=car.id}} {{bind-attr class=":nonHeaderTableRow car.isBeingEdited:rowBeingEdited"}} {{bind-attr time=car.availableFromTime}} carType="van">
-                <td class="carTypeIconColumn nonEditable">
+                <td class="carTypeIconColumn">
                   <img {{bind-attr src=car.carTypeUrl}} {{bind-attr alt=car.carType}} width="40px">
                 </td>
                 <td class="nameTd">
-                  {{car.driverName}}
+                  {{input type="text" disabled=car.isNotEdited value=car.driverName}}
                 </td>
                 <td class="phoneNumberTd">
-                  {{car.driverNumber}}
+                  {{input type="text" disabled=car.isNotEdited value=car.driverNumber}}
                 </td>
-                <td class="nonEditable">
+                <td>
                   <input disabled="true" type='text' class="datePicker" data-date-format="D/M"/>
                 </td>
-                <td class="nonEditable">
+                <td>
                   <input disabled="true" type="text" class="timePicker" />
                 </td>
-                <td class="nonEditable">
-                  <input disabled="true" type='number' class="availableDuration" min="1" max="24" {{bind-attr value=car.availableDurationInHours}} />
+                <td>
+                  {{input type="text" class="availableDurationInput" disabled=car.isNotEdited value=car.availableDurationInHours}}
                   שעות 
                 </td>
-                <td class="nonEditable">
+                <td>
                   {{#if car.isBeingEdited}}
                     <span {{action 'updateCar' car}} class="glyphicon glyphicon-ok finishedEditingIcon"></span>
                   {{else}}
