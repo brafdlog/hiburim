@@ -39,8 +39,9 @@
 		}
 	},
 
-	_handleFailure: function(actionName) {
+	_handleFailure: function(actionName, failureReason) {
 		alert('Failed to ' + actionName + " " + this.get('modelName'));
+		console.log('Failed to ' + actionName + " " + this.get('modelName') + ". Reason: " + failureReason);
 	},
 
 	_handleSuccess: function(actionName) {
@@ -62,8 +63,8 @@ App.CarsController = Ember.SortableAndFilterableController.extend({
 			var that = this;
 			car.save().then(function() {
 				that._handleSuccess('Updated');
-			}, function() {
-				that._handleFailure('update');
+			}, function(failureReason) {
+				that._handleFailure('update', failureReason);
 			});
 			car.set('isBeingEdited', false);
 		},
@@ -80,8 +81,8 @@ App.CarsController = Ember.SortableAndFilterableController.extend({
 					car.deleteRecord();
 					car.save().then(function() {
 						that._handleSuccess('Deleted');
-					}, function() {
-						that._handleFailure('Delete');
+					}, function(failureReason) {
+						that._handleFailure('Delete', failureReason);
 					});
 				}
 			});
