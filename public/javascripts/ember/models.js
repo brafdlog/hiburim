@@ -6,14 +6,14 @@ App.Car = DS.Model.extend({
 	availableFromDate: DS.attr('date'),
 	availableFromTime: DS.attr(),
 	availableDurationInHours: DS.attr('number'),
-	van: DS.attr('boolean'),
 	carTypeUrl: function() {
 		if (this.get('carType') === 'van') {
 			return '/images/van.png';
 		} else {
 			return '/images/privateCar.png';
 		}
-	}.property('carType')
+	}.property('carType'),
+	isBeingEdited: false
 });
 
 App.Car.reopenClass({

@@ -48,17 +48,21 @@ App.CarsController = Ember.SortableAndFilterableController.extend({
 	}.on('init'),
 
 	actions: {
-		newCar: function() {
-			this.store.createRecord('car', {carType: 'van'});
+		updateCar: function(car) {
+			car.save();
+			car.set('isBeingEdited', false);
 		},
-		delete: function(carId) {
-			var that = this;
+		editCar: function(car) {
+			car.set('isBeingEdited', true);
+		},
+		newCar: function() {
+			this.store.createRecord('car', {carType: 'van', isBeingEdited: true});
+		},
+		delete: function(car) {
 			bootbox.confirm('האם למחוק?', function(userWantsToDelete) {
 				if (userWantsToDelete) {
-					that.store.find('car', carId).then(function(car) {
-						car.deleteRecord();
-						car.save();
-					});
+					car.deleteRecord();
+					car.save();
 				}
 			});
 		}
