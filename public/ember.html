@@ -120,7 +120,7 @@
               </tr>
             </thead>
             <tbody>
-              {{#each car in filteredCars}}
+            {{#each car in filteredElements}}
               <tr {{bind-attr id=car.id}} class="nonHeaderTableRow" {{bind-attr time=car.availableFromTime}} carType="van">
                 <td class="carTypeIconColumn nonEditable">
                   <img {{bind-attr src=car.carTypeUrl}} {{bind-attr alt=car.carType}} width="40px">

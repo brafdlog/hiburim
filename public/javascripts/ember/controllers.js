@@ -1,19 +1,52 @@
-App.CarsController = Ember.ArrayController.extend({
+/*
+ To use this controller:
+ On init of child controller add the filtered properties you want.
+ Make an each statement on the filteredElements.
+ Bind an input to filter to filter the content.
+ Make action that calls sortby with the name of the parameter to sort by.
+ */
+Ember.SortableAndFilterableController = Ember.ArrayController.extend({
+	filteredProperties: Ember.A([]),
 	filter: '',
 
-	filteredCars: function() {
+	filteredElements: function() {
 		var filter = this.get('filter');
+		// Regex for contains ignore case
 		var regEx = new RegExp(filter, 'gi');
-		var cars = this.get('arrangedContent');
-		if (!filter) {
-			return cars;
+		var elements = this.get('arrangedContent');
+		var filteredProperties = this.get('filteredProperties');
+
+		if (!filter || filteredProperties.length === 0) {
+			return elements;
 		}
-		return cars.filter(function(car) {
-			var carTypeMatch = car.get('carType') && car.get('carType').match(regEx);
-			var driverNameMatch = car.get('driverName') && car.get('driverName').match(regEx);
-			return carTypeMatch || driverNameMatch;
+		return elements.filter(function(element) {
+			for (var i=0; i<filteredProperties.length; i++) {
+				var filteredProperty = filteredProperties[i];
+				var match = element.get(filteredProperty) && element.get(filteredProperty).match(regEx);
+				if (match) {
+					return true;
+				}
+			}
+			return false;
 		});
 	}.property('filter', 'arrangedContent', 'arrangedContent.@each.isDeleted'),
+
+	actions: {
+		sortBy: function(property) {
+			this.set('sortProperties', [property]);
+			this.set('sortAscending', !this.get('sortAscending'));
+		}
+	}
+});
+
+App.CarsController = Ember.SortableAndFilterableController.extend({
+	
+	initFilteredProperties: function() {
+		var filteredProperties = this.get('filteredProperties');
+		filteredProperties.pushObject('driverName');
+		filteredProperties.pushObject('carType');
+	}.on('init'),
+
 	actions: {
 		newCar: function() {
 			this.store.createRecord('car', {carType: 'van'});
@@ -28,10 +61,6 @@ App.CarsController = Ember.ArrayController.extend({
 					});
 				}
 			});
-		},
-		sortBy: function(property) {
-			this.set('sortProperties', [property]);
-			this.set('sortAscending', !this.get('sortAscending'));
 		}
 	}
 });
