@@ -30,6 +30,11 @@ th, tr, .datePicker {
   margin-bottom: 10px;
 }
 
+.carSearchRow {
+  margin-top: 10px;
+  margin-bottom: 20px; 
+}
+
 input {
   border: 0;
   color: black;
