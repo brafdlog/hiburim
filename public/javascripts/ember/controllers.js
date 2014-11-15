@@ -9,13 +9,9 @@ App.CarsController = Ember.ArrayController.extend({
 			return cars;
 		}
 		return cars.filter(function(car) {
-			if (car.get('carType')) {
-				return car.get('carType').match(regEx);	
-			} 
-			if (car.get('driverName')) {
-				return car.get('driverName').match(regEx);
-			}
-			return false;
+			var carTypeMatch = car.get('carType') && car.get('carType').match(regEx);
+			var driverNameMatch = car.get('driverName') && car.get('driverName').match(regEx);
+			return carTypeMatch || driverNameMatch;
 		});
 	}.property('filter', 'arrangedContent', 'arrangedContent.@each.isDeleted'),
 	actions: {
