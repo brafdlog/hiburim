@@ -5,12 +5,13 @@
  Bind an input to filter to filter the content.
  Make action that calls sortby with the name of the parameter to sort by.
  */
-Ember.SortableAndFilterableController = Ember.ArrayController.extend({
-	filteredProperties: Ember.A([]),
-	filter: '',
+ Ember.SortableAndFilterableController = Ember.ArrayController.extend({
+ 	modelName: '',
+ 	filteredProperties: Ember.A([]),
+ 	filter: '',
 
-	filteredElements: function() {
-		var filter = this.get('filter');
+ 	filteredElements: function() {
+ 		var filter = this.get('filter');
 		// Regex for contains ignore case
 		var regEx = new RegExp(filter, 'gi');
 		var elements = this.get('arrangedContent');
@@ -36,20 +37,34 @@ Ember.SortableAndFilterableController = Ember.ArrayController.extend({
 			this.set('sortProperties', [property]);
 			this.set('sortAscending', !this.get('sortAscending'));
 		}
+	},
+
+	_handleFailure: function(actionName) {
+		alert('Failed to ' + actionName + " " + this.get('modelName'));
+	},
+
+	_handleSuccess: function(actionName) {
+		console.log(actionName + " " + this.get('modelName'));
 	}
 });
 
 App.CarsController = Ember.SortableAndFilterableController.extend({
 	
-	initFilteredProperties: function() {
+	initController: function() {
 		var filteredProperties = this.get('filteredProperties');
 		filteredProperties.pushObject('driverName');
 		filteredProperties.pushObject('carType');
+		this.set('modelName', "car");
 	}.on('init'),
 
 	actions: {
 		updateCar: function(car) {
-			car.save();
+			var that = this;
+			car.save().then(function() {
+				that._handleSuccess('Updated');
+			}, function() {
+				that._handleFailure('update');
+			});
 			car.set('isBeingEdited', false);
 		},
 		editCar: function(car) {
@@ -59,10 +74,15 @@ App.CarsController = Ember.SortableAndFilterableController.extend({
 			this.store.createRecord('car', {carType: 'van', isBeingEdited: true});
 		},
 		delete: function(car) {
+			var that = this;
 			bootbox.confirm('האם למחוק?', function(userWantsToDelete) {
 				if (userWantsToDelete) {
 					car.deleteRecord();
-					car.save();
+					car.save().then(function() {
+						that._handleSuccess('Deleted');
+					}, function() {
+						that._handleFailure('Delete');
+					});
 				}
 			});
 		}
