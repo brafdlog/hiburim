@@ -30,7 +30,7 @@ router.get('/', function(req, resp) {
 			routesCommon.handleServerError(resp, err);
 		} else {
 			_.each(allCarsArray, function(element, index, list) {
-				element.id = element._id;
+				_setRegularIdFromDBId(element);
 			});
 
 			resp.json({cars: allCarsArray});
@@ -47,8 +47,8 @@ router.get('/:carId', function(req, resp) {
 			routesCommon.handleServerError(resp, err);
 		} else {
 			if (carFromDB) {
-				carFromDB.id = carFromDB._id;
-				resp.send(carFromDB);
+				_setRegularIdFromDBId(carFromDB);
+				resp.send({car: carFromDB});
 			} else {
 				resp.send("Car with id " + carId + " was not found");
 				resp.end();
@@ -60,12 +60,13 @@ router.get('/:carId', function(req, resp) {
 // Create car
 router.post('/', function(req, resp) {
 	console.log("Got request to create car");
-	var carToCreate = _createCarObject(req.body.carType, req.body.driverName, req.body.driverNumber, req.body.availableFrom, req.body.availableUntil);
+	var carToCreate = req.body.car;
 	carDAO.createCar(carToCreate, function(err, createdCar) {
 		if (err) {
 			routesCommon.handleServerError(resp, err);
 		} else {
-			resp.send(createdCar);
+			_setRegularIdFromDBId(createdCar);
+			resp.send({car: createdCar});
 			resp.end();
 		}
 	});
@@ -73,12 +74,15 @@ router.post('/', function(req, resp) {
 
 // Update car
 router.put('/:carId', function(req, resp) {
-	var updatedCar = req.body;
+	var updatedCar = req.body.car;
+	// This should be handled in ember's level, not here
+	updatedCar._id = req.params.carId;
 	carDAO.updateCar(updatedCar, function(err) {
 		if (err) {
 			routesCommon.handleServerError(resp, err);
 		} else {
-			resp.send(updatedCar).end();
+			_setRegularIdFromDBId(updatedCar);
+			resp.send({car: updatedCar}).end();
 		}
 	});
 });
@@ -95,8 +99,14 @@ router.delete('/:carId', function(req, resp) {
 	});
 });
 
-function _createCarObject(carType, driverName, driverNumber, availableFrom, availableUntil) {
-	return {carType: carType, driverName: driverName, driverNumber: driverNumber, availableFrom: availableFrom, availableUntil: availableUntil};
+// This should be handled in ember's level, not here
+function _setRegularIdFromDBId(car) {
+	if (car.car) {
+		console.log("In car car. Should not happen");
+		car.car.id = car.car._id;
+	} else {
+		car.id = car._id;	
+	}
 }
 
 module.exports = router;
