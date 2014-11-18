@@ -59,6 +59,11 @@ App.CarsController = Ember.SortableAndFilterableController.extend({
 	}.on('init'),
 
 	actions: {
+		changeCarType: function(car) {
+			if(car.get('isBeingEdited')) {
+				car.set('carType', car.get('nextCarType'));
+			}
+		},
 		updateCar: function(car) {
 			var that = this;
 			car.save().then(function() {
