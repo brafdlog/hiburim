@@ -1,9 +1,3 @@
-var carTypeImgUrls = {
-	van: '/images/van.png',
-	privateCar: '/images/privateCar.png',
-	notAvailable: '/images/notAvailable.jpg'
-};
-
 App.Car = DS.Model.extend({
 	_id: DS.attr(),
 	carType: DS.attr(),
@@ -16,18 +10,7 @@ App.Car = DS.Model.extend({
 	availableDurationInHours: DS.attr('number'),
 	
 	// The following fields should be part of the car view/controller
-	carTypeUrl: function() {
-		return carTypeImgUrls[this.get('carType')];
-	}.property('carType'),
-	nextCarType: function() {
-		if (this.get('carType') === 'van') {
-			return 'privateCar';
-		} else if (this.get('carType') === 'privateCar') {
-			return 'notAvailable';
-		} else {
-			return 'van';
-		}
-	}.property('carType'),
+	
 	updateAvailableFromDateFromStr: function() {
 		var dateStr = this.get('availableFromDateStr');
 		var timeStr = this.get('availableFromTimeStr');

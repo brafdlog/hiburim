@@ -40,13 +40,33 @@ Ember.SortableAndFilterableController = Ember.ArrayController.extend({
 	},
 });
 
+var carTypeImgUrls = {
+	van: '/images/van.png',
+	privateCar: '/images/privateCar.png',
+	notAvailable: '/images/notAvailable.jpg'
+};
+
 App.CarController = Ember.ObjectController.extend({
 	isBeingEdited: false,
 	isNotEdited: Ember.computed.not('isBeingEdited'),
+	
+	carTypeUrl: function() {
+		return carTypeImgUrls[this.get('model.carType')];
+	}.property('model.carType'),
+	nextCarType: function() {
+		if (this.get('model.carType') === 'van') {
+			return 'privateCar';
+		} else if (this.get('model.carType') === 'privateCar') {
+			return 'notAvailable';
+		} else {
+			return 'van';
+		}
+	}.property('model.carType'),
+
 	actions: {
 		changeCarType: function(car) {
 			if(this.get('isBeingEdited')) {
-				car.set('carType', car.get('nextCarType'));
+				car.set('carType', this.get('nextCarType'));
 			}
 		},
 		updateCar: function(car) {
