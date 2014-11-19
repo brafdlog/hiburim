@@ -122,7 +122,7 @@
               </tr>
             </thead>
             {{#each car in filteredElements}}
-            {{render 'car' this}}
+            {{render 'car' car}}
             {{/each}}
           </table>
         </div>
@@ -133,32 +133,32 @@
 </script>
 
 <script type="text/x-handlebars" id="carRowTemplate">
-  <tr {{bind-attr id=car.id}} {{bind-attr class=":nonHeaderTableRow controller.isBeingEdited:rowBeingEdited"}}>
-    <td {{action 'changeCarType' car}} class="carTypeIconColumn">
-      <img {{bind-attr src=car.carTypeUrl}} {{bind-attr alt=car.carType}} width="40px">
+  <tr {{bind-attr id=id}} {{bind-attr class=":nonHeaderTableRow controller.isBeingEdited:rowBeingEdited"}}>
+    <td {{action 'changeCarType' this}} class="carTypeIconColumn">
+      <img {{bind-attr src=controller.carTypeUrl}} {{bind-attr alt=carType}} width="40px">
     </td>
     <td class="nameTd">
-      {{input type="text" disabled=controller.isNotEdited value=car.driverName}}
+      {{input type="text" disabled=controller.isNotEdited value=driverName}}
     </td>
     <td class="phoneNumberTd">
-      {{input type="text" disabled=controller.isNotEdited value=car.driverNumber}}
+      {{input type="text" disabled=controller.isNotEdited value=driverNumber}}
     </td>
     <td>
-      {{input type="text" disabled=controller.isNotEdited value=car.availableFromDateStr class="datePicker"}}
+      {{input type="text" disabled=controller.isNotEdited value=availableFromDateStr class="datePicker"}}
     </td>
     <td>
-      {{input type="text" disabled=controller.isNotEdited value=car.availableFromTimeStr class="timePicker"}}
+      {{input type="text" disabled=controller.isNotEdited value=availableFromTimeStr class="timePicker"}}
     </td>
     <td>
-      {{input type="text" class="availableDurationInput" disabled=controller.isNotEdited value=car.availableDurationInHours}}
+      {{input type="text" class="availableDurationInput" disabled=controller.isNotEdited value=availableDurationInHours}}
       שעות 
     </td>
     <td>
       {{#if controller.isBeingEdited}}
-      <span {{action 'updateCar' car}} class="glyphicon glyphicon-ok finishedEditingIcon"></span>
+      <span {{action 'updateCar' this}} class="glyphicon glyphicon-ok finishedEditingIcon"></span>
       {{else}}
-      <span {{action 'editCar' car}} title="ערוך" class="glyphicon glyphicon-pencil editIcon"></span>
-      <span {{action 'delete' car}} title="מחק" class="glyphicon glyphicon-remove deleteIcon"></span>
+      <span {{action 'editCar' this}} title="ערוך" class="glyphicon glyphicon-pencil editIcon"></span>
+      <span {{action 'delete' this}} title="מחק" class="glyphicon glyphicon-remove deleteIcon"></span>
       {{/if}}
     </td>
   </tr>
