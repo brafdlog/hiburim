@@ -13,7 +13,7 @@ var consumers = require('./routes/consumers');
 
 var app = express();
 
-// view engine setup
+// view engine setup 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 // Don't default to the layout file in the views folder
