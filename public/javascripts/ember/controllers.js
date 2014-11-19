@@ -51,6 +51,13 @@ App.CarController = Ember.ObjectController.extend({
 	needs: "cars",
   	carsController: Ember.computed.alias("controllers.cars"),
 
+	initController: function() {
+		var isCarNew = this.get('model.isNew');
+		if (isCarNew) {
+			this.set('isBeingEdited', true);
+		}
+	}.on('init'),
+
 	isBeingEdited: false,
 	isNotEdited: Ember.computed.not('isBeingEdited'),
 	
