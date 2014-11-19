@@ -47,6 +47,10 @@ var carTypeImgUrls = {
 };
 
 App.CarController = Ember.ObjectController.extend({
+	// Allows access to the CarsController
+	needs: "cars",
+  	carsController: Ember.computed.alias("controllers.cars"),
+
 	isBeingEdited: false,
 	isNotEdited: Ember.computed.not('isBeingEdited'),
 	
