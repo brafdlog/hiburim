@@ -121,45 +121,47 @@
                 <th></th>
               </tr>
             </thead>
-            <tbody>
             {{#each car in filteredElements}}
-              <tr {{bind-attr id=car.id}} {{bind-attr class=":nonHeaderTableRow car.isBeingEdited:rowBeingEdited"}} {{bind-attr time=car.availableFromTime}} {{action 'editCar' car on="doubleClick"}} carType="van">
-                <td {{action 'changeCarType' car}} class="carTypeIconColumn">
-                  <img {{bind-attr src=car.carTypeUrl}} {{bind-attr alt=car.carType}} width="40px">
-                </td>
-                <td class="nameTd">
-                  {{input type="text" disabled=car.isNotEdited value=car.driverName}}
-                </td>
-                <td class="phoneNumberTd">
-                  {{input type="text" disabled=car.isNotEdited value=car.driverNumber}}
-                </td>
-                <td>
-                  {{input type="text" disabled=car.isNotEdited value=car.availableFromDateStr class="datePicker"}}
-                </td>
-                <td>
-                  {{input type="text" disabled=car.isNotEdited value=car.availableFromTimeStr class="timePicker"}}
-                </td>
-                <td>
-                  {{input type="text" class="availableDurationInput" disabled=car.isNotEdited value=car.availableDurationInHours}}
-                  שעות 
-                </td>
-                <td>
-                  {{#if car.isBeingEdited}}
-                    <span {{action 'updateCar' car}} class="glyphicon glyphicon-ok finishedEditingIcon"></span>
-                  {{else}}
-                    <span {{action 'editCar' car}} title="ערוך" class="glyphicon glyphicon-pencil editIcon"></span>
-                    <span {{action 'delete' car}} title="מחק" class="glyphicon glyphicon-remove deleteIcon"></span>
-                  {{/if}}
-                </td>
-              </tr>
-              {{/each}}
-            </tbody>
+            {{render 'car' this}}
+            {{/each}}
           </table>
         </div>
       </div>
     </div>
     {{partial 'carsListMobileView'}}
   </div>
+</script>
+
+<script type="text/x-handlebars" id="carRowTemplate">
+  <tr {{bind-attr id=car.id}} {{bind-attr class=":nonHeaderTableRow controller.isBeingEdited:rowBeingEdited"}}>
+    <td {{action 'changeCarType' car}} class="carTypeIconColumn">
+      <img {{bind-attr src=car.carTypeUrl}} {{bind-attr alt=car.carType}} width="40px">
+    </td>
+    <td class="nameTd">
+      {{input type="text" disabled=controller.isNotEdited value=car.driverName}}
+    </td>
+    <td class="phoneNumberTd">
+      {{input type="text" disabled=controller.isNotEdited value=car.driverNumber}}
+    </td>
+    <td>
+      {{input type="text" disabled=controller.isNotEdited value=car.availableFromDateStr class="datePicker"}}
+    </td>
+    <td>
+      {{input type="text" disabled=controller.isNotEdited value=car.availableFromTimeStr class="timePicker"}}
+    </td>
+    <td>
+      {{input type="text" class="availableDurationInput" disabled=controller.isNotEdited value=car.availableDurationInHours}}
+      שעות 
+    </td>
+    <td>
+      {{#if controller.isBeingEdited}}
+      <span {{action 'updateCar' car}} class="glyphicon glyphicon-ok finishedEditingIcon"></span>
+      {{else}}
+      <span {{action 'editCar' car}} title="ערוך" class="glyphicon glyphicon-pencil editIcon"></span>
+      <span {{action 'delete' car}} title="מחק" class="glyphicon glyphicon-remove deleteIcon"></span>
+      {{/if}}
+    </td>
+  </tr>
 </script>
 
 <!-- Cars list visible only on mobile -->
@@ -195,6 +197,7 @@
   </div>
 </script>
 
+<!--
 <script type="text/x-handlebars" id="car">
  <div class="row" id="carDetailsRow">
   <div class="col-md-7">
@@ -234,5 +237,6 @@
 
 </div>
 </script>
+-->
 
 </html>

@@ -51,9 +51,7 @@ App.Car = DS.Model.extend({
 			}
 			this.set('availableUntilDateTime', toDate.toDate());
 		}
-	}.observes('availableFromDateTime', 'availableDurationInHours').on('init'),
-	isBeingEdited: false,
-	isNotEdited: Ember.computed.not('isBeingEdited')
+	}.observes('availableFromDateTime', 'availableDurationInHours').on('init')
 });
 
 App.Car.reopenClass({

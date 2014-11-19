@@ -5,13 +5,13 @@
  Bind an input to filter to filter the content.
  Make action that calls sortby with the name of the parameter to sort by.
  */
- Ember.SortableAndFilterableController = Ember.ArrayController.extend({
- 	modelName: '',
- 	filteredProperties: Ember.A([]),
- 	filter: '',
+Ember.SortableAndFilterableController = Ember.ArrayController.extend({
+	modelName: '',
+	filteredProperties: Ember.A([]),
+	filter: '',
 
- 	filteredElements: function() {
- 		var filter = this.get('filter');
+	filteredElements: function() {
+		var filter = this.get('filter');
 		// Regex for contains ignore case
 		var regEx = new RegExp(filter, 'gi');
 		var elements = this.get('arrangedContent');
@@ -38,29 +38,14 @@
 			this.set('sortAscending', !this.get('sortAscending'));
 		}
 	},
-
-	_handleFailure: function(actionName, failureReason) {
-		alert('Failed to ' + actionName + " " + this.get('modelName'));
-		console.log('Failed to ' + actionName + " " + this.get('modelName') + ". Reason: " + failureReason);
-	},
-
-	_handleSuccess: function(actionName) {
-		console.log(actionName + " " + this.get('modelName'));
-	}
 });
 
-App.CarsController = Ember.SortableAndFilterableController.extend({
-	
-	initController: function() {
-		var filteredProperties = this.get('filteredProperties');
-		filteredProperties.pushObject('driverName');
-		filteredProperties.pushObject('carType');
-		this.set('modelName', "car");
-	}.on('init'),
-
+App.CarController = Ember.ObjectController.extend({
+	isBeingEdited: false,
+	isNotEdited: Ember.computed.not('isBeingEdited'),
 	actions: {
 		changeCarType: function(car) {
-			if(car.get('isBeingEdited')) {
+			if(this.get('isBeingEdited')) {
 				car.set('carType', car.get('nextCarType'));
 			}
 		},
@@ -71,13 +56,10 @@ App.CarsController = Ember.SortableAndFilterableController.extend({
 			}, function(failureReason) {
 				that._handleFailure('update', failureReason);
 			});
-			car.set('isBeingEdited', false);
+			this.set('isBeingEdited', false);
 		},
-		editCar: function(car) {
-			car.set('isBeingEdited', true);
-		},
-		newCar: function() {
-			this.store.createRecord('car', {carType: 'van', isBeingEdited: true});
+		editCar: function() {
+			this.set('isBeingEdited', true);
 		},
 		delete: function(car) {
 			var that = this;
@@ -92,5 +74,28 @@ App.CarsController = Ember.SortableAndFilterableController.extend({
 				}
 			});
 		}
+	},
+	_handleFailure: function(actionName, failureReason) {
+		alert('Failed to ' + actionName + " car");
+		console.log('Failed to ' + actionName + " car. Reason: " + failureReason);
+	},
+	_handleSuccess: function(actionName) {
+		console.log(actionName + " car");
 	}
+});
+
+App.CarsController = Ember.SortableAndFilterableController.extend({
+	
+	initController: function() {
+		var filteredProperties = this.get('filteredProperties');
+		filteredProperties.pushObject('driverName');
+		filteredProperties.pushObject('carType');
+		this.set('modelName', "car");
+	}.on('init'),
+	actions: {
+		newCar: function() {
+			this.store.createRecord('car', {carType: 'van'});
+		}
+	}
+
 });
