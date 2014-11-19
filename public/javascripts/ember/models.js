@@ -8,8 +8,9 @@ App.Car = DS.Model.extend({
 	carType: DS.attr(),
 	driverName: DS.attr(),
 	driverNumber: DS.attr(), 
-	availableFromDate: DS.attr('date'),
-	availableFromTime: DS.attr(),
+	availableFromDateTime: DS.attr('date'),
+	availableFromDateStr: DS.attr(),
+	availableFromTimeStr: DS.attr(),
 	availableDurationInHours: DS.attr('number'),
 	
 	// The following fields should be part of the car view/controller
@@ -23,6 +24,19 @@ App.Car = DS.Model.extend({
 			return 'van';
 		}
 	}.property('carType'),
+	updateDateFromStr: function() {
+		var dateStr = this.get('availableFromDateStr');
+		var timeStr = this.get('availableFromTimeStr');
+		if (dateStr) {
+			var date = moment(dateStr, $.hib.consts.momentDateFormat);
+			if (timeStr) {
+				var time = moment(timeStr, $.hib.consts.momentTimeFormat);
+				date.hours(time.hours());
+				date.minutes(time.minutes());
+			}
+			this.set('availableFromDateTime', date.toDate());
+		}
+	}.observes('availableFromDateStr', 'availableFromTimeStr').on('init'),
 	isBeingEdited: false,
 	isNotEdited: Ember.computed.not('isBeingEdited')
 });

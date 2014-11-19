@@ -58,6 +58,8 @@
   <script src="/javascripts/ember/routes.js"></script>
   <script src="/javascripts/ember/models.js"></script>
   <script src="/javascripts/ember/controllers.js"></script>
+  <script src="/javascripts/ember/views.js"></script>
+
 
 </head>
 
@@ -132,10 +134,10 @@
                   {{input type="text" disabled=car.isNotEdited value=car.driverNumber}}
                 </td>
                 <td>
-                  <input disabled="true" type='text' class="datePicker" data-date-format="D/M"/>
+                  {{input type="text" disabled=car.isNotEdited value=car.availableFromDateStr class="datePicker"}}
                 </td>
                 <td>
-                  <input disabled="true" type="text" class="timePicker" />
+                  {{input type="text" disabled=car.isNotEdited value=car.availableFromTimeStr class="timePicker"}}
                 </td>
                 <td>
                   {{input type="text" class="availableDurationInput" disabled=car.isNotEdited value=car.availableDurationInHours}}
