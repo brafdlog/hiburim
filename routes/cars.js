@@ -94,7 +94,9 @@ router.delete('/:carId', function(req, resp) {
 		if (err) {
 			routesCommon.handleServerError(resp, err);
 		} else {
-			resp.status(200).end();
+			// The status 204 is required in order for ember to not consider the deletion a failure
+			// Alternativley, can respond with 200 and and empty object - {}
+			resp.status(204).end();
 		}
 	});
 });
