@@ -1,6 +1,7 @@
 var carTypeImgUrls = {
 	van: '/images/van.png',
-	privateCar: '/images/privateCar.png'
+	privateCar: '/images/privateCar.png',
+	notAvailable: '/images/notAvailable.jpg'
 };
 
 App.Car = DS.Model.extend({
@@ -20,6 +21,8 @@ App.Car = DS.Model.extend({
 	nextCarType: function() {
 		if (this.get('carType') === 'van') {
 			return 'privateCar';
+		} else if (this.get('carType') === 'privateCar') {
+			return 'notAvailable';
 		} else {
 			return 'van';
 		}
