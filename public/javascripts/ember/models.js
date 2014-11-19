@@ -10,6 +10,7 @@ App.Car = DS.Model.extend({
 	driverName: DS.attr(),
 	driverNumber: DS.attr(), 
 	availableFromDateTime: DS.attr('date'),
+	availableUntilDateTime: DS.attr('date'),
 	availableFromDateStr: DS.attr(),
 	availableFromTimeStr: DS.attr(),
 	availableDurationInHours: DS.attr('number'),
@@ -27,7 +28,7 @@ App.Car = DS.Model.extend({
 			return 'van';
 		}
 	}.property('carType'),
-	updateDateFromStr: function() {
+	updateAvailableFromDateFromStr: function() {
 		var dateStr = this.get('availableFromDateStr');
 		var timeStr = this.get('availableFromTimeStr');
 		if (dateStr) {
@@ -40,6 +41,17 @@ App.Car = DS.Model.extend({
 			this.set('availableFromDateTime', date.toDate());
 		}
 	}.observes('availableFromDateStr', 'availableFromTimeStr').on('init'),
+	updateAvailableUntilDate: function() {
+		var fromDate = this.get('availableFromDateTime');
+		if (fromDate) {
+			var toDate = moment(fromDate);
+			var availableDurationInHours = this.get('availableDurationInHours');
+			if (availableDurationInHours) {
+				toDate.add(availableDurationInHours, 'hours');
+			}
+			this.set('availableUntilDateTime', toDate.toDate());
+		}
+	}.observes('availableFromDateTime', 'availableDurationInHours').on('init'),
 	isBeingEdited: false,
 	isNotEdited: Ember.computed.not('isBeingEdited')
 });
