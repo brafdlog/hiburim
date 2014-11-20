@@ -30,3 +30,8 @@ td:focus {
 .italicText {
 	font-style: italic;
 }
+
+.searchRow {
+  margin-top: 10px;
+  margin-bottom: 20px; 
+}

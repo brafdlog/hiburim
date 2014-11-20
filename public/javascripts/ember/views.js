@@ -3,7 +3,7 @@ App.CarView = Ember.View.extend({
 	tagName: 'tbody',
 
 	doubleClick: function(event) {
-		this.get('controller').send('editCar');
+		this.get('controller').send('editModel');
 	},
 
 	didInsertElement: function() {

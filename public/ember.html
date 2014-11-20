@@ -97,7 +97,7 @@
       <h1 class="page-header">רכבים</h1>  
     </div>
   </div>
-  <div class="row carSearchRow">
+  <div class="row searchRow">
     <div class="col-md-2 col-md-offset-1">
       {{input type='text' class='form-control' value=filter placeholder='חיפוש'}}
     </div>
@@ -157,10 +157,10 @@
     </td>
     <td>
       {{#if controller.isBeingEdited}}
-      <span {{action 'updateCar' this}} class="glyphicon glyphicon-ok finishedEditingIcon"></span>
+      <span {{action 'updateModel' this}} class="glyphicon glyphicon-ok finishedEditingIcon"></span>
       {{else}}
-      <span {{action 'editCar' this}} title="ערוך" class="glyphicon glyphicon-pencil editIcon"></span>
-      <span {{action 'delete' this}} title="מחק" class="glyphicon glyphicon-remove deleteIcon"></span>
+      <span {{action 'editModel' this}} title="ערוך" class="glyphicon glyphicon-pencil editIcon"></span>
+      <span {{action 'deleteModel' this}} title="מחק" class="glyphicon glyphicon-remove deleteIcon"></span>
       {{/if}}
     </td>
   </tr>

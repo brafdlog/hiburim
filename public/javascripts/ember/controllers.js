@@ -2,7 +2,7 @@
  To use this controller:
  On init of child controller add the filtered properties you want.
  Make an each statement on the filteredElements.
- Bind an input to filter to filter the content.
+ Bind an input to filter in order to filter the content.
  Make action that calls sortby with the name of the parameter to sort by.
  */
 Ember.SortableAndFilterableController = Ember.ArrayController.extend({
@@ -40,22 +40,69 @@ Ember.SortableAndFilterableController = Ember.ArrayController.extend({
 	},
 });
 
+Ember.SingleModelController = Ember.ObjectController.extend({
+	modelName: '',
+	isBeingEdited: false,
+	isNotEdited: Ember.computed.not('isBeingEdited'),
+
+	initController: function() {
+		var isNew = this.get('model.isNew');
+		if (isNew) {
+			this.set('isBeingEdited', true);
+		}
+	}.on('init'),
+
+	actions: {
+		updateModel: function(model) {
+			var that = this;
+			model.save().then(function() {
+				that._handleSuccess('Updated');
+			}, function(failureReason) {
+				that._handleFailure('update', failureReason);
+			});
+			this.set('isBeingEdited', false);
+		},
+		editModel: function() {
+			this.set('isBeingEdited', true);
+		},
+		deleteModel: function(model) {
+			var that = this;
+			bootbox.confirm('האם למחוק?', function(userWantsToDelete) {
+				if (userWantsToDelete) {
+					model.deleteRecord();
+					model.save().then(function() {
+						that._handleSuccess('Deleted');
+					}, function(failureReason) {
+						that._handleFailure('Delete', failureReason);
+					});
+				}
+			});
+		}	
+	},
+
+	_handleFailure: function(actionName, failureReason) {
+		alert('Failed to ' + actionName + " " + this.get('modelName'));
+		console.log('Failed to ' + actionName + " " + this.get('modelName') + ". Reason: " + failureReason);
+	},
+	_handleSuccess: function(actionName) {
+		console.log(actionName + " " + this.get('modelName'));
+	}
+	
+});
+
 var carTypeImgUrls = {
 	'רכב מסחרי': '/images/van.png',
 	'רכב פרטי': '/images/privateCar.png',
 	'לא זמין': '/images/notAvailable.jpg'
 };
 
-App.CarController = Ember.ObjectController.extend({
+App.CarController = Ember.SingleModelController.extend({
 	// Allows access to the CarsController
 	needs: "cars",
 	carsController: Ember.computed.alias("controllers.cars"),
 
 	initController: function() {
-		var isCarNew = this.get('model.isNew');
-		if (isCarNew) {
-			this.set('isBeingEdited', true);
-		}
+		this.set('modelName', 'car');
 
 		var availableFromDateTime = this.get('model.availableFromDateTime');
 		if (availableFromDateTime) {
@@ -66,9 +113,7 @@ App.CarController = Ember.ObjectController.extend({
 			this.set('availableFromTimeStr', timeStr);
 		}
 	}.on('init'),
-
-	isBeingEdited: false,
-	isNotEdited: Ember.computed.not('isBeingEdited'),
+	
 	availableFromDateStr: "",
 	availableFromTimeStr: "",
 	
@@ -115,40 +160,9 @@ App.CarController = Ember.ObjectController.extend({
 			if(this.get('isBeingEdited')) {
 				car.set('carType', this.get('nextCarType'));
 			}
-		},
-		updateCar: function(car) {
-			var that = this;
-			car.save().then(function() {
-				that._handleSuccess('Updated');
-			}, function(failureReason) {
-				that._handleFailure('update', failureReason);
-			});
-			this.set('isBeingEdited', false);
-		},
-		editCar: function() {
-			this.set('isBeingEdited', true);
-		},
-		delete: function(car) {
-			var that = this;
-			bootbox.confirm('האם למחוק?', function(userWantsToDelete) {
-				if (userWantsToDelete) {
-					car.deleteRecord();
-					car.save().then(function() {
-						that._handleSuccess('Deleted');
-					}, function(failureReason) {
-						that._handleFailure('Delete', failureReason);
-					});
-				}
-			});
 		}
 	},
-	_handleFailure: function(actionName, failureReason) {
-		alert('Failed to ' + actionName + " car");
-		console.log('Failed to ' + actionName + " car. Reason: " + failureReason);
-	},
-	_handleSuccess: function(actionName) {
-		console.log(actionName + " car");
-	}
+
 });
 
 App.CarsController = Ember.SortableAndFilterableController.extend({
