@@ -4,7 +4,7 @@ $.hib.consts = {
 	pickATimeDateFormat: "dd-mm-yyyy",
 	pickATimeTimeFormat: "H:i",
 	momentDateFormat: "DD-MM-YYYY",
-	momentTimeFormat: "H:m"
+	momentTimeFormat: "H:mm"
 };
 
 $.hib.post = function(url, data, success, error) {
