@@ -41,9 +41,9 @@ Ember.SortableAndFilterableController = Ember.ArrayController.extend({
 });
 
 var carTypeImgUrls = {
-	van: '/images/van.png',
-	privateCar: '/images/privateCar.png',
-	notAvailable: '/images/notAvailable.jpg'
+	'רכב מסחרי': '/images/van.png',
+	'רכב פרטי': '/images/privateCar.png',
+	'לא זמין': '/images/notAvailable.jpg'
 };
 
 App.CarController = Ember.ObjectController.extend({
@@ -101,12 +101,12 @@ App.CarController = Ember.ObjectController.extend({
 		return carTypeImgUrls[this.get('model.carType')];
 	}.property('model.carType'),
 	nextCarType: function() {
-		if (this.get('model.carType') === 'van') {
-			return 'privateCar';
-		} else if (this.get('model.carType') === 'privateCar') {
-			return 'notAvailable';
+		if (this.get('model.carType') === 'רכב מסחרי') {
+			return 'רכב פרטי';
+		} else if (this.get('model.carType') === 'רכב פרטי') {
+			return 'לא זמין';
 		} else {
-			return 'van';
+			return 'רכב מסחרי';
 		}
 	}.property('model.carType'),
 
@@ -161,7 +161,7 @@ App.CarsController = Ember.SortableAndFilterableController.extend({
 	}.on('init'),
 	actions: {
 		newCar: function() {
-			this.store.createRecord('car', {carType: 'van'});
+			this.store.createRecord('car', {carType: 'רכב מסחרי'});
 		}
 	}
 
