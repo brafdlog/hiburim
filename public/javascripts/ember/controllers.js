@@ -36,6 +36,9 @@ Ember.SortableAndFilterableController = Ember.ArrayController.extend({
 		sortBy: function(property) {
 			this.set('sortProperties', [property]);
 			this.set('sortAscending', !this.get('sortAscending'));
+		},
+		createModel: function() {
+			this.store.createRecord(this.get('modelName'), {});
 		}
 	},
 });
@@ -105,6 +108,12 @@ App.CarController = Ember.SingleModelController.extend({
 		this._super();
 		this.set('modelName', 'car');
 
+		// Default car type of new car is van
+		var isNew = this.get('model.isNew');
+		if (isNew) {
+			this.set('carType', 'רכב מסחרי');
+		}
+
 		var availableFromDateTime = this.get('model.availableFromDateTime');
 		if (availableFromDateTime) {
 			var availabeFromMoment = moment(availableFromDateTime);
@@ -114,7 +123,7 @@ App.CarController = Ember.SingleModelController.extend({
 			this.set('availableFromTimeStr', timeStr);
 		}
 	}.on('init'),
-	
+		
 	availableFromDateStr: "",
 	availableFromTimeStr: "",
 	
@@ -167,18 +176,11 @@ App.CarController = Ember.SingleModelController.extend({
 });
 
 App.CarsController = Ember.SortableAndFilterableController.extend({
-	
 	initController: function() {
 		this._super();
 		var filteredProperties = this.get('filteredProperties');
 		filteredProperties.pushObject('driverName');
 		filteredProperties.pushObject('carType');
 		this.set('modelName', "car");
-	}.on('init'),
-	actions: {
-		newCar: function() {
-			this.store.createRecord('car', {carType: 'רכב מסחרי'});
-		}
-	}
-
+	}.on('init')
 });
