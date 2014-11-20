@@ -5,13 +5,13 @@
  Bind an input to filter to filter the content.
  Make action that calls sortby with the name of the parameter to sort by.
  */
-Ember.SortableAndFilterableController = Ember.ArrayController.extend({
-	modelName: '',
-	filteredProperties: Ember.A([]),
-	filter: '',
+ Ember.SortableAndFilterableController = Ember.ArrayController.extend({
+ 	modelName: '',
+ 	filteredProperties: Ember.A([]),
+ 	filter: '',
 
-	filteredElements: function() {
-		var filter = this.get('filter');
+ 	filteredElements: function() {
+ 		var filter = this.get('filter');
 		// Regex for contains ignore case
 		var regEx = new RegExp(filter, 'gi');
 		var elements = this.get('arrangedContent');
@@ -40,27 +40,63 @@ Ember.SortableAndFilterableController = Ember.ArrayController.extend({
 	},
 });
 
-var carTypeImgUrls = {
-	van: '/images/van.png',
-	privateCar: '/images/privateCar.png',
-	notAvailable: '/images/notAvailable.jpg'
-};
+ var carTypeImgUrls = {
+ 	van: '/images/van.png',
+ 	privateCar: '/images/privateCar.png',
+ 	notAvailable: '/images/notAvailable.jpg'
+ };
 
-App.CarController = Ember.ObjectController.extend({
+ App.CarController = Ember.ObjectController.extend({
 	// Allows access to the CarsController
 	needs: "cars",
-  	carsController: Ember.computed.alias("controllers.cars"),
+	carsController: Ember.computed.alias("controllers.cars"),
 
 	initController: function() {
 		var isCarNew = this.get('model.isNew');
 		if (isCarNew) {
 			this.set('isBeingEdited', true);
 		}
+
+		var availableFromDateTime = this.get('model.availableFromDateTime');
+		if (availableFromDateTime) {
+			var availabeFromMoment = moment(availableFromDateTime);
+			var dateStr = availabeFromMoment.format($.hib.consts.momentDateFormat);
+			this.set('availableFromDateStr', dateStr);
+			var timeStr = availabeFromMoment.format($.hib.consts.momentTimeFormat);
+			this.set('availableFromTimeStr', timeStr);
+		}
 	}.on('init'),
 
 	isBeingEdited: false,
 	isNotEdited: Ember.computed.not('isBeingEdited'),
+	availableFromDateStr: "",
+	availableFromTimeStr: "",
 	
+	updateAvailableFromDateFromStr: function() {
+		var dateStr = this.get('availableFromDateStr');
+		var timeStr = this.get('availableFromTimeStr');
+		if (dateStr) {
+			var date = moment(dateStr, $.hib.consts.momentDateFormat);
+			if (timeStr) {
+				var time = moment(timeStr, $.hib.consts.momentTimeFormat);
+				date.hours(time.hours());
+				date.minutes(time.minutes());
+			}
+			this.set('availableFromDateTime', date.toDate());
+		}
+	}.observes('availableFromDateStr', 'availableFromTimeStr'),
+	updateAvailableUntilDate: function() {
+		var fromDate = this.get('availableFromDateTime');
+		if (fromDate) {
+			var toDate = moment(fromDate);
+			var availableDurationInHours = this.get('availableDurationInHours');
+			if (availableDurationInHours) {
+				toDate.add(availableDurationInHours, 'hours');
+			}
+			this.set('model.availableUntilDateTime', toDate.toDate());
+		}
+	}.observes('availableFromDateTime', 'availableDurationInHours'),
+
 	carTypeUrl: function() {
 		return carTypeImgUrls[this.get('model.carType')];
 	}.property('model.carType'),
