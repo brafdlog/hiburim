@@ -5,25 +5,6 @@ var _ = require("underscore");
 var router = express.Router();
 
 // Get all cars
-router.get('/render', function(req, resp) {	
-	carDAO.getAllCars(function(err, allCarsArray) {
-		if (err) {
-			routesCommon.handleServerError(resp, err);
-		} else {
-			// Set flag for handlebars to know which icon to display
-			_.each(allCarsArray, function(element, index, list) {
-				element.van = element.carType === 'van';
-			});
-
-			// Add an empty element so we will have an empty hidden row at the end of the table
-			allCarsArray.push({});
-
-			resp.render('cars', {'layout': 'generalLayout', cars: allCarsArray});
-		}
-	});
-});
-
-// Get all cars
 router.get('/', function(req, resp) {	
 	carDAO.getAllCars(function(err, allCarsArray) {
 		if (err) {
