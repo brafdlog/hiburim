@@ -102,6 +102,7 @@ App.CarController = Ember.SingleModelController.extend({
 	carsController: Ember.computed.alias("controllers.cars"),
 
 	initController: function() {
+		this._super();
 		this.set('modelName', 'car');
 
 		var availableFromDateTime = this.get('model.availableFromDateTime');
@@ -168,6 +169,7 @@ App.CarController = Ember.SingleModelController.extend({
 App.CarsController = Ember.SortableAndFilterableController.extend({
 	
 	initController: function() {
+		this._super();
 		var filteredProperties = this.get('filteredProperties');
 		filteredProperties.pushObject('driverName');
 		filteredProperties.pushObject('carType');
