@@ -5,13 +5,13 @@
  Bind an input to filter to filter the content.
  Make action that calls sortby with the name of the parameter to sort by.
  */
- Ember.SortableAndFilterableController = Ember.ArrayController.extend({
- 	modelName: '',
- 	filteredProperties: Ember.A([]),
- 	filter: '',
+Ember.SortableAndFilterableController = Ember.ArrayController.extend({
+	modelName: '',
+	filteredProperties: Ember.A([]),
+	filter: '',
 
- 	filteredElements: function() {
- 		var filter = this.get('filter');
+	filteredElements: function() {
+		var filter = this.get('filter');
 		// Regex for contains ignore case
 		var regEx = new RegExp(filter, 'gi');
 		var elements = this.get('arrangedContent');
@@ -40,13 +40,13 @@
 	},
 });
 
- var carTypeImgUrls = {
- 	van: '/images/van.png',
- 	privateCar: '/images/privateCar.png',
- 	notAvailable: '/images/notAvailable.jpg'
- };
+var carTypeImgUrls = {
+	van: '/images/van.png',
+	privateCar: '/images/privateCar.png',
+	notAvailable: '/images/notAvailable.jpg'
+};
 
- App.CarController = Ember.ObjectController.extend({
+App.CarController = Ember.ObjectController.extend({
 	// Allows access to the CarsController
 	needs: "cars",
 	carsController: Ember.computed.alias("controllers.cars"),
