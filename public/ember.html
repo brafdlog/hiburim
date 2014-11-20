@@ -135,7 +135,7 @@
 <script type="text/x-handlebars" id="carRowTemplate">
   <tr {{bind-attr id=id}} {{bind-attr class=":nonHeaderTableRow controller.isBeingEdited:rowBeingEdited"}}>
     <td {{action 'changeCarType' this}} class="carTypeIconColumn">
-      <img {{bind-attr src=controller.carTypeUrl}} {{bind-attr alt=carType}} width="40px">
+      <img {{bind-attr src=controller.carTypeUrl}} {{bind-attr alt=carType}} {{bind-attr title=carType}} width="40px">
     </td>
     <td class="nameTd">
       {{input type="text" disabled=controller.isNotEdited value=driverName}}
