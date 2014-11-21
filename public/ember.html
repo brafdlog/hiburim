@@ -105,6 +105,15 @@
   </div>
 </script>
 
+<script type="text/x-handlebars" id="_editDeleteSaveIcons">
+  {{#if controller.isBeingEdited}}
+  <span {{action 'updateModel' this}} class="glyphicon glyphicon-ok finishedEditingIcon"></span>
+  {{else}}
+  <span {{action 'editModel' this}} title="ערוך" class="glyphicon glyphicon-pencil editIcon"></span>
+  <span {{action 'deleteModel' this}} title="מחק" class="glyphicon glyphicon-remove deleteIcon"></span>
+  {{/if}}
+</script>
+
 <!-- Cars table - desktop view -->
 <script type="text/x-handlebars" id="cars">
   {{partial 'headerAndSearchRow'}}
@@ -159,12 +168,7 @@
       שעות 
     </td>
     <td>
-      {{#if controller.isBeingEdited}}
-      <span {{action 'updateModel' this}} class="glyphicon glyphicon-ok finishedEditingIcon"></span>
-      {{else}}
-      <span {{action 'editModel' this}} title="ערוך" class="glyphicon glyphicon-pencil editIcon"></span>
-      <span {{action 'deleteModel' this}} title="מחק" class="glyphicon glyphicon-remove deleteIcon"></span>
-      {{/if}}
+     {{partial 'editDeleteSaveIcons'}}
     </td>
   </tr>
 </script>
