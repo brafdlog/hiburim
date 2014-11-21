@@ -1,5 +1,4 @@
-App.CarView = Ember.View.extend({
-	templateName: 'carRowTemplate',
+App.TableRowView = Ember.View.extend({
 	tagName: 'tbody',
 
 	doubleClick: function(event) {
@@ -17,4 +16,8 @@ App.CarView = Ember.View.extend({
 			format: $.hib.consts.pickATimeTimeFormat // 23:30 or 9:40
 		});
 	}
+});
+
+App.CarView = App.TableRowView.extend({
+	templateName: 'carRowTemplate',
 });
