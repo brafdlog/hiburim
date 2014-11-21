@@ -176,6 +176,8 @@ App.CarController = Ember.SingleModelController.extend({
 });
 
 App.CarsController = Ember.SortableAndFilterableController.extend({
+	headerText: 'רכבים',
+	newModelText: 'רכב חדש',
 	initController: function() {
 		this._super();
 		var filteredProperties = this.get('filteredProperties');
