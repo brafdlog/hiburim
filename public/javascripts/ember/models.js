@@ -43,6 +43,7 @@ App.Consumer = DS.Model.extend({
 App.Consumer.reopenClass({
 	FIXTURES: [
 	{
+		id: 1,
 		_id: 1,
 		name: 'משה', 
 		phoneNumber: '02-56835213',
@@ -65,6 +66,7 @@ App.Consumer.reopenClass({
 		}
 	},
 	{
+		id: 2,
 		_id: 2,
 		name: 'חיים', 
 		phoneNumber: "057-456732",
