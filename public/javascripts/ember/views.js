@@ -21,3 +21,7 @@ App.TableRowView = Ember.View.extend({
 App.CarView = App.TableRowView.extend({
 	templateName: 'carRowTemplate',
 });
+
+App.ConsumerView = App.TableRowView.extend({
+	templateName: 'consumerRowTemplate'
+});

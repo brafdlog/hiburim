@@ -206,4 +206,82 @@
   </div>
 </script>
 
+<!-- Consumer table - desktop view -->
+<script type="text/x-handlebars" id="consumers">
+  {{partial 'headerAndSearchRow'}}
+  <div class="row">
+    <div class="col-md-10 col-md-offset-1 main">
+      <div {{bind-attr class=":deskopTableView controller.hideTableOnMobile:hidden-xs"}}>
+        <div class="table-responsive">
+          <table id="consumersTable" class="table table-striped">
+            <thead>
+              <tr>
+                <th {{action 'sortBy' 'name'}}>שם</th>
+                <th {{action 'sortBy' 'phoneNumber'}}>טלפון</th>
+                <th>תאריכים פנויים</th>
+                <th {{action 'sortBy' 'item.category'}}>סוג הפריט</th>
+                <th>תיאור הפריט</th>
+                <th>כתובת הפונה</th>
+                <th>קומה</th>
+                <th>מספר דירה</th>
+                <th>מעלית</th>
+                <th>חניה</th>
+                <th>הערות על הכתובת</th>
+                <th></th>
+              </tr>
+            </thead>
+            {{#each consumer in filteredElements}}
+            {{render 'consumer' consumer}}
+            {{/each}}
+          </table>
+        </div>
+      </div>
+    </div>
+    {{#if controller.hideTableOnMobile}}
+    <!-- Add here a partial for mobile consumer view -->
+    {{/if}}
+  </div>
+</script>
+
+<script type="text/x-handlebars" id="consumerRowTemplate">
+  <tr {{bind-attr id=id}} {{bind-attr class=":nonHeaderTableRow controller.isBeingEdited:rowBeingEdited"}}>
+    <td class="nameTd">
+      {{input type="text" disabled=controller.isNotEdited value=name}}
+    </td>
+    <td class="phoneNumberTd">
+      {{input type="text" disabled=controller.isNotEdited value=phoneNumber}}
+    </td>
+    <td class="convenientDatesTd">
+      {{input type="text" disabled=controller.isNotEdited value=convenientDates}}
+    </td>
+    <td class="itemCategoryTd">
+      {{view "select" content=controller.itemCategories value=item.category}}
+    </td>
+    <td class="itemDescriptionTd">
+       {{textarea value=item.description disabled=controller.isNotEdited cols="10" rows="3"}}
+    </td>
+    <td class="addressTd">
+      {{input type="text" disabled=controller.isNotEdited value=address.geoDisplayString}}
+    </td>
+    <td class="addressFloorTd">
+      {{input type="text" disabled=controller.isNotEdited value=address.floor}}
+    </td>
+    <td class="addressFlatNumberTd">
+      {{input type="text" disabled=controller.isNotEdited value=address.flatNumber}}
+    </td>
+    <td>
+      {{input type="checkbox" name="מעלית" disabled=controller.isNotEdited checked=address.hasElavator}}
+    </td>
+    <td>
+      {{input type="checkbox" name="חניה" disabled=controller.isNotEdited checked=address.hasParking}}
+    </td>
+    <td class="addressDescriptionTd">
+      {{textarea value=address.description disabled=controller.isNotEdited cols="10" rows="3"}}
+    </td>
+    <td>
+      {{partial 'editDeleteSaveIcons'}}
+    </td>
+  </tr>
+</script>
+
 </html>

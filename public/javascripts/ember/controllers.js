@@ -187,3 +187,34 @@ App.CarsController = Ember.SortableAndFilterableController.extend({
 		this.set('modelName', "car");
 	}.on('init')
 });
+
+App.ConsumersController = Ember.SortableAndFilterableController.extend({
+	headerText: 'פניות',
+	newModelText: 'פניה חדשה',
+	hideTableOnMobile: false,
+	initController: function() {
+		this._super();
+		var filteredProperties = this.get('filteredProperties');
+		filteredProperties.pushObject('name');
+		filteredProperties.pushObject('item.category');
+		filteredProperties.pushObject('item.description');
+		filteredProperties.pushObject('address.geoDisplayString');
+		this.set('modelName', "consumer");
+	}.on('init')
+});
+
+App.ConsumerController = Ember.SingleModelController.extend({
+	itemCategories: ['ארון', 'שידה', 'כיסא'],
+
+	initController: function() {
+		this._super();
+		this.set('modelName', 'consumer');
+
+		// Set defaults for new consumer
+		// var isNew = this.get('model.isNew');
+		// if (isNew) {
+		// 	this.set('carType', 'רכב מסחרי');
+		// }
+
+	}.on('init')
+});
