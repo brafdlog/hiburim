@@ -110,9 +110,7 @@
   {{partial 'headerAndSearchRow'}}
   <div class="row">
     <div class="col-md-10 col-md-offset-1 main">
-      <!--Disable hiding on mobile until fix the mobile list bug -->
-      <!--<div class="hidden-xs deskopTableView">-->
-      <div class="deskopTableView">
+      <div {{bind-attr class=":deskopTableView controller.hideTableOnMobile:hidden-xs"}}>
         <div class="table-responsive">
           <table id="carsTable" class="table table-striped">
             <thead>
@@ -133,8 +131,9 @@
         </div>
       </div>
     </div>
-    <!--Hide until we fix the issue of not seeing anything on mobile -->
-    {{!-- {{partial 'carsListMobileView'}} --}}
+    {{#if controller.hideTableOnMobile}}
+    {{partial 'carsListMobileView'}}
+    {{/if}}
   </div>
 </script>
 
