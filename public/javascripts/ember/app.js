@@ -9,9 +9,9 @@ if (useRealData) {
   		// Default serialization of save doesn't pass in the id in the post body 
   		// so we add it here manually
   		serialize: function(record, options) {
-    		var json = this._super.apply(this, arguments); // Get default serialization
-    		json._id = record.id;  // tack on the id
-    		return json;
+  			options = options ? options : {};
+  			options.includeId = true;
+    		return this._super.apply(this, [record, options]); // Get default serialization
     	}
     });
 } else {
