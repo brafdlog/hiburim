@@ -1,5 +1,4 @@
 App.Car = DS.Model.extend({
-	_id: DS.attr(),
 	carType: DS.attr(),
 	driverName: DS.attr(),
 	driverNumber: DS.attr(), 
@@ -18,7 +17,6 @@ App.Car.reopenClass({
 });
 
 App.Consumer = DS.Model.extend({
-	_id: DS.attr(),
 	name: DS.attr(), 
 	phoneNumber: DS.attr(),
 	convenientDates: DS.attr(),
