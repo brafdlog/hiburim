@@ -10,14 +10,13 @@ router.get('/', function(req, resp) {
 		if (err) {
 			routesCommon.handleServerError(resp, err);
 		} else {
-			// resp.send(allConsumersArray);
-			// resp.end();
-			resp.render('consumers', {'layout': 'generalLayout', consumers: allConsumersArray});
+			resp.json({consumers: allConsumersArray});
+			resp.end();
 		}
 	});
 });
 
-// Get all consumers
+// Get create consumer form
 router.get('/createConsumerForm', function(req, resp) {	
 	resp.render('addConsumer', {'layout': 'generalLayout'});
 });
@@ -30,7 +29,7 @@ router.get('/:consumerId', function(req, resp) {
 			routesCommon.handleServerError(resp, err);
 		} else {
 			if (consumerFromDB) {
-				resp.send(consumerFromDB);
+				resp.send({consumer: consumerFromDB});
 			} else {
 				resp.send("Consumer with id " + consumerId + " was not found");
 			}
@@ -42,12 +41,12 @@ router.get('/:consumerId', function(req, resp) {
 // Create consumer
 router.post('/', function(req, resp) {
 	console.log("Got request to create a consumer");
-	var consumerToCreate = req.body;
+	var consumerToCreate = req.body.consumer;
 	consumerDAO.createConsumer(consumerToCreate, function(err, createdConsumer) {
 		if (err) {
 			routesCommon.handleServerError(resp, err);
 		} else {
-			resp.send(createdConsumer);
+			resp.send({consumer: createdConsumer});
 			resp.end();
 		}
 	});
@@ -55,12 +54,12 @@ router.post('/', function(req, resp) {
 
 // Update consumer
 router.put('/:consumerId', function(req, resp) {
-	var updatedConsumer = req.body;
+	var updatedConsumer = req.body.consumer;
 	consumerDAO.updateConsumer(updatedConsumer, function(err) {
 		if (err) {
 			routesCommon.handleServerError(resp, err);
 		} else {
-			resp.send(updatedConsumer).end();
+			resp.send({consumer: updatedConsumer}).end();
 		}
 	});
 });
@@ -72,35 +71,11 @@ router.delete('/:consumerId', function(req, resp) {
 		if (err) {
 			routesCommon.handleServerError(resp, err);
 		} else {
-			resp.status(200).end();
+			// The status 204 is required in order for ember to not consider the deletion a failure
+			// Alternativley, can respond with 200 and and empty object - {}
+			resp.status(204).end();
 		}
 	});
 });
 
 module.exports = router;
-
-/*
-	Consumer object:
-	 {
-		name: "Moshe ", 
-		phoneNumber: "057-456732",
-		convenientDates: [456345634564],
-		item: {
-			category: "ארון",
-			requiresDismanteling: true,
-			description: "זה ארון מאוד יפה"
-		},
-		address: {
-			geoQueryString: "Even Shmuel 33, Jerusalem, Israel",
-			geoDisplayString: "אבן שמואל 33, ירושלים",
-			latitude: "4536364.534",
-			longitude: "645645645.3423",
-			floor: "3",
-			flatNumber: "7",
-			hasElavator: false,
-			hasParking: true,
-			description: "מקום יפה"
-		}
-	};
-
- */
