@@ -23,5 +23,23 @@ App.CarView = App.TableRowView.extend({
 });
 
 App.ConsumerView = App.TableRowView.extend({
-	templateName: 'consumerRowTemplate'
+	templateName: 'consumerRowTemplate',
+
+	didInsertElement : function(){
+		var that = this;
+		this._super();
+		var tbodyElement = this.get('element');
+		var addressInput = $(tbodyElement).find('input.addressInput');
+		Ember.run.scheduleOnce('afterRender', this, function(){
+			addressInput.geocomplete()
+			.bind("geocode:result", function(event, result){
+				var lat = result.geometry.location.lat();
+				var lon = result.geometry.location.lng();
+				var geoCompleteAddress = result.formatted_address;
+				that.set('controller.model.address.latitude', lat);
+				that.set('controller.model.address.longitude', lon);
+				that.set('controller.model.address.geoQueryString', geoCompleteAddress);
+			});
+		});
+	}
 });

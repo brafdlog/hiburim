@@ -51,6 +51,10 @@
   <script src="/javascripts/pickadate/picker.date.js"></script>
   <script src="/javascripts/pickadate/picker.time.js"></script>
 
+  <script src="http://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=places"></script>
+  <script src="/javascripts/geocomplete/jquery.geocomplete.js"></script>
+
+  
   <script src="/javascripts/clientCommon.js"></script>
 
   <script src="/javascripts/ember/app.js"></script>
@@ -59,7 +63,6 @@
   <script src="/javascripts/ember/models.js"></script>
   <script src="/javascripts/ember/controllers.js"></script>
   <script src="/javascripts/ember/views.js"></script>
-
 
 </head>
 
@@ -261,14 +264,13 @@
     <td class="itemDescriptionTd">
        {{textarea value=item.description disabled=controller.isNotEdited cols="10" rows="3"}}
     </td>
-    <td class="addressTd" {{bind-attr lat=address.latitude}} {{bind-attr lon=address.longitude}} {{bind-attr geoQueryString=address.geoQueryString}} {{bind-attr geoDisplayString=address.geoDisplayString}}>
-      {{#if address.latitude}}
-      <a {{bind-attr href=controller.googleMapsUrl}} target="_blank">
-        {{input type="text" disabled=controller.isNotEdited value=address.geoDisplayString}}
+    <td class="addressTd">
+      <a {{bind-attr href=controller.googleMapsUrl}} {{bind-attr hidden=controller.mapLinkNotActive}} target="_blank">
+        {{input type="text" class="addressInput" disabled=controller.isNotEdited value=address.geoDisplayString}}
       </a>
-      {{else}}
-      {{input type="text" disabled=controller.isNotEdited value=address.geoDisplayString}}
-      {{/if}}
+      <div {{bind-attr hidden=controller.mapLinkActive}}>
+        {{input type="text" class="addressInput" disabled=controller.isNotEdited value=address.geoDisplayString}}
+      </div>
     </td>
     <td class="addressFloorTd">
       {{input type="text" class="xSmallWidth" disabled=controller.isNotEdited value=address.floor}}

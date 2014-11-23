@@ -3,7 +3,8 @@ input[type="checkbox"][disabled] {
     cursor: default;
 }
 
-a input {
+/* Make the google maps link have the style of a link */
+a input[disabled] {
 	cursor: pointer !important;
 	color: rgb(42, 100, 150);
 }

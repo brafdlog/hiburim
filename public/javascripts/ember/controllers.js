@@ -205,6 +205,13 @@ App.ConsumersController = Ember.SortableAndFilterableController.extend({
 
 App.ConsumerController = Ember.SingleModelController.extend({
 	itemCategories: ['ארון', 'שידה', 'כיסא'],
+	mapLinkActive: function() {
+		if (this.get('isNotEdited') && this.get('googleMapsUrl')) {
+			return true;
+		}
+		return false;
+	}.property('isNotEdited', 'googleMapsUrl'),
+	mapLinkNotActive: Ember.computed.not('mapLinkActive'),
 	googleMapsUrl: function() {
 		if (this.get('model.address') && this.get('model.address.latitude')) {
 			return 'http://maps.google.com/?q=' + this.get('model.address.latitude') + ',' + this.get('model.address.longitude');
