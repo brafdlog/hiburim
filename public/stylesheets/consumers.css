@@ -1,21 +1,4 @@
-th, tr {
-  text-align: center;
-}
-
-tr td:last-child{
-    width:1%;
-    white-space:nowrap;
-}
-
-.phoneNumberTd, .nameTd {
-	min-width: 100px;	
-}
-
-.addressNotesTableHeader {
-  min-width: 150px;
-}
-
 /* Prevent the changed cursor when hovering over disabled checkboxes */
-input[type="checkbox"][disabled="true"], input[type="checkbox"][disabled="disabled"] {
+input[type="checkbox"][disabled] {
     cursor: default;
 }
