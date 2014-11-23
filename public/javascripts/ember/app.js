@@ -19,4 +19,15 @@ if (useRealData) {
 	App.ApplicationAdapter = DS.FixtureAdapter;	
 }
 
+// This transform allows attributes that are json objects.
+// The transform will just leave them as they are
+App.RawTransform = DS.Transform.extend({
+	deserialize: function(serialized) {
+		return serialized;
+	},
+	serialize: function(deserialized) {
+		return deserialized;
+	}
+});
 
+App.register("transform:raw", App.RawTransform);
