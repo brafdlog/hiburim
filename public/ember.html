@@ -246,10 +246,10 @@
 <script type="text/x-handlebars" id="consumerRowTemplate">
   <tr {{bind-attr id=id}} {{bind-attr class=":nonHeaderTableRow controller.isBeingEdited:rowBeingEdited"}}>
     <td class="nameTd">
-      {{input type="text" disabled=controller.isNotEdited value=name}}
+      {{input type="text" class="mediumWidth" disabled=controller.isNotEdited value=name}}
     </td>
     <td class="phoneNumberTd">
-      {{input type="text" disabled=controller.isNotEdited value=phoneNumber}}
+      {{input type="text" class="mediumWidth" disabled=controller.isNotEdited value=phoneNumber}}
     </td>
     <td class="convenientDatesTd">
       {{input type="text" disabled=controller.isNotEdited value=convenientDates}}
@@ -264,10 +264,10 @@
       {{input type="text" disabled=controller.isNotEdited value=address.geoDisplayString}}
     </td>
     <td class="addressFloorTd">
-      {{input type="text" disabled=controller.isNotEdited value=address.floor}}
+      {{input type="text" class="xSmallWidth" disabled=controller.isNotEdited value=address.floor}}
     </td>
     <td class="addressFlatNumberTd">
-      {{input type="text" disabled=controller.isNotEdited value=address.flatNumber}}
+      {{input type="text" class="xSmallWidth" disabled=controller.isNotEdited value=address.flatNumber}}
     </td>
     <td>
       {{input type="checkbox" name="מעלית" disabled=controller.isNotEdited checked=address.hasElavator}}

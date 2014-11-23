@@ -35,3 +35,19 @@ td:focus {
   margin-top: 10px;
   margin-bottom: 20px; 
 }
+
+table input {
+  text-align: center;
+}
+
+.xSmallWidth {
+  width: 25px;
+}
+
+.smallWidth {
+  width: 50px;
+}
+
+.mediumWidth {
+  width: 90px;
+}

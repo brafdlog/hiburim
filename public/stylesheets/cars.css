@@ -34,10 +34,6 @@ th, tr, .datePicker {
   margin-bottom: 10px;
 }
 
-#carsTable input {
-  text-align: center;
-}
-
 input {
   border: 0;
   color: black;
