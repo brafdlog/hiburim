@@ -261,8 +261,14 @@
     <td class="itemDescriptionTd">
        {{textarea value=item.description disabled=controller.isNotEdited cols="10" rows="3"}}
     </td>
-    <td class="addressTd">
+    <td class="addressTd" {{bind-attr lat=address.latitude}} {{bind-attr lon=address.longitude}} {{bind-attr geoQueryString=address.geoQueryString}} {{bind-attr geoDisplayString=address.geoDisplayString}}>
+      {{#if address.latitude}}
+      <a {{bind-attr href=controller.googleMapsUrl}} target="_blank">
+        {{input type="text" disabled=controller.isNotEdited value=address.geoDisplayString}}
+      </a>
+      {{else}}
       {{input type="text" disabled=controller.isNotEdited value=address.geoDisplayString}}
+      {{/if}}
     </td>
     <td class="addressFloorTd">
       {{input type="text" class="xSmallWidth" disabled=controller.isNotEdited value=address.floor}}

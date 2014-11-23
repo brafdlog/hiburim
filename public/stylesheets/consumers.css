@@ -2,3 +2,8 @@
 input[type="checkbox"][disabled] {
     cursor: default;
 }
+
+a input {
+	cursor: pointer !important;
+	color: rgb(42, 100, 150);
+}
