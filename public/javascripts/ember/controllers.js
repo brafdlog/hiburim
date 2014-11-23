@@ -210,11 +210,12 @@ App.ConsumerController = Ember.SingleModelController.extend({
 		this._super();
 		this.set('modelName', 'consumer');
 
-		// Set defaults for new consumer
-		// var isNew = this.get('model.isNew');
-		// if (isNew) {
-		// 	this.set('carType', 'רכב מסחרי');
-		// }
+		// Initialize item and address if it is a new consumer
+		var isNew = this.get('model.isNew');
+		if (isNew) {
+			this.set('address', {});
+			this.set('item', {});
+		}
 
 	}.on('init')
 });
