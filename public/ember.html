@@ -110,12 +110,14 @@
 </script>
 
 <script type="text/x-handlebars" id="_editDeleteSaveIcons">
+  <div class="editIconsSection">
   {{#if controller.isBeingEdited}}
   <span {{action 'updateModel' this}} class="glyphicon glyphicon-ok finishedEditingIcon"></span>
   {{else}}
   <span {{action 'editModel' this}} title="ערוך" class="glyphicon glyphicon-pencil editIcon"></span>
   <span {{action 'deleteModel' this}} title="מחק" class="glyphicon glyphicon-remove deleteIcon"></span>
   {{/if}}
+  </div>
 </script>
 
 <!-- Cars table - desktop view -->
