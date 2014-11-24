@@ -1,3 +1,16 @@
+App.ApplicationView = Ember.View.extend({
+
+	didInsertElement: function() {
+		this._super();
+		// Make the mobile navigation menu close after selection
+		$(document).on('click','.navbar-collapse.in',function(e) {
+			if($(e.target).is('a') && $(e.target).attr('class') != 'dropdown-toggle' ) {
+				$(this).collapse('hide');
+			}
+		});
+    }
+});
+
 App.TableRowView = Ember.View.extend({
 	tagName: 'tbody',
 
@@ -6,6 +19,7 @@ App.TableRowView = Ember.View.extend({
 	},
 
 	didInsertElement: function() {
+		this._super();
 		var viewElementId = this.get('elementId');
 		$('#' + viewElementId + ' .datePicker').pickadate({
 			format: $.hib.consts.pickATimeDateFormat // dd-mm-yyyy
