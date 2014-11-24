@@ -8,3 +8,7 @@ a input[disabled] {
 	cursor: pointer !important;
 	color: rgb(42, 100, 150);
 }
+
+.addressTd input {
+	text-overflow: ellipsis;
+}
