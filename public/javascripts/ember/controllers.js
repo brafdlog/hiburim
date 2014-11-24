@@ -204,7 +204,7 @@ App.ConsumersController = Ember.SortableAndFilterableController.extend({
 });
 
 App.ConsumerController = Ember.SingleModelController.extend({
-	itemCategories: ['ארון', 'שידה', 'כיסא'],
+	itemCategories: ['כיסאות', 'מיטה זוגית', 'מיטה זוגית + מזרן', 'מיטת יחיד', 'מיטת יחיד + מזרן', 'ארון בגדים', 'שולחן כתיבה', 'שולחן אוכל', 'שולחן אוכל + כיסאות', 'ספה', 'סלון', 'אחר'],
 	mapLinkActive: function() {
 		if (this.get('isNotEdited') && this.get('googleMapsUrl')) {
 			return true;
