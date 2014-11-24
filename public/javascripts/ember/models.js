@@ -33,7 +33,7 @@ App.Consumer.reopenClass({
 		phoneNumber: '02-56835213',
 		convenientDates: '2/4/14, 5/6/14',
 		item: {
-			category: 'ארון',
+			category: 'ספה',
 			requiresDismanteling: true,
 			description: 'זה ארון מאוד יפה'
 		},
@@ -56,7 +56,7 @@ App.Consumer.reopenClass({
 		phoneNumber: "057-456732",
 		convenientDates: '6/3/14, 9/5/14',
 		item: {
-			category: "שידה",
+			category: "סלון",
 			requiresDismanteling: false,
 			description: "וואי וואי איזה שידה"
 		},

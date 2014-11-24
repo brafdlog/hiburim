@@ -1,6 +1,6 @@
 App = Ember.Application.create();
 
-var useRealData = true;
+var useRealData = false;
 
 if (useRealData) {
 	// This should allow using _id instead of id in models
