@@ -34,6 +34,22 @@
   <![endif]-->
 
   <script src="/javascripts/jquery-2.1.1.min.js"></script>
+  <!-- First thing, load client configuration object so we can be sure it is loaded -->
+  <script type="text/javascript">
+    $.ajax({
+      dataType: "json",
+      url: '/config',
+      // Want to be sure we have the configuration before continuing
+      async: false,
+      success: function(configData) {
+        $.hibConfig = configData;
+      },
+      error: function() {
+        alert('Failed loading configuration');
+      }
+    });
+  </script>
+
   <script src="/javascripts/ember/handlebars-v1.3.0.js"></script>
   <script src="/javascripts/ember/ember-1.8.1.js"></script>
   <script src="/javascripts/ember/ember-data.js"></script>

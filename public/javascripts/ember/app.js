@@ -1,8 +1,6 @@
 App = Ember.Application.create();
 
-var useRealData = true;
-
-if (useRealData) {
+if ($.hibConfig.useRealData) {
 	// This should allow using _id instead of id in models
 	App.ApplicationSerializer = DS.RESTSerializer.extend({
 		primaryKey: '_id',

@@ -11,6 +11,7 @@ var routes = require('./routes/index');
 var cars = require('./routes/cars');
 var donors = require('./routes/donors');
 var consumers = require('./routes/consumers');
+var configRoute = require('./routes/configRoute');
 
 var app = express();
 
@@ -42,6 +43,7 @@ app.use('/', routes);
 app.use('/cars', cars);
 app.use('/donors', donors);
 app.use('/consumers', consumers);
+app.use('/config', configRoute);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
