@@ -1,9 +1,6 @@
 var monk = require("monk");
-// local db
-//var db = monk('localhost:27017/mydb');
-
-// production DB
-var db = monk('mongodb://brafdlog:LS3gHLxTn2MsC24V1x@ds053320.mongolab.com:53320/hiburim');
+var config = require('../config').Config;
+var db = monk(config.mongoDbUri);
 
 function getAllElementsOfCollection(collectionName, callback) {
 	var collection = db.get(collectionName);
