@@ -57,3 +57,54 @@ App.Consumer.reopenClass({
 	}
 	]
 });
+
+App.Donor.reopenClass({
+	FIXTURES: [
+	{
+		id: 1,
+		_id: 1,
+		name: 'משה', 
+		phoneNumber: '02-56835213',
+		convenientDates: '2/4/14, 5/6/14',
+		item: {
+			category: 'ספה',
+			requiresDismanteling: true,
+			description: 'זה ארון מאוד יפה'
+		},
+		address: {
+			geoQueryString: "Dubnov 10, Tel Aviv",
+			geoDisplayString: 'דובנוב 10 תל אביב',
+			latitude: '23432432.2342',
+			longitude: '453456.45345',
+			floor: 7,
+			flatNumber: 9,
+			hasElavator: true,
+			hasParking: false,
+			description: "זאת כתובת מאוד מסובכת"
+		},
+	},
+	{
+		id: 2,
+		_id: 2,
+		name: 'חיים', 
+		phoneNumber: "057-456732",
+		convenientDates: '6/3/14, 9/5/14',
+		item: {
+			category: "סלון",
+			requiresDismanteling: false,
+			description: "וואי וואי איזה שידה"
+		},
+		address: {
+			geoQueryString: "Even Shmuel, Jerusalem",
+			geoDisplayString: 'אבן שמואל ירושלים',
+			latitude: '23432432.2342',
+			longitude: '453456.45345',
+			floor: 5,
+			flatNumber: 2,
+			hasElavator: false,
+			hasParking: true,
+			description: "זאת עוד כתובת"
+		}
+	}
+	]
+});

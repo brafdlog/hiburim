@@ -43,7 +43,7 @@ Ember.SortableAndFilterableController = Ember.ArrayController.extend({
 	},
 });
 
-Ember.SingleModelController = Ember.ObjectController.extend({
+App.SingleModelController = Ember.ObjectController.extend({
 	modelName: '',
 	isBeingEdited: false,
 	isNotEdited: Ember.computed.not('isBeingEdited'),
@@ -99,7 +99,7 @@ var carTypeImgUrls = {
 	'לא זמין': '/images/notAvailable.jpg'
 };
 
-App.CarController = Ember.SingleModelController.extend({
+App.CarController = App.SingleModelController.extend({
 	// Allows access to the CarsController
 	needs: "cars",
 	carsController: Ember.computed.alias("controllers.cars"),
@@ -203,7 +203,22 @@ App.ConsumersController = Ember.SortableAndFilterableController.extend({
 	}.on('init')
 });
 
-App.ConsumerController = Ember.SingleModelController.extend({
+App.DonorsController = Ember.SortableAndFilterableController.extend({
+	headerText: 'תרומות',
+	newModelText: 'תרומה חדשה',
+	hideTableOnMobile: false,
+	initController: function() {
+		this._super();
+		var filteredProperties = this.get('filteredProperties');
+		filteredProperties.pushObject('name');
+		filteredProperties.pushObject('item.category');
+		filteredProperties.pushObject('item.description');
+		filteredProperties.pushObject('address.geoDisplayString');
+		this.set('modelName', "donor");
+	}.on('init')
+});
+
+App.SinglePersonWithItemController = App.SingleModelController.extend({
 	itemCategories: ['כיסאות', 'מיטה זוגית', 'מיטה זוגית + מזרן', 'מיטת יחיד', 'מיטת יחיד + מזרן', 'ארון בגדים', 'שולחן כתיבה', 'שולחן אוכל', 'שולחן אוכל + כיסאות', 'ספה', 'סלון', 'כיריים חשמליות', 'כיריים גז', 'טלויזיה שטוחה', 'טלויזיה רחבה (לא שטוחה)', 'תנור חימום \\ רדיאטור', 'מאוורר', 'מיקרוגל', 'טוסטר אובן', 'ציוד למטבח', 'שטיח', 'שואב אבק', 'צעצועים וספרים לילדים', 'ציוד לילדים ולתינוקות', 'אחר'],
 	mapLinkActive: function() {
 		if (this.get('isNotEdited') && this.get('googleMapsUrl')) {
@@ -221,14 +236,27 @@ App.ConsumerController = Ember.SingleModelController.extend({
 
 	initController: function() {
 		this._super();
-		this.set('modelName', 'consumer');
 
-		// Initialize item and address if it is a new consumer
+		// Initialize item and address if it is a new person
 		var isNew = this.get('model.isNew');
 		if (isNew) {
 			this.set('address', {});
 			this.set('item', {});
 		}
 
+	}.on('init')
+});
+
+App.ConsumerController = App.SinglePersonWithItemController.extend({
+	initController: function() {
+		this._super();
+		this.set('modelName', 'consumer');
+	}.on('init')
+});
+
+App.DonorController = App.SinglePersonWithItemController.extend({
+	initController: function() {
+		this._super();
+		this.set('modelName', 'donor');
 	}.on('init')
 });

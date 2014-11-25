@@ -21,3 +21,15 @@ App.ConsumerRoute = Ember.Route.extend({
 		return this.store.find('consumer', params.consumer_id);
 	}
 });
+
+App.DonorsRoute = Ember.Route.extend({
+	model: function(params) {
+		return this.store.find('donor');
+	}
+});
+
+App.DonorRoute = Ember.Route.extend({
+	model: function(params) {
+		return this.store.find('donor', params.donor_id);
+	}
+});

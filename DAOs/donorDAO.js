@@ -12,6 +12,10 @@ function createDonor(donorToCreate, callback) {
 	DAOCommon.createElement("donors", donorToCreate, callback);
 }
 
+function updateDonor(donorObjectToUpdate, callback) {
+	DAOCommon.updateElement("donors", donorObjectToUpdate, callback);
+}
+
 function deleteDonor(donorIdToDelete, callback) {
 	DAOCommon.deleteElement("donors", donorIdToDelete, callback);
 }
@@ -20,3 +24,4 @@ exports.getAllDonors = getAllDonors;
 exports.getDonor = getDonor;
 exports.createDonor = createDonor;
 exports.deleteDonor = deleteDonor;
+exports.updateDonor = updateDonor;

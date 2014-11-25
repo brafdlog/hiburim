@@ -5,4 +5,7 @@ App.Router.map(function() {
 	this.resource('consumers', function() {
 		this.resource('consumer', {path: ':consumer_id'});
 	});
+	this.resource('donors', function() {
+		this.resource('donor', {path: ':donor_id'});
+	});
 });

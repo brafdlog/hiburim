@@ -27,8 +27,8 @@ router.get('/:carId', function(req, resp) {
 				resp.send({car: carFromDB});
 			} else {
 				resp.send("Car with id " + carId + " was not found");
-				resp.end();
 			}
+			resp.end();
 		}
 	});
 });

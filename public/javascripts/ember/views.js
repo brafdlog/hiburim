@@ -36,9 +36,7 @@ App.CarView = App.TableRowView.extend({
 	templateName: 'carRowTemplate',
 });
 
-App.ConsumerView = App.TableRowView.extend({
-	templateName: 'consumerRowTemplate',
-
+App.PersonWithItemView = App.TableRowView.extend({
 	didInsertElement : function(){
 		var that = this;
 		this._super();
@@ -56,4 +54,12 @@ App.ConsumerView = App.TableRowView.extend({
 			});
 		});
 	}
+});
+
+App.ConsumerView = App.PersonWithItemView.extend({
+	templateName: 'consumerRowTemplate',
+});
+
+App.DonorView = App.PersonWithItemView.extend({
+	templateName: 'donorRowTemplate',
 });
