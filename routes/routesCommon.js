@@ -25,7 +25,11 @@ function handleFileUpload(req, relativePath, callback) {
 	 		new_location = new_location + '/';
 	 	}
 
-	 	fs.copy(temp_path, new_location + file_name, function(err) {  
+	 	fs.copy(temp_path, new_location + file_name, function(err) {
+	 		// The ui accesses the files without the "public" in the path
+	 		if (_strStartsWith(new_location, 'public/')) {
+	 			new_location = new_location.substr('public/'.length);
+	 		}  
 	 		callback(err, new_location + file_name);
 	 	});
 	 });
@@ -39,6 +43,10 @@ function handleServerError(resp, error) {
 // String ends with
 function _endsWith(str, suffix) {
     return str.indexOf(suffix, str.length - suffix.length) !== -1;
+}
+
+function _strStartsWith(str, prefix) {
+    return(str.indexOf(prefix) === 0);
 }
 
 exports.handleServerError = handleServerError;
