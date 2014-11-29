@@ -171,8 +171,39 @@ App.CarController = App.SingleModelController.extend({
 				car.set('carType', this.get('nextCarType'));
 			}
 		}
-	},
+	}
 
+});
+
+App.CarEmailController = Ember.ObjectController.extend({
+	emailAddress: "",
+	actions: {
+		sendEmail: function(car) {
+			var postData = {
+				emailAddress: 'brafdlog@gmail.com',
+				mailParams: {
+					mailType: 'sendCar'
+				}
+			}; 
+			var controller = this;
+			$.ajax({
+				type: "POST",
+				url: '/api/email',
+				data: JSON.stringify(postData),
+				contentType: "application/json",
+				dataType: 'json',
+				success: function() {
+					bootbox.alert('המייל נשלח בהצלחה', function() {
+						controller.transitionToRoute('cars');	
+					});
+				},
+				error: function(error) {
+					console.log('Failed sending email. Error ' + JSON.stringify(error));
+					alert('failed sending email');
+				}
+			});
+		}
+	}
 });
 
 App.CarsController = Ember.SortableAndFilterableController.extend({

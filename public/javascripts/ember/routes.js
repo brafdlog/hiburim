@@ -10,6 +10,11 @@ App.CarRoute = Ember.Route.extend({
 	}
 });
 
+// model hook implemented in super (carRoute)
+App.CarEmailRoute = App.CarRoute.extend({
+	
+});
+
 App.ConsumersRoute = Ember.Route.extend({
 	model: function(params) {
 		return this.store.find('consumer');

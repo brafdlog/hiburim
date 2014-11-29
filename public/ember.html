@@ -156,6 +156,7 @@
                 <th {{action 'sortBy' 'availableFromTimeStr'}}>זמין משעה</th>
                 <th {{action 'sortBy' 'availableDurationInHours'}}>זמין למשך</th>
                 <th></th>
+                <th></th>
               </tr>
             </thead>
             {{#each car in filteredElements}}
@@ -195,6 +196,9 @@
     <td>
      {{partial 'editDeleteSaveIcons'}}
    </td>
+   <td>
+      {{#link-to 'carEmail' this}}<button type="button" class="btn btn-default btn-sm">שלח מייל</button>{{/link-to}}
+   </td>
  </tr>
 </script>
 
@@ -228,6 +232,14 @@
         {{outlet}}
       </div>
     </div>
+  </div>
+</script>
+
+<script type="text/x-handlebars" id="carEmail">
+ <div class="row sendCarEmailRow">
+  <div class="col-md-2 col-md-offset-1">
+    {{input class="form-control" type="email" placeholder="הכנס כתובת" value=controller.emailAddress}}
+    <button {{action "sendEmail" this}} type="button" class="btn btn-default">שלח מייל</button>
   </div>
 </script>
 
