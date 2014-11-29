@@ -153,7 +153,7 @@ App.CarController = App.SingleModelController.extend({
 	}.observes('availableFromDateTime', 'availableDurationInHours'),
 
 	carTypeUrl: function() {
-		return carTypeImgUrls[this.get('model.carType')];
+		return carTypeImgUrls[this.get('model.carType')] + '?dim=40x40';
 	}.property('model.carType'),
 	nextCarType: function() {
 		if (this.get('model.carType') === 'רכב מסחרי') {
