@@ -47,6 +47,23 @@ router.post('/', function(req, resp) {
 	});
 });
 
+// Upload item image
+router.post('/:donorId/uploadImage', function(req, resp) {
+	console.log("Got request to upload a donor's item image");
+	var donorId = req.params.donorId;
+
+	var relativeUploadPath = 'donors/' + donorId + '/itemImages/';
+	routesCommon.handleFileUpload(req, relativeUploadPath, function(err, newfilePath) {
+		if (err) {
+			console.error('Failed uploading image. Error:' + err);
+			routesCommon.handleServerError(resp, 'Failed uploading image');
+		} else {
+			console.log('Uploaded donor item image successfully');
+			resp.status(200).send(newfilePath).end();
+		}
+	});
+});
+
 // Update donor
 router.put('/:donorId', function(req, resp) {
 	var updatedDonor = req.body.donor;

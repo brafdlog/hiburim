@@ -9,9 +9,12 @@ var development = {
     fromUsername: 'hiburimmailer@gmail.com'
   },
 
+  uploadFolderPath: 'public/upload',
+
   uiExposedConfig: {
   	// as opposed to fixture data
-  	useRealData: true
+  	useRealData: true,
+    maxUploadImageSize: 3, //MB
   }
 };
 
@@ -26,9 +29,12 @@ var production = {
     fromUsername: 'hiburimmailer@gmail.com'
   },
 
+  uploadFolderPath: 'public/upload',
+
   uiExposedConfig: {
   	// as opposed to fixture data
-  	useRealData: true
+  	useRealData: true,
+    maxUploadImageSize: 3, //MB
   }
 };
 
