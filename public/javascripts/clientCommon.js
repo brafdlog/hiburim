@@ -30,6 +30,15 @@ $.hib.put = function(url, data, success, error) {
 	});
 };
 
+// String ends with
+$.hib.strEndsWith = function(str, suffix) {
+    return str.indexOf(suffix, str.length - suffix.length) !== -1;
+};
+
+$.hib.strStartsWith = function(str, prefix) {
+    return(str.indexOf(prefix) === 0);
+};
+
 /*
 	Makes the table editable if:
 		1. The table has the following classes in the right places:  
