@@ -39,6 +39,13 @@ $.hib.strStartsWith = function(str, prefix) {
     return(str.indexOf(prefix) === 0);
 };
 
+$.hib.generateRandomNumber = function(upperLimit) {
+	if (!upperLimit) {
+		upperLimit = 10000000;
+	}
+	return Math.random() * upperLimit;
+};
+
 /*
 	Makes the table editable if:
 		1. The table has the following classes in the right places:  

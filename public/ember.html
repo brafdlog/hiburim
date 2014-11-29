@@ -449,12 +449,15 @@
       <div class="carousel-inner" role="listbox">
         {{#each image in controller.imagesForView}}
         <div {{bind-attr class=":item image.isActive:active"}}>
-          <img {{bind-attr src=image.url}} alt="Item image" class="carouselImg">
-        </div>
-        {{/each}}
-      </div>
+          <div>
+           <span id="donorItemImageDeleteIcon" {{action 'deleteImage' image}} title="מחק" class="glyphicon glyphicon-remove deleteIcon"></span>
+         </div>
+         <img {{bind-attr src=image.url}} alt="Item image" class="carouselImg">
+       </div>
+       {{/each}}
+     </div>
 
-      <!-- Controls -->
+     <!-- Controls -->
       <a class="left carousel-control" href="#donor-item-image-carousel" role="button" data-slide="prev">
         <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
         <span class="sr-only">Previous</span>

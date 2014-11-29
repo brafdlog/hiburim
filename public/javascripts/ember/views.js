@@ -18,7 +18,7 @@ App.DonorItemImagesView = Ember.View.extend({
 	didInsertElement: function() {
 		this._super();
 		var controller = this.get('controller');
-		$("#donorItemImageUploadForm").dropzone({ 
+		var dropzone =  new Dropzone("#donorItemImageUploadForm", { 
 			url: this.get('controller.uploadUrl'),
 			maxFilesize: $.hibConfig.maxUploadImageSize, // MB,
 			init: function() {
@@ -26,6 +26,16 @@ App.DonorItemImagesView = Ember.View.extend({
 					controller.send('imageAdded', file, fileServerUrl);
 				});
 			}
+		});
+
+		// // remove images from dropzone when they are done
+		// dropzone.on("complete", function(file) {
+		// 	dropzone.removeFile(file);
+		// });
+
+		$('#donor-item-image-carousel').carousel({
+			// Don't automatically cycle
+			interval: false
 		});
     }
 });

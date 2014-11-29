@@ -5,3 +5,8 @@
 #donor-item-image-carousel {
 	margin-top: 60px;
 }
+
+#donorItemImageDeleteIcon {
+	position: relative;
+	left: -100px;
+}

@@ -2,6 +2,16 @@ var formidable = require('formidable');
 var fs = require('fs-extra');
 var config = require('../config').Config;
 
+function deleteFile(filePath, callback) {
+	// don't let user delete anything he wants on the server
+	if(filePath.indexOf(config.uploadFolderPath) !== -1) {
+		fs.remove(filePath, callback);
+	} else {
+		console.log('Tried to delete a file in path ' + filePath + '. Cant delete from there');
+		callback("'Tried to delete a file in path ' + filePath + '. Cant delete from there'");
+	}
+}
+
 function handleFileUpload(req, relativePath, callback) {
 	 var form = new formidable.IncomingForm();
 
@@ -51,3 +61,4 @@ function _strStartsWith(str, prefix) {
 
 exports.handleServerError = handleServerError;
 exports.handleFileUpload = handleFileUpload;
+exports.deleteFile = deleteFile;

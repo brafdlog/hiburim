@@ -201,9 +201,38 @@ App.DonorItemImagesController = Ember.ObjectController.extend({
 			if (!images) {
 				images = [];
 			}
-			images.addObject({url: fileServerUrl});
+			var imageId = $.hib.generateRandomNumber();
+			images.addObject({id: imageId, url: fileServerUrl});
 			donorModel.set('item.images', images);
 			donorModel.save();
+		},
+		deleteImage: function(imageToDelete) {
+			var that = this;
+			bootbox.confirm('האם למחוק?', function(userWantsToDelete) {
+				if (userWantsToDelete) {
+					var donorModel = that.get('model');
+					var images = donorModel.get('item.images');
+					images.removeObject(imageToDelete);
+					donorModel.set('item.images', images);
+					donorModel.save();
+
+					var donorId = that.get('model.id');
+					$.ajax({
+						type: "DELETE",
+						url: 'donors/' + donorId + '/image',
+						data: JSON.stringify(imageToDelete),
+						contentType: "application/json",
+						dataType: 'json',
+						success: function() {
+							console.log('Deleted image successfully');
+						},
+						error: function(error) {
+							console.log('Failed deleting image. Error ' + JSON.stringify(error));
+							alert('failed deleting image');
+						}
+					});
+				}
+			});
 		}
 	}
 });
