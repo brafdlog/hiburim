@@ -175,6 +175,39 @@ App.CarController = App.SingleModelController.extend({
 
 });
 
+App.DonorItemImagesController = Ember.ObjectController.extend({
+	imagesForView: function() {
+		var itemImages = this.get('model.item.images');
+		
+		if (itemImages && itemImages.length > 0) {
+			// Set the first element as active in the carousel
+			itemImages.objectAt(0).isActive = true;
+
+			// Set indexes for images. this is also used in the carousel
+			for (var i=0; i<itemImages.length; i++) {
+				itemImages.objectAt(i).index = i;
+			}
+		}
+		
+		return itemImages;
+	}.property('model.item.images'),
+	uploadUrl: function() {
+		return '/donors/' + this.get('model.id') + '/uploadImage';
+	}.property('model._id'),
+	actions: {
+		imageAdded: function(file, fileServerUrl) {
+			var donorModel = this.get('model');
+			var images = donorModel.get('item.images');
+			if (!images) {
+				images = [];
+			}
+			images.addObject({url: fileServerUrl});
+			donorModel.set('item.images', images);
+			donorModel.save();
+		}
+	}
+});
+
 App.CarEmailController = Ember.ObjectController.extend({
 	emailAddress: "",
 	actions: {

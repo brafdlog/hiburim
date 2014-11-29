@@ -69,7 +69,8 @@ App.Donor.reopenClass({
 		item: {
 			category: 'ספה',
 			requiresDismanteling: true,
-			description: 'זה ארון מאוד יפה'
+			description: 'זה ארון מאוד יפה',
+			images: [{url: 'upload/donors/5479f9651121daea57870d8e/itemImages/fixacomputer.png'}]
 		},
 		address: {
 			geoQueryString: "Dubnov 10, Tel Aviv",
@@ -81,7 +82,7 @@ App.Donor.reopenClass({
 			hasElavator: true,
 			hasParking: false,
 			description: "זאת כתובת מאוד מסובכת"
-		},
+		}
 	},
 	{
 		id: 2,

@@ -22,12 +22,6 @@
   <!-- Bootstrap right to left extension -->
   <link rel="stylesheet" href="/stylesheets/bootstrap/bootstrap-rtl.min.css">
 
-  <link href="/stylesheets/generalLayout.css" rel="stylesheet">
-  <link href="/stylesheets/cars.css" rel="stylesheet">
-  <link href="/stylesheets/consumers.css" rel="stylesheet">
-  <!-- Custom stylesheet currently empty -->
-  <link href="/stylesheets/ember.css" rel="stylesheet">
-
   <!-- Pickadate stylesheets -->
   <link href="/stylesheets/pickadate/classic.css" rel="stylesheet">
   <link href="/stylesheets/pickadate/classic.date.css" rel="stylesheet">
@@ -36,6 +30,14 @@
 
   <link href="/stylesheets/dropzone/basic.css" rel="stylesheet">
   <link href="/stylesheets/dropzone/dropzone.css" rel="stylesheet">
+
+
+  <link href="/stylesheets/generalLayout.css" rel="stylesheet">
+  <link href="/stylesheets/cars.css" rel="stylesheet">
+  <link href="/stylesheets/consumers.css" rel="stylesheet">
+  <link href="/stylesheets/donors.css" rel="stylesheet">
+  <!-- Custom stylesheet currently empty -->
+  <link href="/stylesheets/ember.css" rel="stylesheet">
 
   <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!--[if lt IE 9]>
@@ -343,7 +345,7 @@
 <script type="text/x-handlebars" id="donors">
   {{partial 'headerAndSearchRow'}}
   <div class="row">
-    <div class="col-md-10 col-md-offset-1 main">
+    <div class="col-md-10 main">
       <div {{bind-attr class=":deskopTableView controller.hideTableOnMobile:hidden-xs"}}>
         <div class="table-responsive">
           <table id="donorsTable" class="table table-striped">
@@ -354,6 +356,7 @@
                 <th>תאריכים פנויים</th>
                 <th {{action 'sortBy' 'item.category'}}>סוג הפריט</th>
                 <th>תיאור הפריט</th>
+                <th>תמונות</th>
                 <th>כתובת הפונה</th>
                 <th>קומה</th>
                 <th>מספר דירה</th>
@@ -393,6 +396,9 @@
     <td class="itemDescriptionTd">
        {{textarea value=item.description disabled=controller.isNotEdited cols="10" rows="3"}}
     </td>
+    <td>
+      {{#link-to 'donorItemImages' this}} <span class="glyphicon glyphicon-picture" aria-hidden="true"></span> {{/link-to}}
+    </td>
     <td class="addressTd">
       <a {{bind-attr href=controller.googleMapsUrl}} {{bind-attr hidden=controller.mapLinkNotActive}} target="_blank">
         {{input type="text" class="addressInput" disabled=controller.isNotEdited value=address.geoDisplayString}}
@@ -421,5 +427,47 @@
     </td>
   </tr>
 </script>
+
+<script type="text/x-handlebars" id="donorItemImages">
+ <div class="row">
+  <div class="col-md-4 col-md-offset-1">
+    <h1>העלאת תמונות</h1>
+    <form {{bind-attr action=controller.uploadUrl}} method="post" enctype="multipart/form-data" class="dropzone" id="donorItemImageUploadForm">
+      <div class="dz-message" data-dz-message><span>לחץ או גרור תמונה לכאן</span></div>
+    </form>
+  </div>
+  <div class="col-md-4 col-md-offset-1">
+    {{#if controller.imagesForView}}
+    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+      <!-- Indicators -->
+      <ol class="carousel-indicators">
+        {{#each image in controller.imagesForView}}
+        <li data-target="#carousel-example-generic" {{bind-attr data-slide-to=image.index}} {{bind-attr class="image.isActive:active"}}></li>
+        {{/each}}
+      </ol>
+      <!-- Wrapper for slides -->
+      <div class="carousel-inner" role="listbox">
+        {{#each image in controller.imagesForView}}
+        <div {{bind-attr class=":item image.isActive:active"}}>
+          <img {{bind-attr src=image.url}} alt="Item image" class="carouselImg">
+        </div>
+        {{/each}}
+      </div>
+
+      <!-- Controls -->
+      <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div>
+    {{else}}
+    <h1>אין תמונות</h1>
+    {{/if}}
+
+  </script>
 
 </html>

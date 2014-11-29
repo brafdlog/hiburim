@@ -11,6 +11,25 @@ App.ApplicationView = Ember.View.extend({
     }
 });
 
+App.DonorItemImagesView = Ember.View.extend({
+	imagesForView: function() {
+		return this.get('controller.model.item.images');
+	}.observes('controller.model.item.images').on('init'),
+	didInsertElement: function() {
+		this._super();
+		var controller = this.get('controller');
+		$("#donorItemImageUploadForm").dropzone({ 
+			url: this.get('controller.uploadUrl'),
+			maxFilesize: $.hibConfig.maxUploadImageSize, // MB,
+			init: function() {
+				this.on('success', function(file, fileServerUrl) {
+					controller.send('imageAdded', file, fileServerUrl);
+				});
+			}
+		});
+    }
+});
+
 App.TableRowView = Ember.View.extend({
 	tagName: 'tbody',
 

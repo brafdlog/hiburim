@@ -38,3 +38,8 @@ App.DonorRoute = Ember.Route.extend({
 		return this.store.find('donor', params.donor_id);
 	}
 });
+
+// model hook implemented in super (donorRoute)
+App.DonorItemImagesRoute = App.DonorRoute.extend({
+	
+});

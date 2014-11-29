@@ -59,3 +59,9 @@ table input {
 .sendCarEmailRow {
   margin-top: 20px;
 }
+
+.carouselImg img {
+  width: auto;
+  height: 225px;
+  max-height: 225px;
+}
