@@ -47,41 +47,6 @@ router.post('/', function(req, resp) {
 	});
 });
 
-// Upload item image
-router.post('/:donorId/uploadImage', function(req, resp) {
-	console.log("Got request to upload a donor's item image");
-	var donorId = req.params.donorId;
-
-	var relativeUploadPath = _buildItemImageRelativePath(donorId);
-	routesCommon.handleFileUpload(req, relativeUploadPath, function(err, newfilePath) {
-		if (err) {
-			console.error('Failed uploading image. Error:' + err);
-			routesCommon.handleServerError(resp, 'Failed uploading image');
-		} else {
-			console.log('Uploaded donor item image successfully');
-			resp.status(200).send(newfilePath).end();
-		}
-	});
-});
-
-// Delete item image
-router.delete('/:donorId/image', function(req, resp) {
-	console.log("Got request to upload a donor's item image");
-	var donorId = req.params.donorId;
-	var imageToDeletePath = req.body.url;
-	imageToDeletePath = 'public/' + imageToDeletePath;
-	
-	routesCommon.deleteFile(imageToDeletePath, function(err) {
-		if (err) {
-			console.error('Failed deleting image. Error:' + err);
-			routesCommon.handleServerError(resp, 'Failed deleting image');
-		} else {
-			resp.status(204).end();
-		}
-	});
-	
-});
-
 // Update donor
 router.put('/:donorId', function(req, resp) {
 	var updatedDonor = req.body.donor;
@@ -106,6 +71,43 @@ router.delete('/:donorId', function(req, resp) {
 			resp.status(204).end();
 		}
 	});
+});
+
+// Upload item image
+router.post('/:donorId/images', function(req, resp) {
+	console.log("Got request to upload a donor's item image");
+	var donorId = req.params.donorId;
+
+	var relativeUploadPath = _buildItemImageRelativePath(donorId);
+	routesCommon.handleFileUpload(req, relativeUploadPath, function(err, newfilePath) {
+		if (err) {
+			console.error('Failed uploading image. Error:' + err);
+			routesCommon.handleServerError(resp, 'Failed uploading image');
+		} else {
+			console.log('Uploaded donor item image successfully');
+			resp.status(200).send(newfilePath).end();
+		}
+	});
+});
+
+// Delete item image
+router.delete('/:donorId/images/:imagePathEncoded', function(req, resp) {
+	console.log("Got request to upload a donor's item image");
+	var donorId = req.params.donorId;
+	var imageToDeletePath = req.params.imagePathEncoded;
+	// The image path is url encoded, need to decode it
+	imageToDeletePath = decodeURIComponent(imageToDeletePath);
+	imageToDeletePath = 'public/' + imageToDeletePath;
+	
+	routesCommon.deleteFile(imageToDeletePath, function(err) {
+		if (err) {
+			console.error('Failed deleting image. Error:' + err);
+			routesCommon.handleServerError(resp, 'Failed deleting image');
+		} else {
+			resp.status(204).end();
+		}
+	});
+	
 });
 
 function _buildItemImageRelativePath(donorId) {

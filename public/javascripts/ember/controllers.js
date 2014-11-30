@@ -188,11 +188,10 @@ App.DonorItemImagesController = Ember.ObjectController.extend({
 				itemImages.objectAt(i).index = i;
 			}
 		}
-		
 		return itemImages;
 	}.property('model.item.images'),
 	uploadUrl: function() {
-		return '/donors/' + this.get('model.id') + '/uploadImage';
+		return '/donors/' + this.get('model.id') + '/images';
 	}.property('model._id'),
 	actions: {
 		imageAdded: function(file, fileServerUrl) {
@@ -201,8 +200,7 @@ App.DonorItemImagesController = Ember.ObjectController.extend({
 			if (!images) {
 				images = [];
 			}
-			var imageId = $.hib.generateRandomNumber();
-			images.addObject({id: imageId, url: fileServerUrl});
+			images.addObject({url: fileServerUrl});
 			donorModel.set('item.images', images);
 			donorModel.save();
 		},
@@ -216,11 +214,13 @@ App.DonorItemImagesController = Ember.ObjectController.extend({
 					donorModel.set('item.images', images);
 					donorModel.save();
 
+					var imageUrl = imageToDelete.url;
+					var encodedImageUrl = encodeURIComponent(imageUrl);
+
 					var donorId = that.get('model.id');
 					$.ajax({
 						type: "DELETE",
-						url: 'donors/' + donorId + '/image',
-						data: JSON.stringify(imageToDelete),
+						url: 'donors/' + donorId + '/images/' + encodedImageUrl,
 						contentType: "application/json",
 						dataType: 'json',
 						success: function() {
