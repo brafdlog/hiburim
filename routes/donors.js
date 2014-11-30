@@ -3,6 +3,8 @@ var donorDAO = require("../DAOs/donorDAO");
 var express = require('express');
 var _ = require("underscore");
 var router = express.Router();
+var fs = require('fs-extra');
+var config = require('../config').Config;
 
 // Get all donors
 router.get('/', function(req, resp) {	
@@ -73,6 +75,26 @@ router.delete('/:donorId', function(req, resp) {
 	});
 });
 
+// Get all item images
+router.get('/:donorId/images', function(req, resp) {
+	var donorId = req.params.donorId;
+	console.log("Got request to get all item images of donor with id " + donorId);
+
+	var imagesDirectoryAbsolutePath = _buildeItemImagesDirectoryAbsolutePath(donorId);
+	fs.readdir(imagesDirectoryAbsolutePath, function(err, files) {
+		if (err) {
+			routesCommon.handleServerError(resp, err);
+		} else {
+			var toReturn = files.map(function(fileName){
+				var imageRelativePath = _buildItemImageRelativePath(donorId) + fileName;
+				return {url: imageRelativePath};
+			});
+			resp.json(toReturn).end();
+		}
+	});
+
+});
+
 // Upload item image
 router.post('/:donorId/images', function(req, resp) {
 	console.log("Got request to upload a donor's item image");
@@ -112,6 +134,10 @@ router.delete('/:donorId/images/:imagePathEncoded', function(req, resp) {
 
 function _buildItemImageRelativePath(donorId) {
 	return 'donors/' + donorId + '/itemImages/';
+}
+
+function _buildeItemImagesDirectoryAbsolutePath(donorId) {
+	return process.env.PWD + '/' + config.uploadFolderPath + '/' + _buildItemImageRelativePath(donorId);
 }
 
 module.exports = router;
