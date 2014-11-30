@@ -236,15 +236,37 @@ App.DonorItemImagesController = Ember.ObjectController.extend({
 		}
 	}
 });
-
+/*
+ar availableFromDateTime = this.get('model.availableFromDateTime');
+		if (availableFromDateTime) {
+			var availabeFromMoment = moment(availableFromDateTime);
+			var dateStr = availabeFromMoment.format($.hib.consts.momentDateFormat);
+			this.set('availableFromDateStr', dateStr);
+			var timeStr = availabeFromMoment.format($.hib.consts.momentTimeFormat);
+			this.set('availableFromTimeStr', timeStr);
+		}
+ */
 App.CarEmailController = Ember.ObjectController.extend({
 	emailAddress: "",
 	actions: {
 		sendEmail: function(car) {
+			var availableFromDateTime = this.get('model.availableFromDateTime');
+			var dateStr, timeStr;
+			if (availableFromDateTime) {
+				var availabeFromMoment = moment(availableFromDateTime);
+				dateStr = availabeFromMoment.format($.hib.consts.momentDateFormat);
+				timeStr = availabeFromMoment.format($.hib.consts.momentTimeFormat);
+			}
+
 			var postData = {
 				emailAddress: 'brafdlog@gmail.com',
 				mailParams: {
-					mailType: 'sendCar'
+					mailType: 'sendCar',
+					availableFromDate: dateStr,
+					availableFromTime: timeStr,
+					availableDurationInHours: car.get('availableDurationInHours'),
+					driverName: car.get('driverName'),
+					driverNumber: car.get('driverNumber')
 				}
 			}; 
 			var controller = this;

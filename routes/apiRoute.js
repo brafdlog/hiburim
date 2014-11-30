@@ -1,7 +1,14 @@
 var express = require('express');
-var router = express.Router();
+var handlebars = require('handlebars');
 var nodemailer = require('nodemailer');
 var config = require('../config').Config;
+var fs = require('fs-extra');
+
+var router = express.Router();
+
+var mailTemplates = {
+	sendCarTemplate: ''
+};
 
 var transporter = nodemailer.createTransport({
 	service: 'gmail',
@@ -37,14 +44,24 @@ router.post('/email', function(req, resp) {
 });
 
 function _getMailConfigByType(mailParams) {
+
 	if (mailParams.mailType === 'sendCar') {
-		return {
-			subject: 'רכב פנוי להובלה',
-			body: 'שלום, יש רכב פנוי להובלה. אנא כנס לאתר של חיבורים כדי להתעדכן. תודה!'
-		};
+		return {body: mailTemplates.sendCarTemplate(mailParams), subject: 'הודעה מחיבורים - רכב פנוי להובלה'};
 	} else {
 		return false;
 	}
 }
+
+// Init email templates
+(function() {
+	var emailTemplateFolderPath = process.env.PWD + '/views/emailTemplates';
+	fs.readFile(emailTemplateFolderPath + '/carAvailable.hbs', 'utf8', function (err,templateSource) {
+		if (err) {
+			console.log("Failed loading template for sendCar email");
+		} else {
+			mailTemplates.sendCarTemplate = handlebars.compile(templateSource);
+		}
+	});
+})();
 
 module.exports = router;
