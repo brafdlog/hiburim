@@ -10,6 +10,13 @@ if ($.hibConfig.useRealData) {
   			options = options ? options : {};
   			options.includeId = true;
     		return this._super.apply(this, [record, options]); // Get default serialization
+    	},
+    	// This allows defining non persistant model attributes
+    	serializeAttribute: function(record, json, key, attribute) {
+    		if (attribute.options.transient) {
+    			return;
+    		}
+    		return this._super(record, json, key, attribute);
     	}
     });
 } else {
@@ -25,7 +32,7 @@ App.RawTransform = DS.Transform.extend({
 	},
 	serialize: function(deserialized) {
 		return deserialized;
-	}
+	},
 });
 
 App.register("transform:raw", App.RawTransform);
