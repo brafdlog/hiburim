@@ -259,7 +259,7 @@ App.CarEmailController = Ember.ObjectController.extend({
 			}
 
 			var postData = {
-				emailAddress: 'brafdlog@gmail.com',
+				emailAddress: this.get('emailAddress'),
 				mailParams: {
 					mailType: 'sendCar',
 					availableFromDate: dateStr,
