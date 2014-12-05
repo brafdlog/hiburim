@@ -55,7 +55,6 @@ function getServerConfig(serverProvider) {
   if (serverProvider === 'heroku') {
     console.log('Using heroku server config');
     return {
-      hostIp: '127.0.0.1',
       port: process.env.PORT
     };
   }
