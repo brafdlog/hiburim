@@ -5,5 +5,8 @@ sudo iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 80 -j REDIRECT --to-po
 Add the following to file /etc/rc.local:
 iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 80 -j REDIRECT --to-port 3000
 
-// Install imagemagick which is used by the server for resizing
+// Install imagemagick which is used by the server for resizing1
 sudo apt-get install imagemagick
+
+// Forever command (-w for watching for changes, --apend so it will append logs)
+forever -w --append -l ~/log/forever.log -o ~/log/stdout.log -e ~/log/stderr.log start ./bin/www
