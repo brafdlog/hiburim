@@ -3,9 +3,8 @@ var development = {
  ***REMOVED***
   env: global.process.env.NODE_ENV || 'development',
   serverProvider: global.process.env.SERVER_PROVIDER,
-  serverConfig: getSevrerConfig(serverProvider),
-  hostIp: serverConfig.hostIp,
-  serverPort: serverConfig.port,
+  hostIp: getServerConfig(this.serverProvider).hostIp,
+  serverPort: getServerConfig(this.serverProvider).port,
 
   mailSender: {
     authUsername: 'hiburimmailer@gmail.com',
@@ -27,9 +26,8 @@ var production = {
  ***REMOVED***
   env: global.process.env.NODE_ENV || 'production',
   serverProvider: global.process.env.SERVER_PROVIDER,
-  serverConfig: getSevrerConfig(serverProvider),
-  hostIp: serverConfig.hostIp,
-  serverPort: serverConfig.port,
+  hostIp: getServerConfig(this.serverProvider).hostIp,
+  serverPort: getServerConfig(this.serverProvider).port,
 
   mailSender: {
     authUsername: 'hiburimmailer@gmail.com',
@@ -46,35 +44,29 @@ var production = {
   }
 };
 
-function getSevrerConfig(serverProvider) {
+function getServerConfig(serverProvider) {
   if (!serverProvider) {
     console.log('Using local server config');
-    return local_server_config;
+    return {
+      hostIp: '127.0.0.1',
+      port: 3000
+    };
   }
   if (serverProvider === 'heroku') {
     console.log('Using heroku server config');
-    return heroku_server_config;
+    return {
+      hostIp: '127.0.0.1',
+      port: process.env.PORT
+    };
   }
   if (serverProvider === 'openshift') {
     console.log('Using openshift server config');
-    return openshift_server_config;
+    return {
+      hostIp: process.env.OPENSHIFT_NODEJS_IP,
+      port: process.env.OPENSHIFT_NODEJS_PORT
+    };
   }
   console.log('Server provider ' + serverProvider + ' does not fit any sevrer config!!');
 }
-
-var local_server_config = {
-  hostIp: '127.0.0.1',
-  port: 3000
-};
-
-var heroku_server_config = {
-  hostIp: '127.0.0.1',
-  port: process.env.PORT
-};
-
-var openshift_server_config = {
-  hostIp: process.env.OPENSHIFT_NODEJS_IP,
-  port: process.env.OPENSHIFT_NODEJS_PORT
-};
 
 exports.Config = global.process.env.NODE_ENV === 'production' ? production : development;

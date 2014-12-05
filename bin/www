@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 var debug = require('debug')('express');
 var app = require('../app');
-var config = require('./config').Config;
+var config = require('../config').Config;
 
 app.set('hostIp', config.hostIp);
 app.set('port', config.port);
