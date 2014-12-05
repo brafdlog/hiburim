@@ -19,6 +19,7 @@ var apiRoute = require('./routes/apiRoute');
 var app = express();
 
 console.log('Using ' + config.env + ' configuration');
+console.log('Server provider: ' + global.process.env.SERVER_PROVIDER);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

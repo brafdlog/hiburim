@@ -1,9 +1,10 @@
 #!/usr/bin/env node
 var debug = require('debug')('express');
 var app = require('../app');
+var config = require('./config').Config;
 
-app.set('hostIp', process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1');
-app.set('port', process.env.OPENSHIFT_NODEJS_PORT || process.env.PORT || 3000);
+app.set('hostIp', config.hostIp);
+app.set('port', config.port);
 
 var server = app.listen(app.get('port'), app.get('hostIp'), function() {
   debug('Express server listening on port ' + server.address().port);
