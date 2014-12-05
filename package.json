@@ -3,9 +3,11 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon ./bin/www",
+    "start": "node server.js",
     "test": "mocha"
   },
+  "main": "server.js",
+
   "dependencies": {
     "express": "~4.9.0",
     "body-parser": "~1.8.1",
