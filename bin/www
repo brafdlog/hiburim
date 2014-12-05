@@ -8,11 +8,26 @@ app.set('port', config.port);
 
 var server;
 if (process.env.SERVER_PROVIDER === 'heroku') {
-	server = app.listen(process.env.PORT, function() {
+	console.log('Running on heroku');
+	var port = process.env.PORT;
+	console.log('Listening to port: ' + port);
+	server = app.listen(port, function() {
+		debug('Express server listening on port ' + server.address().port);
+	});	
+} else if (process.env.SERVER_PROVIDER === 'openshift') {
+	console.log('Running on openshift');
+	var port = process.env.OPENSHIFT_NODEJS_PORT;
+	var ip = process.env.OPENSHIFT_NODEJS_IP;
+	console.log('Listening to ip: ' + ip + '. port: ' + port);
+	server = app.listen(port, ip, function() {
 		debug('Express server listening on port ' + server.address().port);
 	});	
 } else {
-	server = app.listen(app.get('port'), app.get('hostIp'), function() {
+	// localhost
+	 console.log('Running on localhost');
+	 var port = 3000;
+	 console.log('Listening to port: ' + port);
+	 server = app.listen(port, function() {
 		debug('Express server listening on port ' + server.address().port);
 	});	
 }
