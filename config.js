@@ -1,10 +1,10 @@
 var development = {
   appAddress: '127.0.0.1:3000',
  ***REMOVED***
-  env: global.process.env.NODE_ENV || 'development',
-  serverProvider: global.process.env.SERVER_PROVIDER,
-  hostIp: getServerConfig(this.serverProvider).hostIp,
-  serverPort: getServerConfig(this.serverProvider).port,
+  env: process.env.NODE_ENV || 'development',
+  serverProvider: process.env.SERVER_PROVIDER,
+  hostIp: getServerConfig(process.env.SERVER_PROVIDER).hostIp,
+  serverPort: getServerConfig(process.env.SERVER_PROVIDER).port,
 
   mailSender: {
     authUsername: 'hiburimmailer@gmail.com',
@@ -24,10 +24,10 @@ var development = {
 var production = {
   appAddress : 'hiburim.herokuapp.com',
  ***REMOVED***
-  env: global.process.env.NODE_ENV || 'production',
-  serverProvider: global.process.env.SERVER_PROVIDER,
-  hostIp: getServerConfig(this.serverProvider).hostIp,
-  serverPort: getServerConfig(this.serverProvider).port,
+  env: process.env.NODE_ENV || 'production',
+  serverProvider: process.env.SERVER_PROVIDER,
+  hostIp: getServerConfig(process.env.SERVER_PROVIDER).hostIp,
+  serverPort: getServerConfig(process.env.SERVER_PROVIDER).port,
 
   mailSender: {
     authUsername: 'hiburimmailer@gmail.com',
@@ -69,4 +69,4 @@ function getServerConfig(serverProvider) {
   console.log('Server provider ' + serverProvider + ' does not fit any sevrer config!!');
 }
 
-exports.Config = global.process.env.NODE_ENV === 'production' ? production : development;
+exports.Config = process.env.NODE_ENV === 'production' ? production : development;
