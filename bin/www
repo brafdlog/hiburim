@@ -7,14 +7,12 @@ app.set('hostIp', config.hostIp);
 app.set('port', config.port);
 
 var server;
-if (app.get('hostIp')) {
-	server = app.listen(app.get('port'), app.get('hostIp'), function() {
+if (process.env.SERVER_PROVIDER === 'heroku') {
+	server = app.listen(process.env.PORT, function() {
 		debug('Express server listening on port ' + server.address().port);
 	});	
 } else {
-	server = app.listen(app.get('port'), function() {
+	server = app.listen(app.get('port'), app.get('hostIp'), function() {
 		debug('Express server listening on port ' + server.address().port);
 	});	
 }
-
-
