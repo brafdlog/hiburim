@@ -39,11 +39,16 @@ app.use(compression({
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+
 // Use quickthumb for images
 app.use('/images', quickthumb.static(__dirname + '/public/images'));
+
 // Cache static resources for one year
-var oneYear = "31557600000";
-app.use(express.static(path.join(__dirname, 'public'), {maxage: oneYear}));
+// var oneYear = "31557600000";
+// app.use(express.static(path.join(__dirname, 'public'), {maxage: oneYear}));
+
+// Don't cache
+app.use(express.static(path.join(__dirname, 'public'), {maxage: 0}));
 
 app.use('/', routes);
 app.use('/cars', cars);
