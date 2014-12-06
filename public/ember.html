@@ -253,47 +253,33 @@
 <script type="text/x-handlebars" id="carEmail">
  <div class="row sendCarEmailRow">
   <div class="col-md-5 col-md-offset-1">
+    <div class="form-group">
+      <label for="carEmailAddressInput">כתובת</label>
+      {{input type="email" class="form-control" id="carEmailAddressInput" placeholder="כתובת מייל" value=controller.emailAddress}}
+    </div>
+    <div class="form-group">
+      <label for="carEmailSubjectInput">נושא</label>
+      {{input type="text" class="form-control" id="carEmailSubjectInput" value=controller.emailSubject}}
+    </div>
+    <div class="form-group">
+      <label for="carEmailBodyInput">תוכן</label>
+      {{textarea class="form-control" id="carEmailBodyInput" value=controller.emailBody cols="40" rows="9"}}
+    </div> 
     <div class="row">
-      <div class="col-md-3">
-        כתובת:
+      <div class="col-md-2 col-md-offset-10">
+        <button {{action "sendEmail" this}} type="button" class="btn btn-primary">שלח מייל</button>
       </div>
-      <div class="col-md-5">
-        <div contenteditable="true" id="carEmailToAddressDiv">
-          
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-3">
-        נושא:
-      </div>
-      <div class="col-md-9">
-        <div contenteditable="true" id="carEmailSubjectDiv">
-          הודעה מחיבורים - רכב פנוי להובלה
-        </div>
-      </div>
-    </div>
-    <div class="row">
-     <div class="col-md-3">
-      תוכן:
-    </div>
-    <div class="col-md-9">
-      <div contenteditable="true" id="carEmailBodyDiv">
-        הי, <br>
-        יש רכב פנוי להובלה בתאריך {{controller.availableFromDateStr}} בשעה {{controller.availableFromTimeStr}}. <br>
-        הרכב יהיה זמין למשך {{availableDurationInHours}} שעות. <br>
-        שם הנהג: {{driverName}} <br>
-        מספר הטלפון של הנהג: {{driverNumber}} <br>
-        תודה
-      </div>
-    </div>
-  </div>  
-  <div class="row">
-    <div class="col-md-3 col-md-offset-9">
-      <button {{action "sendEmail" this}} type="button" class="btn btn-default">שלח מייל</button>
     </div>
   </div>
-</div>
+</script>
+
+<script type="text/x-handlebars-template" id="carEmailBodyTemplate">
+הי,
+יש רכב פנוי להובלה בתאריך {{availableFromDateStr}} בשעה {{availableFromTimeStr}}.
+הרכב יהיה זמין למשך {{availableDurationInHours}} שעות.
+שם הנהג: {{driverName}}
+מספר הטלפון של הנהג: {{driverNumber}}
+תודה
 </script>
 
 <!-- Consumer table - desktop view -->

@@ -238,29 +238,20 @@ App.DonorItemImagesController = Ember.ObjectController.extend({
 });
 
 App.CarEmailController = Ember.ObjectController.extend({
-	availableFromDateStr: function() {
-		var availableFromDateTime = this.get('model.availableFromDateTime');
-		return moment(availableFromDateTime).format($.hib.consts.momentDateFormat);
-	}.property('model.availableFromDateTime'),
-	availableFromTimeStr: function() {
-		var availableFromDateTime = this.get('model.availableFromDateTime');
-		return moment(availableFromDateTime).format($.hib.consts.momentTimeFormat);
-	}.property('model.availableFromDateTime'),
+	emailAddress: "",
+	emailSubject: "הודעה מחיבורים - רכב פנוי להובלה",
+	emailBody: "",
 	actions: {
 		sendEmail: function(car) {
-			var emailAddress = $('#carEmailToAddressDiv').text();
-			var emailSubject = $('#carEmailSubjectDiv').text();
-			var emailBody = $('#carEmailBodyDiv').text();
-
-			if (!emailAddress || !emailAddress.trim()) {
+			if (!this.get('emailAddress')) {
 				bootbox.alert('אנא מלאו כתובת מייל');
 				return;
 			}
 
 			var postData = {
-				emailAddress: emailAddress,
-				emailSubject: emailSubject,
-				emailBody: emailBody
+				emailAddress: this.get('emailAddress'),
+				emailSubject: this.get('emailSubject'),
+				emailBody: this.get('emailBody')
 			};
 			var controller = this;
 			$.ajax({

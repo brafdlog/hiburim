@@ -65,6 +65,33 @@ App.CarView = App.TableRowView.extend({
 	templateName: 'carRowTemplate',
 });
 
+App.CarEmailView = Ember.View.extend({
+	availableFromDateStr: function() {
+		var availableFromDateTime = this.get('model.availableFromDateTime');
+		return moment(availableFromDateTime).format($.hib.consts.momentDateFormat);
+	}.property('model.availableFromDateTime'),
+	availableFromTimeStr: function() {
+		var availableFromDateTime = this.get('model.availableFromDateTime');
+		return moment(availableFromDateTime).format($.hib.consts.momentTimeFormat);
+	}.property('model.availableFromDateTime'),
+	didInsertElement: function() {
+		this._super();
+		var carEmailBodyTemplateSource = $("#carEmailBodyTemplate").html();
+		var carEmailBodyTemplate = Handlebars.compile(carEmailBodyTemplateSource);
+		var carModel = this.get('controller.model');
+		var handlebarsContext = {
+			availableFromDateStr: this.get('availableFromDateStr'),
+			availableFromTimeStr: this.get('availableFromTimeStr'),
+			availableDurationInHours: carModel.get('availableDurationInHours'),
+			driverName: carModel.get('driverName'),
+			driverNumber: carModel.get('driverNumber')
+		};
+		var emailBodyText = carEmailBodyTemplate(handlebarsContext);
+		emailBodyText = emailBodyText.trim();
+		this.set('controller.emailBody', emailBodyText);
+    }
+});
+
 App.PersonWithItemView = App.TableRowView.extend({
 	didInsertElement : function(){
 		var that = this;
