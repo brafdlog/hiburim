@@ -82,26 +82,6 @@ router.delete('/:donorId', function(req, resp) {
 	});
 });
 
-// Get all item images
-router.get('/:donorId/images', function(req, resp) {
-	var donorId = req.params.donorId;
-	console.log("Got request to get all item images of donor with id " + donorId);
-
-	var imagesDirectoryAbsolutePath = _buildeItemImagesDirectoryAbsolutePath(donorId);
-	fs.readdir(imagesDirectoryAbsolutePath, function(err, files) {
-		if (err) {
-			routesCommon.handleServerError(resp, err);
-		} else {
-			var toReturn = files.map(function(fileName){
-				var imageRelativePath = _buildItemImageRelativePath(donorId) + fileName;
-				return {url: imageRelativePath};
-			});
-			resp.json(toReturn).end();
-		}
-	});
-
-});
-
 // Upload item image
 router.post('/:donorId/images', function(req, resp) {
 	console.log("Got request to upload a donor's item image");
