@@ -68,9 +68,16 @@ router.delete('/:donorId', function(req, resp) {
 		if (err) {
 			routesCommon.handleServerError(resp, err);
 		} else {
-			// The status 204 is required in order for ember to not consider the deletion a failure
-			// Alternativley, can respond with 200 and and empty object - {}
-			resp.status(204).end();
+			var s3PhotoDirPath = 'donors/' + donorId;
+			routesCommon.deleteDirectory(s3PhotoDirPath, function(err) {
+				if (err) {
+					routesCommon.handleServerError(resp, err);
+				} else {
+					// The status 204 is required in order for ember to not consider the deletion a failure
+					// Alternativley, can respond with 200 and and empty object - {}
+					resp.status(204).end();
+				}
+			});
 		}
 	});
 });
@@ -119,7 +126,6 @@ router.delete('/:donorId/images/:imagePathEncoded', function(req, resp) {
 	var imageToDeletePath = req.params.imagePathEncoded;
 	// The image path is url encoded, need to decode it
 	imageToDeletePath = decodeURIComponent(imageToDeletePath);
-	imageToDeletePath = 'public/' + imageToDeletePath;
 	
 	routesCommon.deleteFile(imageToDeletePath, function(err) {
 		if (err) {

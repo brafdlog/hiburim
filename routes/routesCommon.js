@@ -1,15 +1,51 @@
 var formidable = require('formidable');
 var fs = require('fs-extra');
+var s3 = require('s3');
 var config = require('../config').Config;
 
-function deleteFile(filePath, callback) {
-	// don't let user delete anything he wants on the server
-	if(filePath.indexOf(config.uploadFolderPath) !== -1) {
-		fs.remove(filePath, callback);
-	} else {
-		console.log('Tried to delete a file in path ' + filePath + '. Cant delete from there');
-		callback("'Tried to delete a file in path ' + filePath + '. Cant delete from there'");
+var s3Client = s3.createClient({
+	s3Options: {
+		***REMOVED***,
+		***REMOVED***
 	}
+});
+
+function deleteDirectory(dirPath, callback) {
+
+	var params = {
+		Bucket: "hiburim",
+		Prefix: dirPath
+	};
+
+	var deletion = s3Client.deleteDir(params);
+	deletion.on('error', function(err) {
+		console.error("Failed deleting:", err.stack);
+		callback(err);
+	});
+	deletion.on('end', function() {
+		callback();
+	});
+}
+
+function deleteFile(filePath, callback) {
+
+	filePath = filePath.substring('http://hiburim.s3.amazonaws.com/'.length);
+
+	var params = {
+		Bucket: "hiburim",
+		Delete: {
+			Objects: [{Key: filePath}]
+		}
+	};
+
+	var deletion = s3Client.deleteObjects(params);
+	deletion.on('error', function(err) {
+		console.error("Failed deleting:", err.stack);
+		callback(err);
+	});
+	deletion.on('end', function() {
+		callback();
+	});
 }
 
 function handleFileUpload(req, relativePath, callback) {
@@ -24,23 +60,28 @@ function handleFileUpload(req, relativePath, callback) {
 	 	var temp_path = this.openedFiles[0].path;
 	 	/* The file name of the uploaded file */
 	 	var file_name = this.openedFiles[0].name;
-	 	/* Location where we want to copy the uploaded file */
-	 	var new_location = config.uploadFolderPath + '/' + relativePath;
 
-	 	// This is to prevent problems with duplicate names
-	 	// var epochString = (new Date()).getTime();
-	 	// file_name = file_name + '_' + epochString;
 
-	 	if (!_endsWith(new_location, '/')) {
-	 		new_location = new_location + '/';
-	 	}
+	 	var params = {
+	 		localFile: temp_path,
 
-	 	fs.copy(temp_path, new_location + file_name, function(err) {
-	 		// The ui accesses the files without the "public" in the path
-	 		if (_strStartsWith(new_location, 'public/')) {
-	 			new_location = new_location.substr('public/'.length);
-	 		}  
-	 		callback(err, new_location + file_name);
+	 		s3Params: {
+	 			Bucket: "hiburim",
+	 			Key: relativePath + file_name,
+	 			ACL: 'public-read'
+	 		}
+	 	};
+	 	var uploader = s3Client.uploadFile(params);
+	 	uploader.on('error', function(err) {
+	 		console.error("unable to upload:", err.stack);
+	 		callback(err);
+	 	});
+	 	// uploader.on('progress', function() {
+	 	// 	console.log("progress", uploader.progressMd5Amount,
+	 	// 		uploader.progressAmount, uploader.progressTotal);
+	 	// });
+	 	uploader.on('end', function() {
+	 		callback(undefined, 'http://hiburim.s3.amazonaws.com/' + relativePath + file_name);
 	 	});
 	 });
 }
@@ -62,3 +103,4 @@ function _strStartsWith(str, prefix) {
 exports.handleServerError = handleServerError;
 exports.handleFileUpload = handleFileUpload;
 exports.deleteFile = deleteFile;
+exports.deleteDirectory = deleteDirectory;
