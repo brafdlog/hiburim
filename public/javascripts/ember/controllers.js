@@ -236,39 +236,32 @@ App.DonorItemImagesController = Ember.ObjectController.extend({
 		}
 	}
 });
-/*
-ar availableFromDateTime = this.get('model.availableFromDateTime');
-		if (availableFromDateTime) {
-			var availabeFromMoment = moment(availableFromDateTime);
-			var dateStr = availabeFromMoment.format($.hib.consts.momentDateFormat);
-			this.set('availableFromDateStr', dateStr);
-			var timeStr = availabeFromMoment.format($.hib.consts.momentTimeFormat);
-			this.set('availableFromTimeStr', timeStr);
-		}
- */
+
 App.CarEmailController = Ember.ObjectController.extend({
-	emailAddress: "",
+	availableFromDateStr: function() {
+		var availableFromDateTime = this.get('model.availableFromDateTime');
+		return moment(availableFromDateTime).format($.hib.consts.momentDateFormat);
+	}.property('model.availableFromDateTime'),
+	availableFromTimeStr: function() {
+		var availableFromDateTime = this.get('model.availableFromDateTime');
+		return moment(availableFromDateTime).format($.hib.consts.momentTimeFormat);
+	}.property('model.availableFromDateTime'),
 	actions: {
 		sendEmail: function(car) {
-			var availableFromDateTime = this.get('model.availableFromDateTime');
-			var dateStr, timeStr;
-			if (availableFromDateTime) {
-				var availabeFromMoment = moment(availableFromDateTime);
-				dateStr = availabeFromMoment.format($.hib.consts.momentDateFormat);
-				timeStr = availabeFromMoment.format($.hib.consts.momentTimeFormat);
+			var emailAddress = $('#carEmailToAddressDiv').text();
+			var emailSubject = $('#carEmailSubjectDiv').text();
+			var emailBody = $('#carEmailBodyDiv').text();
+
+			if (!emailAddress || !emailAddress.trim()) {
+				bootbox.alert('אנא מלאו כתובת מייל');
+				return;
 			}
 
 			var postData = {
-				emailAddress: this.get('emailAddress'),
-				mailParams: {
-					mailType: 'sendCar',
-					availableFromDate: dateStr,
-					availableFromTime: timeStr,
-					availableDurationInHours: car.get('availableDurationInHours'),
-					driverName: car.get('driverName'),
-					driverNumber: car.get('driverNumber')
-				}
-			}; 
+				emailAddress: emailAddress,
+				emailSubject: emailSubject,
+				emailBody: emailBody
+			};
 			var controller = this;
 			$.ajax({
 				type: "POST",
@@ -283,7 +276,7 @@ App.CarEmailController = Ember.ObjectController.extend({
 				},
 				error: function(error) {
 					console.log('Failed sending email. Error ' + JSON.stringify(error));
-					alert('failed sending email');
+					bootbox.alert('failed sending email');
 				}
 			});
 		}

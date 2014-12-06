@@ -252,10 +252,48 @@
 
 <script type="text/x-handlebars" id="carEmail">
  <div class="row sendCarEmailRow">
-  <div class="col-md-2 col-md-offset-1">
-    {{input class="form-control" type="email" placeholder="הכנס כתובת" value=controller.emailAddress}}
-    <button {{action "sendEmail" this}} type="button" class="btn btn-default">שלח מייל</button>
+  <div class="col-md-5 col-md-offset-1">
+    <div class="row">
+      <div class="col-md-3">
+        כתובת:
+      </div>
+      <div class="col-md-5">
+        <div contenteditable="true" id="carEmailToAddressDiv">
+          
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3">
+        נושא:
+      </div>
+      <div class="col-md-9">
+        <div contenteditable="true" id="carEmailSubjectDiv">
+          הודעה מחיבורים - רכב פנוי להובלה
+        </div>
+      </div>
+    </div>
+    <div class="row">
+     <div class="col-md-3">
+      תוכן:
+    </div>
+    <div class="col-md-9">
+      <div contenteditable="true" id="carEmailBodyDiv">
+        הי, <br>
+        יש רכב פנוי להובלה בתאריך {{controller.availableFromDateStr}} בשעה {{controller.availableFromTimeStr}}. <br>
+        הרכב יהיה זמין למשך {{availableDurationInHours}} שעות. <br>
+        שם הנהג: {{driverName}} <br>
+        מספר הטלפון של הנהג: {{driverNumber}} <br>
+        תודה
+      </div>
+    </div>
+  </div>  
+  <div class="row">
+    <div class="col-md-3 col-md-offset-9">
+      <button {{action "sendEmail" this}} type="button" class="btn btn-default">שלח מייל</button>
+    </div>
   </div>
+</div>
 </script>
 
 <!-- Consumer table - desktop view -->

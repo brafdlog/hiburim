@@ -47,3 +47,11 @@ label {
 .page-header {
   margin-top: 15px;
 }
+
+.sendCarEmailRow .row {
+  margin: 20px;
+}
+
+.sendCarEmailRow div[contenteditable="true"] {
+  border: 1px solid #ccc;  
+}
