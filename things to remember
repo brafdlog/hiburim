@@ -1,3 +1,22 @@
+///////////////////
+MongoDB
+///////////////////
+
+show dbs
+use <dbName>
+db.<collectionName>.find()
+
+Backup DB (this will create a backup in the dump folder)
+mongodump -h ds053320.mongolab.com:53320 -d hiburim -u brafdlog -p <DB password>
+
+Restore DB
+mongorestore
+
+
+///////////////////
+Server setup
+///////////////////
+
 // forward port 80 to port 3000
 sudo iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 80 -j REDIRECT --to-port 3000
 
