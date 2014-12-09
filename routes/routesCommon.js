@@ -10,10 +10,12 @@ var s3Client = s3.createClient({
 	}
 });
 
+var bucketName = config.s3Bucket;
+
 function deleteDirectory(dirPath, callback) {
 
 	var params = {
-		Bucket: "hiburim",
+		Bucket: bucketName,
 		Prefix: dirPath
 	};
 
@@ -28,11 +30,11 @@ function deleteDirectory(dirPath, callback) {
 }
 
 function deleteFile(filePath, callback) {
-
-	filePath = filePath.substring('http://hiburim.s3.amazonaws.com/'.length);
+	var s3PartOfUrl = 'http://' + bucketName + '.s3.amazonaws.com/';
+	filePath = filePath.substring(s3PartOfUrl.length);
 
 	var params = {
-		Bucket: "hiburim",
+		Bucket: bucketName,
 		Delete: {
 			Objects: [{Key: filePath}]
 		}
@@ -52,7 +54,7 @@ function handleFileUpload(req, relativePath, callback) {
 	 var form = new formidable.IncomingForm();
 
 	 form.parse(req, function(err, fields, files) {
-	 	console.log('Uploaded files: ' + files);
+	 	console.log('Got request to upload files: ' + JSON.stringify(files));
 	 });
 
 	 form.on('end', function(fields, files) {
@@ -66,7 +68,7 @@ function handleFileUpload(req, relativePath, callback) {
 	 		localFile: temp_path,
 
 	 		s3Params: {
-	 			Bucket: "hiburim",
+	 			Bucket: bucketName,
 	 			Key: relativePath + file_name,
 	 			ACL: 'public-read'
 	 		}
@@ -81,7 +83,7 @@ function handleFileUpload(req, relativePath, callback) {
 	 	// 		uploader.progressAmount, uploader.progressTotal);
 	 	// });
 	 	uploader.on('end', function() {
-	 		callback(undefined, 'http://hiburim.s3.amazonaws.com/' + relativePath + file_name);
+	 		callback(undefined, 'http://' + bucketName + '.s3.amazonaws.com/' + relativePath + file_name);
 	 	});
 	 });
 }

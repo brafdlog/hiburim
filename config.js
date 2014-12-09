@@ -6,6 +6,8 @@ var development = {
   hostIp: getServerConfig(process.env.SERVER_PROVIDER).hostIp,
   serverPort: getServerConfig(process.env.SERVER_PROVIDER).port,
 
+  s3Bucket: 'hiburim-test',
+
   mailSender: {
     authUsername: 'hiburimmailer@gmail.com',
     authPassword: 'hiburim2014',
@@ -28,6 +30,7 @@ var production = {
   serverProvider: process.env.SERVER_PROVIDER,
   hostIp: getServerConfig(process.env.SERVER_PROVIDER).hostIp,
   serverPort: getServerConfig(process.env.SERVER_PROVIDER).port,
+  s3Bucket: 'hiburim',
 
   mailSender: {
     authUsername: 'hiburimmailer@gmail.com',
