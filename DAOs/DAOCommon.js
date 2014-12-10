@@ -13,10 +13,15 @@ function getAllElementsOfCollection(collectionName, callback) {
 }
 
 function getSingleElementOfCollection(collectionName, elementId, callback) {
+	var query = {_id: elementId};
+	getSingleElementOfCollectionByQuery(collectionName, query, callback);
+}
+
+function getSingleElementOfCollectionByQuery(collectionName, queryObject, callback) {
 	var collection = db.get(collectionName);
-	collection.find({_id: elementId}, function(err, foundElementsArray) {
-		_logMsg(err, "Loaded element with id: " + elementId + " from collection " + collectionName, 
-			"Failed loading element with id: " + elementId + " from collection " + collectionName + ". Error ");
+	collection.find(queryObject, function(err, foundElementsArray) {
+		_logMsg(err, "Loaded element by query: " + queryObject + " from collection " + collectionName, 
+			"Failed loading element by query: " + queryObject + " from collection " + collectionName + ". Error ");
 
 		if (_isFunction(callback)) {
 			if (foundElementsArray && foundElementsArray.length === 1) {
@@ -24,10 +29,10 @@ function getSingleElementOfCollection(collectionName, elementId, callback) {
 				return;
 			}
 			if (foundElementsArray.length > 1) {
-				err = "Found more than one element with id " + elementId + " from collection " + collectionName;
+				err = "Found more than one element for query " + queryObject + " from collection " + collectionName;
 				console.log(err);
 				callback(err);
-			} else { // if there is no element with the given id
+			} else { // if there is no element for the given query
 				callback(err);	
 			}
 		}
@@ -100,3 +105,4 @@ exports.getSingleElementOfCollection = getSingleElementOfCollection;
 exports.createElement = createElement;
 exports.deleteElement = deleteElement;
 exports.updateElement = updateElement;
+exports.getSingleElementOfCollectionByQuery = getSingleElementOfCollectionByQuery;

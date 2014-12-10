@@ -29,7 +29,8 @@
     "handlebars": "~2.0.0",
     "s3": "~4.3.1",
     "connect-mongo": "~0.4.1",
-    "express-session": "~1.9.3"
+    "express-session": "~1.9.3",
+    "bcrypt": "~0.8.0"
   },
   "devDependencies": {
     "should": "~4.1.0",
