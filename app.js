@@ -1,4 +1,5 @@
 var express = require('express');
+var session = require('express-session');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -7,7 +8,7 @@ var bodyParser = require('body-parser');
 var compression = require('compression');
 var quickthumb = require('quickthumb');
 var config = require('./config').Config;
-
+var MongoSessionStore = require('connect-mongo')(session);
 
 var routes = require('./routes/index');
 var cars = require('./routes/cars');
@@ -39,6 +40,15 @@ app.use(compression({
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+// Store session in mongodb. Needs to be AFTER cookie parser
+app.use(session({
+  store: new MongoSessionStore({
+    url: config.mongoDbUri
+  }),
+ ***REMOVED***
+  resave: false,
+  saveUninitialized: false
+}));
 
 // Use quickthumb for images
 app.use('/images', quickthumb.static(__dirname + '/public/images'));
