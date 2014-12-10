@@ -6,12 +6,6 @@ var router = express.Router();
 
 // Get all cars
 router.get('/', function(req, resp) {
-	if (req.session.marf) {
-		console.log("!!!!!!!!!!!!!!!!!1Session: " + req.session.marf);
-		req.session.marf = req.session.marf+1;
-	} else {
-		req.session.marf = 1;
-	}
 	carDAO.getAllCars(function(err, allCarsArray) {
 		if (err) {
 			routesCommon.handleServerError(resp, err);
