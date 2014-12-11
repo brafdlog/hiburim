@@ -10,6 +10,10 @@ var development = {
    ***REMOVED***
   },
 
+  cookie: {
+   ***REMOVED***
+  },
+
   s3Bucket: 'hiburim-test',
 
   mailSender: {
@@ -37,6 +41,10 @@ var production = {
   s3Bucket: 'hiburim',
 
   session: {
+   ***REMOVED***
+  },
+
+  cookie: {
    ***REMOVED***
   },
 

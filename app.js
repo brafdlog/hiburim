@@ -39,7 +39,8 @@ app.use(compression({
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
+app.use(cookieParser(config.cookie.secret));
+
 // Store session in mongodb. Needs to be AFTER cookie parser
 app.use(session({
   store: new MongoSessionStore({
