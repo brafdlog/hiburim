@@ -359,3 +359,12 @@ App.DonorController = App.SinglePersonWithItemController.extend({
 		this.set('modelName', 'donor');
 	}.on('init')
 });
+
+App.LoginController = Ember.Controller.extend({
+	reset: function() {
+		this.setProperties({
+			email: "",
+			password: ""
+		});
+	}
+});

@@ -1,4 +1,5 @@
 App.Router.map(function() {
+	this.route('login');
 	this.resource('cars', function() {
 		this.resource('car', {path: ':car_id'});
 	});

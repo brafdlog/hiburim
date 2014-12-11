@@ -1,4 +1,19 @@
-App.CarsRoute = Ember.Route.extend({
+App.AuthenticatedRoute = Ember.Route.extend({
+	actions: {
+		error: function(errorReason, transition) {
+			if (errorReason && errorReason.status == 401) {
+				console.log('Authentication error: ' + JSON.stringify(errorReason));
+				this.transitionTo('login');
+			} else {
+				console.log('General error: ' + JSON.stringify(errorReason));
+				// Bubble this event onwards
+				return true;
+			}
+		}
+	}
+});
+
+App.CarsRoute = App.AuthenticatedRoute.extend({
 	model: function() {
 		return this.store.find('car');
 	}
@@ -15,7 +30,7 @@ App.CarEmailRoute = App.CarRoute.extend({
 	
 });
 
-App.ConsumersRoute = Ember.Route.extend({
+App.ConsumersRoute = App.AuthenticatedRoute.extend({
 	model: function(params) {
 		return this.store.find('consumer');
 	}
@@ -27,7 +42,7 @@ App.ConsumerRoute = Ember.Route.extend({
 	}
 });
 
-App.DonorsRoute = Ember.Route.extend({
+App.DonorsRoute = App.AuthenticatedRoute.extend({
 	model: function(params) {
 		return this.store.find('donor');
 	}
@@ -42,4 +57,11 @@ App.DonorRoute = Ember.Route.extend({
 // model hook implemented in super (donorRoute)
 App.DonorItemImagesRoute = App.DonorRoute.extend({
 	
+});
+
+App.LoginRoute = Ember.Route.extend({
+	setupController: function(controller, context) {
+		// reset username and password when going back to login page
+		controller.reset();
+	}
 });

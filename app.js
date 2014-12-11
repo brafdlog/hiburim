@@ -7,8 +7,12 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var compression = require('compression');
 var quickthumb = require('quickthumb');
-var config = require('./config').Config;
 var MongoSessionStore = require('connect-mongo')(session);
+var passport = require('passport');
+
+var config = require('./config').Config;
+var security = require('./security');
+var userDAO = require('./DAOs/userDAO');
 
 var routes = require('./routes/index');
 var cars = require('./routes/cars');
@@ -51,6 +55,14 @@ app.use(session({
   saveUninitialized: false
 }));
 
+// Setup authentication
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(security.authStrategy);
+// Define how user is stored on session
+passport.serializeUser(security.serializeUserForSession);
+passport.deserializeUser(security.deserializeUserFromSession);
+
 // Use quickthumb for images
 app.use('/images', quickthumb.static(__dirname + '/public/images'));
 
@@ -62,11 +74,11 @@ app.use('/images', quickthumb.static(__dirname + '/public/images'));
 app.use(express.static(path.join(__dirname, 'public'), {maxage: 0}));
 
 app.use('/', routes);
-app.use('/cars', cars);
-app.use('/donors', donors);
-app.use('/consumers', consumers);
 app.use('/config', configRoute);
-app.use('/api', apiRoute);
+app.use('/cars', security.requireAuth, cars);
+app.use('/donors', security.requireAuth, donors);
+app.use('/consumers', security.requireAuth, consumers);
+app.use('/api', security.requireAuth, apiRoute);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

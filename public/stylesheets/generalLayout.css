@@ -65,3 +65,11 @@ table input {
   height: 225px;
   max-height: 225px;
 }
+
+.loginContainer {
+  margin-top: 20px;
+}
+
+.loginContainer input {
+  margin-bottom: 10px;
+}
