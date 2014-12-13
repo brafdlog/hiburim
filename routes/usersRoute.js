@@ -17,6 +17,19 @@ router.get('/', security.requireAdminPermission, function(req, resp) {
 	});
 });
 
+// Get current logged in user
+router.get('/current', security.requireAccessPermission, function(req, resp) {
+	var loggedInUserId = req.user._id;
+	userManager.getUser(loggedInUserId, function(err, userFromDB) {
+		if (err) {
+			routesCommon.handleServerError(resp, err);
+		} else {
+			resp.json(userFromDB);
+			resp.end();
+		}
+	});
+});
+
 // Get specific user
 router.get('/:userId', security.requireAdminPermission, function(req, resp) {
 	var userId = req.params.userId;

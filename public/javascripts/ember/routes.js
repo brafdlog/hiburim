@@ -1,6 +1,15 @@
 // Defining auth error handling here so it will appy to
 // the whole app
 App.ApplicationRoute = Ember.Route.extend({
+	// Set logged in user
+	setupController: function(controller, context) {
+		Ember.$.getJSON('/users/current').then(function(loggedInUserJson) {
+			if (loggedInUserJson) {
+				var loggedInUser = Ember.Object.create(loggedInUserJson);
+				controller.set('loggedInUser', loggedInUser);	
+			}
+		});
+	},
 	actions: {
 		error: function(errorReason, transition) {
 			if (errorReason && errorReason.status == 401) {

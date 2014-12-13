@@ -3,7 +3,6 @@ var DAOCommon = require("../DAOs/DAOCommon");
 var config = require("../config").Config;
 var bcrypt = require('bcrypt');
 
-
 function getAllUsers(callback) {
 	// Delete the passwords from the user objects
 	userDAO.getAllUsers(function (err, allUsersArray) {

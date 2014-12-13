@@ -110,7 +110,12 @@
       <li>{{#link-to 'cars'}}רכבים{{/link-to}}</li>
       <li>{{#link-to 'consumers'}}פניות{{/link-to}}</a></li>
       <li>{{#link-to 'donors'}}תרומות רהיטים וציוד{{/link-to}}</a></li>
+      {{#if controller.loggedInUser.permissions.admin}}
       <li>{{#link-to 'users'}}ניהול משתמשים{{/link-to}}</a></li>
+      {{/if}}
+      {{#if controller.loggedInUser}}
+      <li><a href="/logout">התנתק</a></li>
+      {{/if}}
     </ul>
   </div>
 </div>
@@ -181,7 +186,9 @@
                 <th {{action 'sortBy' 'availableFromTimeStr'}}>זמין משעה</th>
                 <th {{action 'sortBy' 'availableDurationInHours'}}>זמין למשך</th>
                 <th></th>
+                {{#if controller.loggedInUser.permissions.admin}}
                 <th></th>
+                {{/if}}
               </tr>
             </thead>
             {{#each car in filteredElements}}
@@ -221,9 +228,11 @@
     <td>
      {{partial 'editDeleteSaveIcons'}}
    </td>
+   {{#if controller.loggedInUser.permissions.admin}}
    <td>
-      {{#link-to 'carEmail' this}}<button type="button" class="btn btn-default btn-sm">שלח מייל</button>{{/link-to}}
+    {{#link-to 'carEmail' this}}<button type="button" class="btn btn-default btn-sm">שלח מייל</button>{{/link-to}}
    </td>
+   {{/if}}
  </tr>
 </script>
 

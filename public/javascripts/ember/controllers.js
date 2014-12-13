@@ -101,8 +101,9 @@ var carTypeImgUrls = {
 
 App.CarController = App.SingleModelController.extend({
 	// Allows access to the CarsController
-	needs: "cars",
+	needs: ['cars', 'application'],
 	carsController: Ember.computed.alias("controllers.cars"),
+	loggedInUser: Ember.computed.alias("controllers.application.loggedInUser"),
 
 	initController: function() {
 		this._super();
@@ -429,6 +430,7 @@ App.RegisterController = Ember.Controller.extend({
 });
 
 App.LoginController = Ember.Controller.extend({
+	needs: ['application'],
 	reset: function() {
 		this.setProperties({
 			email: "",
@@ -443,6 +445,14 @@ App.LoginController = Ember.Controller.extend({
 				url: '/login',
 				data: $('#loginForm').serialize(),
 				success: function(data, status) {
+					// Update the logged in user variable on the application controller
+					Ember.$.getJSON('/users/current').then(function(loggedInUserJson) {
+						if (loggedInUserJson) {
+							var loggedInUser = Ember.Object.create(loggedInUserJson);
+							that.get('controllers.application').set('loggedInUser', loggedInUser);
+						}
+					});
+					
 					that.transitionToRoute('cars');
 				},
 				error: function(jqXHR, status, errorThrown) {
