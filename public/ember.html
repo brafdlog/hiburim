@@ -113,10 +113,12 @@
       {{#if controller.loggedInUser.permissions.admin}}
       <li>{{#link-to 'users'}}ניהול משתמשים{{/link-to}}</a></li>
       {{/if}}
-      {{#if controller.loggedInUser}}
-      <li><a href="/logout">התנתק</a></li>
-      {{/if}}
     </ul>
+    <ul class="nav navbar-nav navbar-left">
+      {{#if controller.loggedInUser}}
+      <li class="navbar-left"><a href="/logout">התנתק</a></li>
+      {{/if}}
+    <ul>
   </div>
 </div>
 </div>
