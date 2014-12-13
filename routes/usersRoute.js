@@ -1,11 +1,12 @@
 var routesCommon = require("./routesCommon");
 var userManager = require("../managers/userManager");
+var security = require('../security');
 var express = require('express');
 var _ = require("underscore");
 var router = express.Router();
 
 // Get all users
-router.get('/', function(req, resp) {
+router.get('/', security.requireAdminPermission, function(req, resp) {
 	userManager.getAllUsers(function(err, allUsersArray) {
 		if (err) {
 			routesCommon.handleServerError(resp, err);
@@ -17,7 +18,7 @@ router.get('/', function(req, resp) {
 });
 
 // Get specific user
-router.get('/:userId', function(req, resp) {
+router.get('/:userId', security.requireAdminPermission, function(req, resp) {
 	var userId = req.params.userId;
 	userManager.getUser(userId, function(err, userFromDB) {
 		if (err) {
@@ -34,6 +35,7 @@ router.get('/:userId', function(req, resp) {
 });
 
 // Create user
+// Currently anyone can create a user - no security is defined here
 router.post('/', function(req, resp) {
 	console.log("Got request to create user");
 	var userToCreate = req.body.user;
@@ -48,7 +50,7 @@ router.post('/', function(req, resp) {
 });
 
 // Update user
-router.put('/:userId', function(req, resp) {
+router.put('/:userId', security.requireAdminPermission, function(req, resp) {
 	var updatedUser = req.body.user;
 	userManager.updateUser(updatedUser, function(err) {
 		if (err) {
@@ -60,7 +62,7 @@ router.put('/:userId', function(req, resp) {
 });
 
 // Delete specific user
-router.delete('/:userId', function(req, resp) {
+router.delete('/:userId', security.requireAdminPermission, function(req, resp) {
 	var userId = req.params.userId;
 
 	userManager.deleteUser(userId, function(err) {

@@ -76,7 +76,6 @@ app.use(express.static(path.join(__dirname, 'public'), {maxage: 0}));
 // Public routes
 app.use('/', indexRoute);
 app.use('/config', configRoute);
-app.use('/users/create', usersRoute);
 
 // Authenticated routes
 app.use('/cars', security.requireAccessPermission, cars);
@@ -84,8 +83,10 @@ app.use('/donors', security.requireAccessPermission, donors);
 app.use('/consumers', security.requireAccessPermission, consumers);
 
 // Admin routes
-app.use('/users', security.requireAdminPermission, usersRoute);
 app.use('/api', security.requireAdminPermission, apiRoute);
+
+// Security defined in the route level
+app.use('/users', usersRoute);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
