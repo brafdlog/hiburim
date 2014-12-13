@@ -17,6 +17,7 @@ var routes = require('./routes/index');
 var cars = require('./routes/cars');
 var donors = require('./routes/donors');
 var consumers = require('./routes/consumers');
+var usersRoute = require('./routes/usersRoute');
 var configRoute = require('./routes/configRoute');
 var apiRoute = require('./routes/apiRoute');
 
@@ -76,6 +77,7 @@ app.use('/', routes);
 app.use('/config', configRoute);
 app.use('/cars', security.requireAuth, cars);
 app.use('/donors', security.requireAuth, donors);
+app.use('/users', security.requireAuth, usersRoute);
 app.use('/consumers', security.requireAuth, consumers);
 app.use('/api', security.requireAuth, apiRoute);
 
