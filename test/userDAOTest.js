@@ -6,16 +6,12 @@ describe("userDAO", function() {
 	
 	it("Should create a new user", function(done) {
 		var userToCreate = _buildUserObject();
-		var originalPassword = userToCreate.password;
 
 		userDAO.createUser(userToCreate, function (error, createdUser) {
 			should.not.exist(error);
 			should.exist(createdUser);
-
-			// Password should be hashed
-			createdUser.password.should.not.equal(originalPassword);
 			
-			userDAO.deleteUserById(createdUser._id, function() {
+			userDAO.deleteUser(createdUser._id, function() {
 				done();	
 			});
 		});
@@ -29,7 +25,7 @@ describe("userDAO", function() {
 			should.exist(createdUser);
 			should.exist(createdUser._id);
 			
-			userDAO.deleteUserById(createdUser._id, function() {
+			userDAO.deleteUser(createdUser._id, function() {
 				userDAO.getUser(createdUser._id, function(err, userFromDB) {
 					should.not.exist(err);
 					should.not.exist(userFromDB);
@@ -54,8 +50,9 @@ describe("userDAO", function() {
 				userFromDB.firstName.should.equal(createdUser.firstName);
 				userFromDB.lastName.should.equal(createdUser.lastName);
 				userFromDB.phoneNumber.should.equal(createdUser.phoneNumber);
+				userFromDB.password.should.equal(createdUser.password);
 
-				userDAO.deleteUserById(createdUser._id, function() {
+				userDAO.deleteUser(createdUser._id, function() {
 					done();
 				});
 			});
@@ -77,26 +74,9 @@ describe("userDAO", function() {
 				userFromDB.firstName.should.equal(createdUser.firstName);
 				userFromDB.lastName.should.equal(createdUser.lastName);
 				userFromDB.phoneNumber.should.equal(createdUser.phoneNumber);
+				userFromDB.password.should.equal(createdUser.password);
 
-				userDAO.deleteUserById(createdUser._id, function() {
-					done();
-				});
-			});
-		});
-	});
-
-	it("Should allow login by user password", function(done) {
-		var userToCreate = _buildUserObject();
-		var originalPassword = userToCreate.password;
-		userDAO.createUser(userToCreate, function (error, createdUser) {
-			should.not.exist(error);
-			should.exist(createdUser);
-
-			userDAO.isPasswordCorrect(userToCreate.email, originalPassword, function(err, passwordCorrect) {
-				should.not.exist(err);
-				passwordCorrect.should.be.true;
-
-				userDAO.deleteUserById(createdUser._id, function() {
+				userDAO.deleteUser(createdUser._id, function() {
 					done();
 				});
 			});

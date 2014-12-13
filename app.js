@@ -12,7 +12,6 @@ var passport = require('passport');
 
 var config = require('./config').Config;
 var security = require('./security');
-var userDAO = require('./DAOs/userDAO');
 
 var routes = require('./routes/index');
 var cars = require('./routes/cars');
