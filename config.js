@@ -14,6 +14,11 @@ var development = {
    ***REMOVED***
   },
 
+  // What permissions a user gets when created
+  defaultUserPermissions: {
+    access: true
+  },
+
   s3Bucket: 'hiburim-test',
 
   mailSender: {
@@ -46,6 +51,11 @@ var production = {
 
   cookie: {
    ***REMOVED***
+  },
+
+  // What permissions a user gets when created
+  defaultUserPermissions: {
+    access: true
   },
 
   mailSender: {

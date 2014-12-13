@@ -1,6 +1,8 @@
 var userDAO = require("../DAOs/userDAO");
 var DAOCommon = require("../DAOs/DAOCommon");
+var config = require("../config").Config;
 var bcrypt = require('bcrypt');
+
 
 function getAllUsers(callback) {
 	// Delete the passwords from the user objects
@@ -50,12 +52,15 @@ function getUserByEmail(email, callback, options) {
 
 function createUser(userToCreate, callback) {
 	// Hash the user's password before saving user to db
+	// Set initial user permissions according to the configuration in config.js
 	bcrypt.genSalt(function(err1, salt) {
 		bcrypt.hash(userToCreate.password, salt, function(err2, hashedPassword) {
 			if (err1 || err2) {
 				callback(err1 || err2);
 			} else {
 				userToCreate.password = hashedPassword;
+				
+				userToCreate.permissions = config.defaultUserPermissions;
 				userDAO.createUser(userToCreate, callback);
 			}
     	});
