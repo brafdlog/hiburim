@@ -1,11 +1,13 @@
-App.AuthenticatedRoute = Ember.Route.extend({
+// Defining auth error handling here so it will appy to
+// the whole app
+App.ApplicationRoute = Ember.Route.extend({
 	actions: {
 		error: function(errorReason, transition) {
 			if (errorReason && errorReason.status == 401) {
 				console.log('Authentication error: ' + JSON.stringify(errorReason));
 				this.transitionTo('login');
 			} else {
-				console.log('General error: ' + JSON.stringify(errorReason));
+				console.log('Error: ' + JSON.stringify(errorReason));
 				// Bubble this event onwards
 				return true;
 			}
@@ -13,13 +15,13 @@ App.AuthenticatedRoute = Ember.Route.extend({
 	}
 });
 
-App.CarsRoute = App.AuthenticatedRoute.extend({
+App.CarsRoute = Ember.Route.extend({
 	model: function() {
 		return this.store.find('car');
 	}
 });
 
-App.CarRoute = App.AuthenticatedRoute.extend({
+App.CarRoute = Ember.Route.extend({
 	model: function(params) {
 		return this.store.find('car', params.car_id);
 	}
@@ -30,32 +32,32 @@ App.CarEmailRoute = App.CarRoute.extend({
 	
 });
 
-App.ConsumersRoute = App.AuthenticatedRoute.extend({
+App.ConsumersRoute = Ember.Route.extend({
 	model: function(params) {
 		return this.store.find('consumer');
 	}
 });
 
-App.ConsumerRoute = App.AuthenticatedRoute.extend({
+App.ConsumerRoute = Ember.Route.extend({
 	model: function(params) {
 		return this.store.find('consumer', params.consumer_id);
 	}
 });
 
-App.DonorsRoute = App.AuthenticatedRoute.extend({
+App.DonorsRoute = Ember.Route.extend({
 	model: function(params) {
 		return this.store.find('donor');
 	}
 });
 
-App.DonorRoute = App.AuthenticatedRoute.extend({
+App.DonorRoute = Ember.Route.extend({
 	model: function(params) {
 		return this.store.find('donor', params.donor_id);
 	}
 });
 
 // model hook implemented in super (donorRoute)
-App.DonorItemImagesRoute = App.AuthenticatedRoute.extend({
+App.DonorItemImagesRoute = Ember.Route.extend({
 	
 });
 
