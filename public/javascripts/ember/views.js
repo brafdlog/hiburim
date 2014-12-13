@@ -50,19 +50,28 @@ App.TableRowView = Ember.View.extend({
 	didInsertElement: function() {
 		this._super();
 		var viewElementId = this.get('elementId');
-		$('#' + viewElementId + ' .datePicker').pickadate({
-			format: $.hib.consts.pickATimeDateFormat // dd-mm-yyyy
-		});
-		$('#' + viewElementId + ' .timePicker').pickatime({
-			min: [6,0],
-			max: [23,0],
-			format: $.hib.consts.pickATimeTimeFormat // 23:30 or 9:40
-		});
+
+		// Init date and time pickers in the row if there are any
+		var datePickerElements = $('#' + viewElementId + ' .datePicker');
+		var timePickerElements = $('#' + viewElementId + ' .timePicker');
+
+		if (datePickerElements.length) {
+			datePickerElements.pickadate({
+				format: $.hib.consts.pickATimeDateFormat // dd-mm-yyyy
+			});
+		}
+		if (timePickerElements.length) {
+			timePickerElements.pickatime({
+				min: [6,0],
+				max: [23,0],
+				format: $.hib.consts.pickATimeTimeFormat // 23:30 or 9:40
+			});
+		}
 	}
 });
 
 App.CarView = App.TableRowView.extend({
-	templateName: 'carRowTemplate',
+	templateName: 'carRowTemplate'
 });
 
 App.CarEmailView = Ember.View.extend({
@@ -118,4 +127,8 @@ App.ConsumerView = App.PersonWithItemView.extend({
 
 App.DonorView = App.PersonWithItemView.extend({
 	templateName: 'donorRowTemplate',
+});
+
+App.UserRowView = App.TableRowView.extend({
+	templateName: 'userRowTemplate'
 });

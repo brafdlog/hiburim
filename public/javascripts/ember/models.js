@@ -22,3 +22,13 @@ App.Consumer = App.PersonWithItem.extend({
 App.Donor = App.PersonWithItem.extend({
 
 });
+
+App.User = DS.Model.extend({
+	email: DS.attr(),
+	// Only for creating user, usually ui won't see the password
+	password: DS.attr(),
+	firstName: DS.attr(),
+	lastName: DS.attr(),
+	phoneNumber: DS.attr(),
+	permissions: DS.attr('raw')
+});

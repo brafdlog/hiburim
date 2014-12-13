@@ -109,3 +109,57 @@ App.Donor.reopenClass({
 	}
 	]
 });
+
+App.User.reopenClass({
+	FIXTURES: [
+	{
+		id: 1,
+		_id: 1,
+		email: 'brafdlog@gmail.com',
+		firstName: 'יהונתן',
+		lastName: 'גולדפרב',
+		phoneNumber: '052-5463213',
+		permissions: {
+			superadmin: true,
+			admin: true, 
+			access: true
+		}
+	},
+	{
+		id: 2,
+		_id: 2,
+		email: 'sagy26@gmail.com ',
+		firstName: 'שגיא',
+		lastName: 'מזרחי',
+		phoneNumber: '053-66666666',
+		permissions: {
+			superadmin: true,
+			admin: true, 
+			access: true
+		}
+	},
+	{
+		id: 3,
+		_id: 3,
+		email: 'moshe@dudu.com',
+		firstName: 'משה',
+		lastName: 'אופניק',
+		phoneNumber: '054-7777777',
+		permissions: {
+			admin: true, 
+			access: true
+		}
+	},
+	{
+		id: 4,
+		_id: 4,
+		email: 'haim@dudu.com',
+		firstName: 'חיים',
+		lastName: 'ברדוגו',
+		phoneNumber: '057-6666666',
+		permissions: {
+			access: true
+		}
+	}
+	]
+});

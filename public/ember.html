@@ -110,6 +110,7 @@
       <li>{{#link-to 'cars'}}רכבים{{/link-to}}</li>
       <li>{{#link-to 'consumers'}}פניות{{/link-to}}</a></li>
       <li>{{#link-to 'donors'}}תרומות רהיטים וציוד{{/link-to}}</a></li>
+      <li>{{#link-to 'users'}}ניהול משתמשים{{/link-to}}</a></li>
     </ul>
   </div>
 </div>
@@ -503,7 +504,97 @@
     {{else}}
     <h1>אין תמונות</h1>
     {{/if}}
-
   </script>
+
+  <script type="text/x-handlebars" id="users">
+    {{partial 'headerAndSearchRow'}}
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1 main">
+        <div {{bind-attr class=":deskopTableView controller.hideTableOnMobile:hidden-xs"}}>
+          <div class="table-responsive">
+            <table id="usersTable" class="table table-striped">
+              <thead>
+                <tr>
+                  <th {{action 'sortBy' 'email'}}>מייל</th>
+                  <th {{action 'sortBy' 'firstName'}}>שם פרטי</th>
+                  <th {{action 'sortBy' 'lastName'}}>שם משפחה</th>
+                  <th {{action 'sortBy' 'phoneNumber'}}>טלפון</th>
+                  <th>גישה לאתר</th>
+                  <th>ניהול</th>
+                  <th></th>
+                </tr>
+              </thead>
+              {{#each user in filteredElements}}
+              {{render 'userRow' user}}
+              {{/each}}
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </script>
+
+  <script type="text/x-handlebars" id="userRowTemplate">
+    <tr {{bind-attr id=id}} {{bind-attr class=":nonHeaderTableRow controller.isBeingEdited:rowBeingEdited"}}>
+      <td class="emailTd">
+        {{input type="email" disabled=controller.isNotEdited value=email}}
+      </td>
+      <td class="firstNameTd">
+        {{input type="text" disabled=controller.isNotEdited value=firstName}}
+      </td>
+      <td class="lastNameTd">
+        {{input type="text" disabled=controller.isNotEdited value=lastName}}
+      </td>
+      <td class="phoneNumberTd">
+        {{input type="text" disabled=controller.isNotEdited value=phoneNumber}}
+      </td>
+      <td>
+        {{input type="checkbox" disabled=controller.isNotEdited checked=permissions.access}}
+      </td>
+      <td>
+        {{input type="checkbox" disabled=controller.isNotEdited checked=permissions.admin}}
+      </td>
+      <td>
+        {{#unless permissions.superadmin}}
+        {{partial 'editDeleteSaveIcons'}}
+        {{/unless}}
+      </td>
+  </tr>
+</script>
+
+<script type="text/x-handlebars" id="createUser">
+  <div class="row">
+  <div class="col-md-2 col-md-offset-1">
+    <h1 class="page-header">משתמש חדש</h1>
+  </div>
+  </div>
+  <div class="row">
+    <div class="col-md-3 col-md-offset-4">
+      <form role="form" id="createUserForm">
+        <div class="form-group">
+          <label for="userEmailInput">כתובת מייל</label>
+           {{input type="email" value=controller.model.email class="form-control" id="userEmailInput" placeholder="כתובת מייל"}}
+        </div>
+        <div class="form-group">
+          <label for="userPasswordInput">סיסמא</label>
+          {{input type="password" value=controller.model.password class="form-control" id="userPasswordInput" placeholder="סיסמא"}}
+        </div>
+        <div class="form-group">
+        <label for="userFirstNameInput">שם פרטי</label>
+          {{input type="text" value=controller.model.firstName class="form-control" id="userFirstNameInput" placeholder="שם פרטי"}}
+        </div>
+        <div class="form-group">
+          <label for="userLastNameInput">שם משפחה</label>
+          {{input type="text" value=controller.model.lastName class="form-control" id="userLastNameInput" placeholder="שם משפחה"}}
+        </div>
+        <div class="form-group">
+          <label for="userPhoneNumberInput">מספר טלפון</label>
+          {{input type="text" value=controller.model.phoneNumber class="form-control" id="userPhoneNumberInput" placeholder="מספר טלפון"}}
+        </div>
+        <button type="submit" {{action 'createUser'}} class="btn btn-primary">צור משתמש</button>
+      </form>
+    </div>
+  </div>
+</script>
 
 </html>

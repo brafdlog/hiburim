@@ -67,3 +67,9 @@ App.LoginRoute = Ember.Route.extend({
 		controller.reset();
 	}
 });
+
+App.UsersRoute = Ember.Route.extend({
+	model: function(params) {
+		return this.store.find('user');
+	}
+});

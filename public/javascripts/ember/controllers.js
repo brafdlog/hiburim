@@ -262,7 +262,7 @@ App.CarEmailController = Ember.ObjectController.extend({
 				dataType: 'json',
 				success: function() {
 					bootbox.alert('המייל נשלח בהצלחה', function() {
-						controller.transitionToRoute('cars');	
+						controller.transitionToRoute('cars');
 					});
 				},
 				error: function(error) {
@@ -317,6 +317,26 @@ App.DonorsController = Ember.SortableAndFilterableController.extend({
 	}.on('init')
 });
 
+App.UsersController = Ember.SortableAndFilterableController.extend({
+	headerText: 'משתמשים',
+	newModelText: 'משתמש חדש',
+	hideTableOnMobile: false,
+	initController: function() {
+		this._super();
+		var filteredProperties = this.get('filteredProperties');
+		filteredProperties.pushObject('email');
+		filteredProperties.pushObject('firstName');
+		filteredProperties.pushObject('lastName');
+		this.set('modelName', "user");
+	}.on('init'),
+	actions: {
+		// Override the parent implementation to transfer to createUser route
+		createModel: function() {
+			this.transitionToRoute('createUser');
+		}
+	}
+});
+
 App.SinglePersonWithItemController = App.SingleModelController.extend({
 	itemCategories: ['כיסאות', 'מיטה זוגית', 'מיטה זוגית + מזרן', 'מיטת יחיד', 'מיטת יחיד + מזרן', 'ארון בגדים', 'שולחן כתיבה', 'שולחן אוכל', 'שולחן אוכל + כיסאות', 'ספה', 'סלון', 'כיריים חשמליות', 'כיריים גז', 'טלויזיה שטוחה', 'טלויזיה רחבה (לא שטוחה)', 'תנור חימום \\ רדיאטור', 'מאוורר', 'מיקרוגל', 'טוסטר אובן', 'ציוד למטבח', 'שטיח', 'שואב אבק', 'צעצועים וספרים לילדים', 'ציוד לילדים ולתינוקות', 'אחר'],
 	mapLinkActive: function() {
@@ -358,6 +378,39 @@ App.DonorController = App.SinglePersonWithItemController.extend({
 		this._super();
 		this.set('modelName', 'donor');
 	}.on('init')
+});
+
+App.UserRowController = App.SingleModelController.extend({
+	// Allows access to the CarsController
+	needs: "users",
+	usersController: Ember.computed.alias("controllers.users"),
+
+	adminHasAccessObserver: function() {
+		// An admin always has access to the system
+		if (this.get('model.permissions.admin') && !this.get('model.permissions.access')) {
+			this.set('model.permissions.access', true);
+		}
+	}.observes('model.permissions.admin'),
+
+	initController: function() {
+		this._super();
+		this.set('modelName', 'user');
+	}.on('init')
+});
+
+App.CreateUserController = Ember.Controller.extend({
+	initController: function() {
+		this._super();
+		var newUserModel = this.store.createRecord('user', {});
+		this.set('model', newUserModel);
+	}.on('init'),
+	actions: {
+		createUser: function() {
+			this.get('model').save();
+			bootbox.alert('המשתמש נוצר בהצלחה');		
+			this.transitionToRoute('cars');
+		}
+	}
 });
 
 App.LoginController = Ember.Controller.extend({
