@@ -418,5 +418,21 @@ App.LoginController = Ember.Controller.extend({
 		this.setProperties({
 			email: ""
 		});
+	},
+	actions: {
+		login: function() {
+			var that = this;
+			$.ajax({
+				type: "POST",
+				url: '/login',
+				data: $('#loginForm').serialize(),
+				success: function(data, status) {
+					that.transitionToRoute('cars');
+				},
+				error: function(jqXHR, status, errorThrown) {
+					bootbox.alert('הפרטים שהוזנו אינם נכונים. אנא נסו שנית');
+				}
+			});
+		}
 	}
 });

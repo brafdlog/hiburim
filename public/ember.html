@@ -125,22 +125,22 @@
   <div class="container loginContainer">
     <div class="row">
       <div class="col-md-3 col-md-offset-4">
-        <form class="form-signin" role="form" method="post" action="/login">
+        <form id="loginForm" class="form-signin" role="form">
           <label for="inputEmail" class="sr-only">Email address</label>
           {{input name="username" value=email type="email" id="inputEmail" class="form-control" placeholder="כתובת מייל"}}
           <label for="inputPassword" class="sr-only">Password</label>
           {{input name="password" value=password type="password" id="inputPassword" class="form-control" placeholder="סיסמא"}}
-          <button class="btn btn-primary" type="submit">התחבר</button>
+          <button {{action 'login'}} class="btn btn-primary" type="button">התחבר</button>
         </form>
       </div>
     </div>
-  </div> <!-- /container -->
+  </div>
 </script>
 
 <script type="text/x-handlebars" id="_headerAndSearchRow">
   <div class="row">
     <div class="col-md-2 col-md-offset-1">
-      <h1 class="page-header">{{controller.headerText}}</h1>  
+      <h1 class="page-header">{{controller.headerText}}</h1>
     </div>
   </div>
   <div class="row searchRow">
