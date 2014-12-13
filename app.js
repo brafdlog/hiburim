@@ -13,7 +13,7 @@ var passport = require('passport');
 var config = require('./config').Config;
 var security = require('./security');
 
-var routes = require('./routes/index');
+var indexRoute = require('./routes/index');
 var cars = require('./routes/cars');
 var donors = require('./routes/donors');
 var consumers = require('./routes/consumers');
@@ -73,13 +73,19 @@ app.use('/images', quickthumb.static(__dirname + '/public/images'));
 // Don't cache
 app.use(express.static(path.join(__dirname, 'public'), {maxage: 0}));
 
-app.use('/', routes);
+// Public routes
+app.use('/', indexRoute);
 app.use('/config', configRoute);
-app.use('/cars', security.requireAuth, cars);
-app.use('/donors', security.requireAuth, donors);
-app.use('/users', security.requireAuth, usersRoute);
-app.use('/consumers', security.requireAuth, consumers);
-app.use('/api', security.requireAuth, apiRoute);
+app.use('/users/create', usersRoute);
+
+// Authenticated routes
+app.use('/cars', security.requireAccessPermission, cars);
+app.use('/donors', security.requireAccessPermission, donors);
+app.use('/consumers', security.requireAccessPermission, consumers);
+
+// Admin routes
+app.use('/users', security.requireAdminPermission, usersRoute);
+app.use('/api', security.requireAdminPermission, apiRoute);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -169,7 +169,7 @@ function _buildUserObject() {
 		phoneNumber: '052-5463213',
 		password: '123456',
 		permissions: {
-			manageUsers: true,
+			admin: true,
 			access: true
 		}
 	};

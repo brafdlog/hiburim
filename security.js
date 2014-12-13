@@ -21,14 +21,21 @@ var authStrategy = new LocalStrategy(
   }
   );
 
-var requireAuth = function(req, res, next){
-  // check if the user is logged in
-  if(!req.isAuthenticated()){
-    req.session.messages = "You need to login to view this page";
+var requireAccessPermission = function(req, res, next){
+  if (_userHasPermission(req, "access")) {
+      next();
+  } else {
     res.status(401);
     res.end();
+  }
+};
+
+var requireAdminPermission = function(req, res, next){
+  if (_userHasPermission(req, "admin")) {
+    next();
   } else {
-    next();  
+    res.status(401);
+    res.end();
   }
 };
 
@@ -42,7 +49,16 @@ var deserializeUserFromSession = function(id, done) {
   });
 };
 
+function _userHasPermission(request, permissionToCheck) {
+  // If isn't logged in has no permissions
+  if (!request.isAuthenticated()) {
+    return false;
+  }
+  return request.user.permissions[permissionToCheck];
+}
+
 exports.authStrategy = authStrategy;
-exports.requireAuth = requireAuth;
+exports.requireAccessPermission = requireAccessPermission;
+exports.requireAdminPermission = requireAdminPermission;
 exports.serializeUserForSession = serializeUserForSession;
 exports.deserializeUserFromSession = deserializeUserFromSession;
