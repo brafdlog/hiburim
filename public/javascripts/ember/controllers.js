@@ -213,10 +213,6 @@ App.DonorItemImagesController = Ember.ObjectController.extend({
 			bootbox.confirm('האם למחוק?', function(userWantsToDelete) {
 				if (userWantsToDelete) {
 					var donorModel = that.get('model');
-					var images = donorModel.get('item.images');
-					images.removeObject(imageToDelete);
-					donorModel.set('item.images', images);
-					donorModel.save();
 
 					var imageUrl = imageToDelete.url;
 					var encodedImageUrl = encodeURIComponent(imageUrl);
@@ -229,6 +225,14 @@ App.DonorItemImagesController = Ember.ObjectController.extend({
 						dataType: 'json',
 						success: function() {
 							console.log('Deleted image successfully');
+							var images = donorModel.get('item.images');
+							images.removeObject(imageToDelete);
+							donorModel.set('item.images', images);
+							donorModel.save().then(function() {
+								console.log('Image removed from model successfully');
+							}, function() {
+								alert("Failed removing image from model");
+							});
 						},
 						error: function(error) {
 							console.log('Failed deleting image. Error ' + JSON.stringify(error));
