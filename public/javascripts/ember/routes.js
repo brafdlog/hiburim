@@ -19,7 +19,7 @@ App.CarsRoute = App.AuthenticatedRoute.extend({
 	}
 });
 
-App.CarRoute = Ember.Route.extend({
+App.CarRoute = App.AuthenticatedRoute.extend({
 	model: function(params) {
 		return this.store.find('car', params.car_id);
 	}
@@ -36,7 +36,7 @@ App.ConsumersRoute = App.AuthenticatedRoute.extend({
 	}
 });
 
-App.ConsumerRoute = Ember.Route.extend({
+App.ConsumerRoute = App.AuthenticatedRoute.extend({
 	model: function(params) {
 		return this.store.find('consumer', params.consumer_id);
 	}
@@ -48,14 +48,14 @@ App.DonorsRoute = App.AuthenticatedRoute.extend({
 	}
 });
 
-App.DonorRoute = Ember.Route.extend({
+App.DonorRoute = App.AuthenticatedRoute.extend({
 	model: function(params) {
 		return this.store.find('donor', params.donor_id);
 	}
 });
 
 // model hook implemented in super (donorRoute)
-App.DonorItemImagesRoute = App.DonorRoute.extend({
+App.DonorItemImagesRoute = App.AuthenticatedRoute.extend({
 	
 });
 
