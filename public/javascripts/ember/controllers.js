@@ -334,9 +334,9 @@ App.UsersController = Ember.SortableAndFilterableController.extend({
 		this.set('modelName', "user");
 	}.on('init'),
 	actions: {
-		// Override the parent implementation to transfer to createUser route
+		// Override the parent implementation to transfer to register route
 		createModel: function() {
-			this.transitionToRoute('createUser');
+			this.transitionToRoute('register');
 		}
 	}
 });
@@ -402,17 +402,24 @@ App.UserRowController = App.SingleModelController.extend({
 	}.on('init')
 });
 
-App.CreateUserController = Ember.Controller.extend({
+App.RegisterController = Ember.Controller.extend({
 	initController: function() {
 		this._super();
 		var newUserModel = this.store.createRecord('user', {});
 		this.set('model', newUserModel);
 	}.on('init'),
 	actions: {
-		createUser: function() {
-			this.get('model').save();
-			bootbox.alert('המשתמש נוצר בהצלחה');		
-			this.transitionToRoute('cars');
+		register: function() {
+			var that = this;
+			this.get('model').save().then(
+				function() {
+					bootbox.alert('המשתמש נוצר בהצלחה');
+					that.transitionToRoute('cars');
+				},
+				function() {
+					alert('An error occured');
+				}
+			);
 		}
 	}
 });

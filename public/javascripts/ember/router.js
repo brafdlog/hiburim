@@ -1,7 +1,7 @@
 App.Router.map(function() {
 	this.route('login');
 	this.resource('users');
-	this.route('createUser', {path: '/users/create'});
+	this.route('register');
 	this.resource('cars', function() {
 		this.resource('car', {path: ':car_id'});
 	});
