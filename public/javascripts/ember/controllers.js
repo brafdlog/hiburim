@@ -202,7 +202,11 @@ App.DonorItemImagesController = Ember.ObjectController.extend({
 			}
 			images.addObject({url: fileServerUrl});
 			donorModel.set('item.images', images);
-			donorModel.save();
+			donorModel.save().then(function() {
+				console.log('Image uploaded successfully');
+			}, function() {
+				alert("Failed uploading image");
+			});
 		},
 		deleteImage: function(imageToDelete) {
 			var that = this;
