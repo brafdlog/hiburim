@@ -431,7 +431,8 @@ App.RegisterController = Ember.Controller.extend({
 App.LoginController = Ember.Controller.extend({
 	reset: function() {
 		this.setProperties({
-			email: ""
+			email: "",
+			password: ""
 		});
 	},
 	actions: {
