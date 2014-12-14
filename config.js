@@ -71,7 +71,7 @@ var production = {
   uiExposedConfig: {
   	// as opposed to fixture data
   	useRealData: true,
-    maxUploadImageSize: 3, //MB
+    maxUploadImageSize: 5, //MB
    ***REMOVED***
   }
 };
