@@ -4,7 +4,8 @@ App.Car = DS.Model.extend({
 	driverNumber: DS.attr(), 
 	availableFromDateTime: DS.attr('date'),
 	availableDurationInHours: DS.attr('number'),
-	availableUntilDateTime: DS.attr('date')
+	availableUntilDateTime: DS.attr('date'),
+	area: DS.attr('string', {defaultValue: 'ירושלים'})
 });
 
 App.PersonWithItem = DS.Model.extend({
@@ -12,7 +13,8 @@ App.PersonWithItem = DS.Model.extend({
 	phoneNumber: DS.attr(),
 	convenientDates: DS.attr(),
 	item: DS.attr('raw'),
-	address: DS.attr('raw')
+	address: DS.attr('raw'),
+	area: DS.attr('string', {defaultValue: 'ירושלים'})
 });
 
 App.Consumer = App.PersonWithItem.extend({

@@ -12,3 +12,7 @@ a input[disabled] {
 .addressTd input {
 	text-overflow: ellipsis;
 }
+
+#consumersTable {
+	margin-right: 20px;
+}

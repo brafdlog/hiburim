@@ -36,6 +36,10 @@ $.hib.carTypeImgUrls = {
 	'לא זמין': '/images/notAvailable.jpg'
 };
 
+$.hib.areas = [
+	'ירושלים', 'תל אביב'
+];
+
 // String ends with
 $.hib.strEndsWith = function(str, suffix) {
     return str.indexOf(suffix, str.length - suffix.length) !== -1;

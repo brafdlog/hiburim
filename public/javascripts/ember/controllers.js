@@ -286,6 +286,7 @@ App.CarsController = Ember.SortableAndFilterableController.extend({
 		var filteredProperties = this.get('filteredProperties');
 		filteredProperties.pushObject('driverName');
 		filteredProperties.pushObject('carType');
+		filteredProperties.pushObject('area');
 		this.set('modelName', "car");
 	}.on('init')
 });
@@ -301,6 +302,7 @@ App.ConsumersController = Ember.SortableAndFilterableController.extend({
 		filteredProperties.pushObject('item.category');
 		filteredProperties.pushObject('item.description');
 		filteredProperties.pushObject('address.geoDisplayString');
+		filteredProperties.pushObject('area');
 		this.set('modelName', "consumer");
 	}.on('init')
 });
@@ -316,6 +318,7 @@ App.DonorsController = Ember.SortableAndFilterableController.extend({
 		filteredProperties.pushObject('item.category');
 		filteredProperties.pushObject('item.description');
 		filteredProperties.pushObject('address.geoDisplayString');
+		filteredProperties.pushObject('area');
 		this.set('modelName', "donor");
 	}.on('init')
 });

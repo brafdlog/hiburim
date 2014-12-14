@@ -182,6 +182,7 @@
             <thead>
               <tr>
                 <th {{action 'sortBy' 'carType'}}>סוג רכב</th>
+                <th {{action 'sortBy' 'area'}}>אזור</th>
                 <th {{action 'sortBy' 'driverName'}}>שם הנהג</th>
                 <th {{action 'sortBy' 'driverNumber'}}>טלפון של הנהג</th>
                 <th {{action 'sortBy' 'availableFromDateTime'}}>זמין מתאריך</th>
@@ -210,6 +211,9 @@
   <tr {{bind-attr id=id}} {{bind-attr class=":nonHeaderTableRow controller.isBeingEdited:rowBeingEdited"}}>
     <td {{action 'changeCarType' this}} class="carTypeIconColumn">
       <img {{bind-attr src=controller.carTypeUrl}} {{bind-attr alt=carType}} {{bind-attr title=carType}} width="40px">
+    </td>
+    <td>
+       {{view "select" content=$.hib.areas disabled=controller.isNotEdited value=area}}
     </td>
     <td class="nameTd">
       {{input type="text" disabled=controller.isNotEdited value=driverName}}
@@ -307,12 +311,13 @@
 <script type="text/x-handlebars" id="consumers">
   {{partial 'headerAndSearchRow'}}
   <div class="row">
-    <div class="col-md-10 col-md-offset-1 main">
+    <div class="col-md-12 main">
       <div {{bind-attr class=":deskopTableView controller.hideTableOnMobile:hidden-xs"}}>
         <div class="table-responsive">
           <table id="consumersTable" class="table table-striped">
             <thead>
               <tr>
+                <th {{action 'sortBy' 'area'}}>אזור</th>
                 <th {{action 'sortBy' 'name'}}>שם</th>
                 <th {{action 'sortBy' 'phoneNumber'}}>טלפון</th>
                 <th>תאריכים פנויים</th>
@@ -342,6 +347,9 @@
 
 <script type="text/x-handlebars" id="consumerRowTemplate">
   <tr {{bind-attr id=id}} {{bind-attr class=":nonHeaderTableRow controller.isBeingEdited:rowBeingEdited"}}>
+    <td>
+       {{view "select" content=$.hib.areas disabled=controller.isNotEdited value=area}}
+    </td>
     <td class="nameTd">
       {{input type="text" class="mediumWidth" disabled=controller.isNotEdited value=name}}
     </td>
@@ -352,7 +360,7 @@
       {{input type="text" disabled=controller.isNotEdited value=convenientDates}}
     </td>
     <td class="itemCategoryTd">
-      {{view "select" content=controller.itemCategories disabled=controller.isNotEdited value=item.category}}
+    {{view "select" content=controller.itemCategories disabled=controller.isNotEdited value=item.category}}
     </td>
     <td class="itemDescriptionTd">
        {{textarea value=item.description disabled=controller.isNotEdited cols="10" rows="3"}}
@@ -390,12 +398,13 @@
 <script type="text/x-handlebars" id="donors">
   {{partial 'headerAndSearchRow'}}
   <div class="row">
-    <div class="col-md-10 main">
+    <div class="col-md-12 main">
       <div {{bind-attr class=":deskopTableView controller.hideTableOnMobile:hidden-xs"}}>
         <div class="table-responsive">
           <table id="donorsTable" class="table table-striped">
             <thead>
               <tr>
+                <th {{action 'sortBy' 'area'}}>אזור</th>
                 <th {{action 'sortBy' 'name'}}>שם</th>
                 <th {{action 'sortBy' 'phoneNumber'}}>טלפון</th>
                 <th>תאריכים פנויים</th>
@@ -426,6 +435,9 @@
 
 <script type="text/x-handlebars" id="donorRowTemplate">
   <tr {{bind-attr id=id}} {{bind-attr class=":nonHeaderTableRow controller.isBeingEdited:rowBeingEdited"}}>
+    <td>
+       {{view "select" content=$.hib.areas disabled=controller.isNotEdited value=area}}
+    </td>
     <td class="nameTd">
       {{input type="text" class="mediumWidth" disabled=controller.isNotEdited value=name}}
     </td>
