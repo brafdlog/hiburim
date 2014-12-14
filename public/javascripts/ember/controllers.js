@@ -93,12 +93,6 @@ App.SingleModelController = Ember.ObjectController.extend({
 	
 });
 
-var carTypeImgUrls = {
-	'רכב מסחרי': '/images/van.png',
-	'רכב פרטי': '/images/privateCar.png',
-	'לא זמין': '/images/notAvailable.jpg'
-};
-
 App.CarController = App.SingleModelController.extend({
 	// Allows access to the CarsController
 	needs: ['cars', 'application'],
@@ -154,7 +148,7 @@ App.CarController = App.SingleModelController.extend({
 	}.observes('availableFromDateTime', 'availableDurationInHours'),
 
 	carTypeUrl: function() {
-		return carTypeImgUrls[this.get('model.carType')] + '?dim=40x40';
+		return $.hib.carTypeImgUrls[this.get('model.carType')] + '?dim=40x40';
 	}.property('model.carType'),
 	nextCarType: function() {
 		if (this.get('model.carType') === 'רכב מסחרי') {

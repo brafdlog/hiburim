@@ -30,6 +30,12 @@ $.hib.put = function(url, data, success, error) {
 	});
 };
 
+$.hib.carTypeImgUrls = {
+	'רכב מסחרי': '/images/van.png',
+	'רכב פרטי': '/images/privateCar.png',
+	'לא זמין': '/images/notAvailable.jpg'
+};
+
 // String ends with
 $.hib.strEndsWith = function(str, suffix) {
     return str.indexOf(suffix, str.length - suffix.length) !== -1;
