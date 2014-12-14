@@ -18,7 +18,7 @@ App.PersonWithItem = DS.Model.extend({
 });
 
 App.Consumer = App.PersonWithItem.extend({
-	
+	urgent: DS.attr('boolean', {defaultValue: false})
 });
 
 App.Donor = App.PersonWithItem.extend({

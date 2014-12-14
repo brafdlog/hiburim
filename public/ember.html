@@ -341,6 +341,7 @@
                 <th>מעלית</th>
                 <th>חניה</th>
                 <th>הערות על הכתובת</th>
+                <th {{action 'sortBy' 'urgent'}}>דחוף</th>
                 <th></th>
               </tr>
             </thead>
@@ -399,6 +400,9 @@
     </td>
     <td class="addressDescriptionTd">
       {{textarea value=address.description disabled=controller.isNotEdited cols="10" rows="3"}}
+    </td>
+    <td class="urgentTd">
+      {{input type="checkbox" disabled=controller.isNotEdited checked=urgent}}
     </td>
     <td>
       {{partial 'editDeleteSaveIcons'}}
