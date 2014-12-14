@@ -14,3 +14,13 @@ App.Router.map(function() {
 	});
 	this.route('donorItemImages', {path: '/donors/:donor_id/images'});
 });
+
+// Add google analytics tracking on page change
+App.Router.reopen({
+  notifyGoogleAnalytics: function() {
+    return ga('send', 'pageview', {
+        'page': this.get('url'),
+        'title': this.get('url')
+      });
+  }.on('didTransition')
+});

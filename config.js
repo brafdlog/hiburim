@@ -33,6 +33,8 @@ var development = {
   	// as opposed to fixture data
   	useRealData: true,
     maxUploadImageSize: 5, //MB
+    // This is not a real id - don't want tracking on development
+   ***REMOVED***
   }
 };
 
@@ -70,6 +72,7 @@ var production = {
   	// as opposed to fixture data
   	useRealData: true,
     maxUploadImageSize: 3, //MB
+   ***REMOVED***
   }
 };
 
