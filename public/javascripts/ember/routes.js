@@ -65,11 +65,6 @@ App.DonorRoute = Ember.Route.extend({
 	}
 });
 
-// model hook implemented in super (donorRoute)
-App.DonorItemImagesRoute = Ember.Route.extend({
-	
-});
-
 App.LoginRoute = Ember.Route.extend({
 	setupController: function(controller, context) {
 		// reset username and password when going back to login page
