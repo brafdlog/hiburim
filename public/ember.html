@@ -373,7 +373,7 @@
       {{input type="text" disabled=controller.isNotEdited value=convenientDates}}
     </td>
     <td class="itemCategoryTd">
-    {{view "select" content=controller.itemCategories disabled=controller.isNotEdited value=item.category}}
+    {{view "select" content=$.hib.itemCategories disabled=controller.isNotEdited value=item.category}}
     </td>
     <td class="itemDescriptionTd">
        {{textarea value=item.description disabled=controller.isNotEdited cols="10" rows="3"}}
@@ -464,7 +464,7 @@
       {{input type="text" disabled=controller.isNotEdited value=convenientDates}}
     </td>
     <td class="itemCategoryTd">
-      {{view "select" content=controller.itemCategories disabled=controller.isNotEdited value=item.category}}
+      {{view "select" content=$.hib.itemCategories disabled=controller.isNotEdited value=item.category}}
     </td>
     <td class="itemDescriptionTd">
        {{textarea value=item.description disabled=controller.isNotEdited cols="10" rows="3"}}

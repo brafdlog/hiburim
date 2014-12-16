@@ -344,7 +344,6 @@ App.UsersController = Ember.SortableAndFilterableController.extend({
 });
 
 App.SinglePersonWithItemController = App.SingleModelController.extend({
-	itemCategories: ['כיסאות', 'מיטה זוגית', 'מיטה זוגית + מזרן', 'מיטת יחיד', 'מיטת יחיד + מזרן', 'ארון בגדים', 'שולחן כתיבה', 'שולחן אוכל', 'שולחן אוכל + כיסאות', 'ספה', 'סלון', 'כיריים חשמליות', 'כיריים גז', 'טלויזיה שטוחה', 'טלויזיה רחבה (לא שטוחה)', 'תנור חימום \\ רדיאטור', 'מאוורר', 'מיקרוגל', 'טוסטר אובן', 'ציוד למטבח', 'שטיח', 'שואב אבק', 'צעצועים וספרים לילדים', 'ציוד לילדים ולתינוקות', 'אחר'],
 	mapLinkActive: function() {
 		if (this.get('isNotEdited') && this.get('googleMapsUrl')) {
 			return true;
