@@ -79,7 +79,6 @@ app.use('/config', configRoute);
 
 // Authenticated routes
 app.use('/cars', security.requireAccessPermission, cars);
-app.use('/donors', security.requireAccessPermission, donors);
 app.use('/consumers', security.requireAccessPermission, consumers);
 
 // Admin routes
@@ -87,6 +86,7 @@ app.use('/api', security.requireAdminPermission, apiRoute);
 
 // Security defined in the route level
 app.use('/users', usersRoute);
+app.use('/donors', donors);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -4,10 +4,11 @@ var express = require('express');
 var _ = require("underscore");
 var router = express.Router();
 var fs = require('fs-extra');
+var security = require('../security');
 var config = require('../config').Config;
 
 // Get all donors
-router.get('/', function(req, resp) {	
+router.get('/', security.requireAccessPermission, function(req, resp) {	
 	donorDAO.getAllDonors(function(err, allDonorsArray) {
 		if (err) {
 			routesCommon.handleServerError(resp, err);
@@ -19,7 +20,7 @@ router.get('/', function(req, resp) {
 });
 
 // Get specific donor
-router.get('/:donorId', function(req, resp) {
+router.get('/:donorId', security.requireAccessPermission, function(req, resp) {
 	var donorId = req.params.donorId;
 	donorDAO.getDonor(donorId, function(err, donorFromDB) {
 		if (err) {
@@ -35,6 +36,7 @@ router.get('/:donorId', function(req, resp) {
 	});
 });
 
+// Public method. No authentication. To allow anonymous users to add donotations
 // Create donor
 router.post('/', function(req, resp) {
 	console.log("Got request to create a donor");
@@ -49,6 +51,7 @@ router.post('/', function(req, resp) {
 	});
 });
 
+// Public method. No authentication. To allow anonymous users to add donotations
 // Update donor
 router.put('/:donorId', function(req, resp) {
 	var updatedDonor = req.body.donor;
@@ -62,7 +65,7 @@ router.put('/:donorId', function(req, resp) {
 });
 
 // Delete specific donor
-router.delete('/:donorId', function(req, resp) {
+router.delete('/:donorId', security.requireAccessPermission, function(req, resp) {
 	var donorId = req.params.donorId;
 	donorDAO.deleteDonor(donorId, function(err) {
 		if (err) {
@@ -82,6 +85,7 @@ router.delete('/:donorId', function(req, resp) {
 	});
 });
 
+// Public method. No authentication. To allow anonymous users to add donotations
 // Upload item image
 router.post('/:donorId/images', function(req, resp) {
 	console.log("Got request to upload a donor's item image");
@@ -100,7 +104,7 @@ router.post('/:donorId/images', function(req, resp) {
 });
 
 // Delete item image
-router.delete('/:donorId/images/:imagePathEncoded', function(req, resp) {
+router.delete('/:donorId/images/:imagePathEncoded', security.requireAccessPermission, function(req, resp) {
 	console.log("Got request to upload a donor's item image");
 	var donorId = req.params.donorId;
 	var imageToDeletePath = req.params.imagePathEncoded;
