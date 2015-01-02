@@ -3,9 +3,13 @@ var config = require('../config').Config;
 var db = monk(config.mongoDbUri);
 
 function getAllElementsOfCollection(collectionName, callback) {
+	getElementsOfCollectionByQuery(collectionName, {}, callback);
+}
+
+function getElementsOfCollectionByQuery(collectionName, queryObject, callback) {
 	var collection = db.get(collectionName);
-	collection.find({}, function(err, allElementsOfCollection) {
-		_logMsg(err, "Loaded all " + collectionName, "Failed loading all " + collectionName +". ");
+	collection.find(queryObject, function(err, allElementsOfCollection) {
+		_logMsg(err, "Loaded " + collectionName + " by query " + JSON.stringify(queryObject), "Failed loading " + collectionName + " by query " + JSON.stringify(queryObject));
 		if (_isFunction(callback)) {
 			callback(err, allElementsOfCollection);
 		}
@@ -106,3 +110,4 @@ exports.createElement = createElement;
 exports.deleteElement = deleteElement;
 exports.updateElement = updateElement;
 exports.getSingleElementOfCollectionByQuery = getSingleElementOfCollectionByQuery;
+exports.getElementsOfCollectionByQuery = getElementsOfCollectionByQuery;
