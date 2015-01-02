@@ -171,6 +171,9 @@ App.CarController = App.SingleModelController.extend({
 });
 
 App.DonorItemImagesController = Ember.ObjectController.extend({
+	queryParams: ['isCreation'],
+	// If true it means that the user got here from the create donor form
+	isCreation: null,
 	imagesForView: function() {
 		var itemImages = this.get('model.item.images');
 		
@@ -189,6 +192,12 @@ App.DonorItemImagesController = Ember.ObjectController.extend({
 		return '/donors/' + this.get('model.id') + '/images';
 	}.property('model._id'),
 	actions: {
+		finishAddingImages: function() {
+			bootbox.alert('פרטי התרומה נקלטו בהצלחה. \nתודה', function() {
+				// Go to the hiburim website
+				window.location.href = 'http://www.hiburim1.co.il';	
+			});
+		},
 		imageAdded: function(file, fileServerUrl) {
 			var donorModel = this.get('model');
 			var images = donorModel.get('item.images');
@@ -383,6 +392,28 @@ App.DonorController = App.SinglePersonWithItemController.extend({
 		this._super();
 		this.set('modelName', 'donor');
 	}.on('init')
+});
+
+App.NewDonorController = Ember.ObjectController.extend({
+	initController: function() {
+		var newDonor = this.store.createRecord('donor', {});
+		newDonor.set('address', Ember.Object.create());
+		newDonor.set('item', Ember.Object.create());
+		this.set('model', newDonor);
+	}.on('init'),
+	actions: {
+		createDonor: function() {
+			var that = this;
+			this.get('model').save().then(
+				function() {
+					that.transitionToRoute('donorItemImages', that.get('model'), {queryParams: {isCreation: true}});
+				},
+				function() {
+					alert('ארעה תקלה בשמירת פרטי התרומה. אנא נסו שנית');
+				}
+			);
+		}
+	}
 });
 
 App.UserRowController = App.SingleModelController.extend({

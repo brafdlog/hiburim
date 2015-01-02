@@ -129,6 +129,25 @@ App.DonorView = App.PersonWithItemView.extend({
 	templateName: 'donorRowTemplate',
 });
 
+App.NewDonorView = Ember.View.extend({
+	didInsertElement : function(){
+		var that = this;
+		this._super();
+		var addressInput = $('#newDonorAddress');
+		Ember.run.scheduleOnce('afterRender', this, function(){
+			addressInput.geocomplete()
+			.bind("geocode:result", function(event, result){
+				var lat = result.geometry.location.lat();
+				var lon = result.geometry.location.lng();
+				var geoCompleteAddress = result.formatted_address;
+				that.set('controller.model.address.latitude', lat);
+				that.set('controller.model.address.longitude', lon);
+				that.set('controller.model.address.geoQueryString', geoCompleteAddress);
+			});
+		});
+	}
+});
+
 App.UserRowView = App.TableRowView.extend({
 	templateName: 'userRowTemplate'
 });

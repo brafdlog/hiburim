@@ -6,3 +6,11 @@
 	position: relative;
 	left: -100px;
 }
+
+.newDonorFormRow {
+	margin-top: 20px;
+}
+
+#finishAddingItemsRow {
+	margin-top: 10px;	
+}

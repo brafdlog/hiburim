@@ -12,6 +12,7 @@ App.Router.map(function() {
 	this.resource('donors', function() {
 		this.resource('donor', {path: ':donor_id'});
 	});
+	this.route('newDonor', {path: '/donors/new'});
 	this.route('donorItemImages', {path: '/donors/:donor_id/images'});
 });
 
