@@ -193,9 +193,29 @@ App.DonorItemImagesController = Ember.ObjectController.extend({
 	}.property('model._id'),
 	actions: {
 		finishAddingImages: function() {
-			bootbox.alert('פרטי התרומה נקלטו בהצלחה. \nתודה', function() {
-				// Go to the hiburim website
-				window.location.href = 'http://www.hiburim1.co.il';	
+			var that = this;
+			bootbox.dialog({
+				message: "פרטי התרומה נקלטו בהצלחה",
+				title: "תודה!",
+				buttons: {
+					success: {
+						label: "תרומה נוספת",
+						className: "btn-success",
+						callback: function() {
+							var donorId = that.get('model.id');
+							// Save the previous donor id to prepopulate the new donor form
+							that.transitionTo('newDonor', {queryParams: {previousDonorId: donorId}});
+						}
+					},
+					main: {
+						label: "סיום",
+						className: "btn-default",
+						callback: function() {
+							// Go to the hiburim website
+							window.location.href = 'http://www.hiburim1.co.il';	
+						}
+					}
+				}
 			});
 		},
 		imageAdded: function(file, fileServerUrl) {
@@ -394,13 +414,9 @@ App.DonorController = App.SinglePersonWithItemController.extend({
 	}.on('init')
 });
 
-App.NewDonorController = Ember.ObjectController.extend({
-	initController: function() {
-		var newDonor = this.store.createRecord('donor', {});
-		newDonor.set('address', Ember.Object.create());
-		newDonor.set('item', Ember.Object.create());
-		this.set('model', newDonor);
-	}.on('init'),
+App.NewDonorController = Ember.Controller.extend({
+	queryParams: ['previousDonorId'],
+	previousDonorId: null,
 	actions: {
 		createDonor: function() {
 			var that = this;

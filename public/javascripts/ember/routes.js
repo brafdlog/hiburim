@@ -65,6 +65,34 @@ App.DonorRoute = Ember.Route.extend({
 	}
 });
 
+App.NewDonorRoute = Ember.Route.extend({
+	setupController: function(controller, model) {
+		var newDonor = controller.store.createRecord('donor', {});
+		newDonor.set('item', Ember.Object.create());
+		newDonor.set('address', Ember.Object.create());
+		controller.set('model', newDonor);
+	    
+	    // Prepopulate previous donor data (in case same donor donated multiple items)
+		var previousDonorId = controller.get('previousDonorId');
+		if (previousDonorId) {
+			this.store.find('donor', previousDonorId).then(
+				function(previousDonor) {
+					if (previousDonor) {
+						newDonor = controller.get('model');
+						newDonor.set('name', previousDonor.get('name'));
+						newDonor.set('phoneNumber', previousDonor.get('phoneNumber'));
+						newDonor.set('area', previousDonor.get('area'));
+						newDonor.set('convenientDates', previousDonor.get('convenientDates'));
+						var cloneOfAddress = JSON.parse(JSON.stringify(previousDonor.get('address')));
+						newDonor.set('address', cloneOfAddress);
+						controller.set('model', newDonor);
+					}
+				}
+				);
+		}
+    }	
+});
+
 App.LoginRoute = Ember.Route.extend({
 	setupController: function(controller, context) {
 		// reset username and password when going back to login page

@@ -431,13 +431,13 @@
             <div class="form-group">
               <label for="newDonorName" class="col-md-3 col-md-offset-1 control-label">שם</label>
               <div class="col-md-6">
-                {{input type="text" id="newDonorName" class="form-control" value=name}}
+                {{input type="text" id="newDonorName" class="form-control" value=controller.model.name}}
               </div>
             </div>
             <div class="form-group">
               <label for="newDonorPhoneNumber" class="col-md-3 col-md-offset-1 control-label">טלפון</label>
               <div class="col-md-6">
-                {{input type="text" id="newDonorPhoneNumber" class="form-control" value=phoneNumber}}
+                {{input type="text" id="newDonorPhoneNumber" class="form-control" value=controller.model.phoneNumber}}
               </div>
             </div>
           </div>
@@ -457,13 +457,13 @@
             <div class="form-group">
               <label for="newDonorItemCategory" class="col-md-3 col-md-offset-1 control-label">סוג הפריט</label>
               <div class="col-md-6">
-                {{view "select" id="newDonorItemCategory" class="form-control" content=$.hib.itemCategories value=item.category}}
+                {{view "select" id="newDonorItemCategory" class="form-control" content=$.hib.itemCategories value=controller.model.item.category}}
               </div>
             </div>
             <div class="form-group">
               <label for="newDonorItemDescription" class="col-md-3 col-md-offset-1 control-label">תיאור</label>
               <div class="col-md-6">
-                {{textarea id="newDonorItemDescription" class="form-control" value=item.description cols="15" rows="5"}}
+                {{textarea id="newDonorItemDescription" class="form-control" value=controller.model.item.description cols="15" rows="5"}}
               </div>
             </div>
           </div>
@@ -483,14 +483,14 @@
             <div class="form-group">
               <label for="selectNewDonorArea" class="col-md-3 col-md-offset-1 control-label">אזור</label>
               <div class="col-md-6">
-                {{view "select" class="form-control" id="selectNewDonorArea" content=$.hib.areas value=area}}
+                {{view "select" class="form-control" id="selectNewDonorArea" content=$.hib.areas value=controller.model.area}}
               </div>
             </div>
 
             <div class="form-group">
               <label for="newDonorAddress" class="col-md-3 col-md-offset-1 control-label">כתובת</label>
               <div class="col-md-6">
-                {{input type="text" id="newDonorAddress" class="form-control" value=address.geoDisplayString}}
+                {{input type="text" id="newDonorAddress" class="form-control" value=controller.model.address.geoDisplayString}}
               </div>
             </div>
 
@@ -498,31 +498,31 @@
             <div class="form-group">
               <label for="newDonorAddressFloor" class="col-md-3 col-md-offset-1 control-label">קומה</label>
               <div class="col-md-6">
-                {{input type="number" id="newDonorAddressFloor" class="form-control" value=address.floor}}
+                {{input type="number" id="newDonorAddressFloor" class="form-control" value=controller.model.address.floor}}
               </div>
             </div>
             <div class="form-group">
               <label for="newDonorAddressFlatNumber" class="col-md-3 col-md-offset-1 control-label">מספר דירה</label>
               <div class="col-md-6">
-                {{input type="number" id="newDonorAddressFlatNumber" class="form-control" value=address.flatNumber}}
+                {{input type="number" id="newDonorAddressFlatNumber" class="form-control" value=controller.model.address.flatNumber}}
               </div>
             </div>
             <div class="form-group">
               <label for="newDonorAddressHasElavator" class="col-md-3 col-md-offset-1 control-label">מעלית</label>
               <div class="col-md-6">
-                {{input type="checkbox" id="newDonorAddressHasElavator" checked=address.hasElavator}}
+                {{input type="checkbox" id="newDonorAddressHasElavator" checked=controller.model.address.hasElavator}}
               </div>
             </div>
             <div class="form-group">
               <label for="newDonorAddressHasParking" class="col-md-3 col-md-offset-1 control-label">חניה</label>
               <div class="col-md-6">
-                {{input type="checkbox" id="newDonorAddressHasParking" checked=address.hasParking}}
+                {{input type="checkbox" id="newDonorAddressHasParking" checked=controller.model.address.hasParking}}
               </div>
             </div>
             <div class="form-group">
               <label for="newDonorAddressDescription" class="col-md-3 col-md-offset-1 control-label">הערות</label>
               <div class="col-md-6">
-                {{textarea id="newDonorAddressDescription" class="form-control" value=address.description cols="15" rows="5"}}
+                {{textarea id="newDonorAddressDescription" class="form-control" value=controller.model.address.description cols="15" rows="5"}}
               </div>
             </div>
           </div>
