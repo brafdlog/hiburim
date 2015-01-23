@@ -104,6 +104,7 @@
 </head>
 
 <body>
+
   <script type="text/x-handlebars">
    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container-fluid">
@@ -227,7 +228,7 @@
       <img {{bind-attr src=controller.carTypeUrl}} {{bind-attr alt=carType}} {{bind-attr title=carType}} width="40px">
     </td>
     <td>
-       {{view "select" content=$.hib.areas disabled=controller.isNotEdited value=area}}
+       {{view "select" class="form-control" class="form-control" class="form-control" content=$.hib.areas disabled=controller.isNotEdited value=area}}
     </td>
     <td class="nameTd">
       {{input type="text" disabled=controller.isNotEdited value=driverName}}
@@ -363,7 +364,7 @@
 <script type="text/x-handlebars" id="consumerRowTemplate">
   <tr {{bind-attr id=id}} {{bind-attr class=":nonHeaderTableRow controller.isBeingEdited:rowBeingEdited"}}>
     <td>
-       {{view "select" content=$.hib.areas disabled=controller.isNotEdited value=area}}
+       {{view "select" class="form-control" class="form-control" content=$.hib.areas disabled=controller.isNotEdited value=area}}
     </td>
     <td class="nameTd">
       {{input type="text" class="mediumWidth" disabled=controller.isNotEdited value=name}}
@@ -375,10 +376,10 @@
       {{input type="text" disabled=controller.isNotEdited value=convenientDates}}
     </td>
     <td class="itemCategoryTd">
-    {{view "select" content=$.hib.itemCategories disabled=controller.isNotEdited value=item.category}}
+    {{view "select" class="form-control" content=$.hib.itemCategories disabled=controller.isNotEdited value=item.category}}
     </td>
     <td class="itemDescriptionTd">
-       {{textarea value=item.description disabled=controller.isNotEdited cols="10" rows="3"}}
+       {{textarea class="form-control" value=item.description disabled=controller.isNotEdited cols="10" rows="3"}}
     </td>
     <td class="addressTd">
       <a {{bind-attr href=controller.googleMapsUrl}} {{bind-attr hidden=controller.mapLinkNotActive}} target="_blank">
@@ -401,7 +402,7 @@
       {{input type="checkbox" name="חניה" disabled=controller.isNotEdited checked=address.hasParking}}
     </td>
     <td class="addressDescriptionTd">
-      {{textarea value=address.description disabled=controller.isNotEdited cols="10" rows="3"}}
+      {{textarea class="form-control" value=address.description disabled=controller.isNotEdited cols="10" rows="3"}}
     </td>
     <td class="urgentTd">
       {{input type="checkbox" disabled=controller.isNotEdited checked=urgent}}
@@ -585,7 +586,7 @@
 <script type="text/x-handlebars" id="donorRowTemplate">
   <tr {{bind-attr id=id}} {{bind-attr class=":nonHeaderTableRow controller.isBeingEdited:rowBeingEdited"}}>
     <td>
-       {{view "select" content=$.hib.areas disabled=controller.isNotEdited value=area}}
+       {{view "select" class="form-control" content=$.hib.areas disabled=controller.isNotEdited value=area}}
     </td>
     <td class="nameTd">
       {{input type="text" class="mediumWidth" disabled=controller.isNotEdited value=name}}
@@ -597,10 +598,10 @@
       {{input type="text" disabled=controller.isNotEdited value=convenientDates}}
     </td>
     <td class="itemCategoryTd">
-      {{view "select" content=$.hib.itemCategories disabled=controller.isNotEdited value=item.category}}
+      {{view "select" class="form-control" content=$.hib.itemCategories disabled=controller.isNotEdited value=item.category}}
     </td>
     <td class="itemDescriptionTd">
-       {{textarea value=item.description disabled=controller.isNotEdited cols="10" rows="3"}}
+       {{textarea class="form-control" value=item.description disabled=controller.isNotEdited cols="10" rows="3"}}
     </td>
     <td>
       {{#link-to 'donorItemImages' this}} <span class="glyphicon glyphicon-picture" aria-hidden="true"></span> {{/link-to}}
@@ -626,7 +627,7 @@
       {{input type="checkbox" name="חניה" disabled=controller.isNotEdited checked=address.hasParking}}
     </td>
     <td class="addressDescriptionTd">
-      {{textarea value=address.description disabled=controller.isNotEdited cols="10" rows="3"}}
+      {{textarea class="form-control" value=address.description disabled=controller.isNotEdited cols="10" rows="3"}}
     </td>
     <td>
       {{partial 'editDeleteSaveIcons'}}
