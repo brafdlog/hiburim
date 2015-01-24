@@ -45,6 +45,9 @@ function getSingleElementOfCollectionByQuery(collectionName, queryObject, callba
 
 function createElement(collectionName, elementToCreate, callback) {
 	var collection = db.get(collectionName);
+	var now = new Date();
+	elementToCreate.creationDate = now;
+	elementToCreate.modificationDate = now;
 	collection.insert(elementToCreate, function (err, createdElement) {
 		_logMsg(err, "Created element with id " + createdElement._id + " in collection " + collectionName, 
 			"Failed creating " + collectionName + ". Error ");
@@ -57,7 +60,8 @@ function createElement(collectionName, elementToCreate, callback) {
 
 function updateElement(collectionName, updatedElement, callback) {
 	var collection = db.get(collectionName);
-
+	var now = new Date();
+	updatedElement.modificationDate = now;
 	collection.updateById(updatedElement._id, updatedElement, function(err) {
 		_logMsg(err, "Updated element with id " + updatedElement._id + " from collection " + collectionName, 
 			"Failed updating element with id " + updatedElement._id + " from collection " + collectionName);

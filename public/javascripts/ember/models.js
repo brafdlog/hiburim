@@ -1,14 +1,19 @@
-App.Car = DS.Model.extend({
+App.BaseModel = DS.Model.extend({
+	creationDate: DS.attr('date'),
+	modificationDate: DS.attr('date')
+});
+
+App.Car = App.BaseModel.extend({
 	carType: DS.attr(),
 	driverName: DS.attr(),
 	driverNumber: DS.attr(), 
 	availableFromDateTime: DS.attr('date'),
 	availableDurationInHours: DS.attr('number'),
 	availableUntilDateTime: DS.attr('date'),
-	area: DS.attr('string', {defaultValue: 'ירושלים'})
+	area: DS.attr('string', {defaultValue: 'ירושלים'}),
 });
 
-App.PersonWithItem = DS.Model.extend({
+App.PersonWithItem = App.BaseModel.extend({
 	name: DS.attr(), 
 	phoneNumber: DS.attr(),
 	convenientDates: DS.attr(),
@@ -25,7 +30,7 @@ App.Donor = App.PersonWithItem.extend({
 
 });
 
-App.User = DS.Model.extend({
+App.User = App.BaseModel.extend({
 	email: DS.attr(),
 	// Only for creating user, usually ui won't see the password
 	password: DS.attr(),
