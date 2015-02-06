@@ -420,6 +420,9 @@ App.NewDonorController = Ember.Controller.extend({
 	actions: {
 		createDonor: function() {
 			var that = this;
+			var donorAddress = $('#newDonorAddress').val();
+			// Ember doesn't detect the geocomplete autofill so I get it here manually
+			this.get('model.address').set('geoDisplayString', donorAddress);
 			this.get('model').save().then(
 				function() {
 					that.transitionToRoute('donorItemImages', that.get('model'), {queryParams: {isCreation: true}});
