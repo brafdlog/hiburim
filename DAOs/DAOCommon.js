@@ -1,6 +1,7 @@
 var monk = require("monk");
 var config = require('../config').Config;
 var db = monk(config.mongoDbUri);
+var util = require("util");
 
 function getAllElementsOfCollection(collectionName, callback) {
 	getElementsOfCollectionByQuery(collectionName, {}, callback);
@@ -9,7 +10,7 @@ function getAllElementsOfCollection(collectionName, callback) {
 function getElementsOfCollectionByQuery(collectionName, queryObject, callback) {
 	var collection = db.get(collectionName);
 	collection.find(queryObject, function(err, allElementsOfCollection) {
-		_logMsg(err, "Loaded " + collectionName + " by query " + JSON.stringify(queryObject), "Failed loading " + collectionName + " by query " + JSON.stringify(queryObject));
+		_logMsg(err, "Loaded " + collectionName + " by query " + inspectObject(queryObject), "Failed loading " + collectionName + " by query " + inspectObject(queryObject));
 		if (_isFunction(callback)) {
 			callback(err, allElementsOfCollection);
 		}
@@ -24,8 +25,8 @@ function getSingleElementOfCollection(collectionName, elementId, callback) {
 function getSingleElementOfCollectionByQuery(collectionName, queryObject, callback) {
 	var collection = db.get(collectionName);
 	collection.find(queryObject, function(err, foundElementsArray) {
-		_logMsg(err, "Loaded element by query: " + queryObject + " from collection " + collectionName, 
-			"Failed loading element by query: " + queryObject + " from collection " + collectionName + ". Error ");
+		_logMsg(err, "Loaded element by query: " + inspectObject(queryObject) + " from collection " + collectionName, 
+			"Failed loading element by query: " + inspectObject(queryObject) + " from collection " + collectionName + ". Error ");
 
 		if (_isFunction(callback)) {
 			if (foundElementsArray && foundElementsArray.length === 1) {
@@ -33,7 +34,7 @@ function getSingleElementOfCollectionByQuery(collectionName, queryObject, callba
 				return;
 			}
 			if (foundElementsArray.length > 1) {
-				err = "Found more than one element for query " + queryObject + " from collection " + collectionName;
+				err = "Found more than one element for query " + inspectObject(queryObject) + " from collection " + collectionName;
 				console.log(err);
 				callback(err);
 			} else { // if there is no element for the given query
@@ -102,10 +103,14 @@ function _isFunction(varToCheck) {
 
 function _logMsg(err, successMsg, errorMsg) {
 	if (err) {
-		console.log(errorMsg + err);
+		console.log(errorMsg + inspectObject(err));
 	} else {
 		console.log(successMsg);
 	}
+}
+
+function inspectObject(obj) {
+	return util.inspect(obj, {showHidden: false, depth: null});
 }
 
 exports.getAllElementsOfCollection = getAllElementsOfCollection;
@@ -115,3 +120,4 @@ exports.deleteElement = deleteElement;
 exports.updateElement = updateElement;
 exports.getSingleElementOfCollectionByQuery = getSingleElementOfCollectionByQuery;
 exports.getElementsOfCollectionByQuery = getElementsOfCollectionByQuery;
+exports.inspectObject = inspectObject;

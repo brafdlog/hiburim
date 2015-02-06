@@ -2,7 +2,7 @@ var express = require('express');
 var session = require('express-session');
 var path = require('path');
 var favicon = require('serve-favicon');
-var logger = require('morgan');
+var morganAutoLogger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var compression = require('compression');
@@ -34,7 +34,9 @@ app.set('view options', { layout: false });
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
-app.use(logger('dev'));
+
+// Automatically logs info about the request etc. Not for manual logging
+app.use(morganAutoLogger('combined'));
 
 // gzip compression of static resources with size larger than 256kb
 app.use(compression({
