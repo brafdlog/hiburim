@@ -27,7 +27,10 @@ Ember.SortableAndFilterableController = Ember.ArrayController.extend({
 		if (!filter || filteredProperties.length === 0) {
 			return allElements;
 		}
-		return allElements.filter(function(element) {
+
+		$.hib.displaySpinner("spinnerDiv");
+
+		var filteredElements = allElements.filter(function(element) {
 			for (var i=0; i<filteredProperties.length; i++) {
 				var filteredProperty = filteredProperties[i];
 				var match = element.get(filteredProperty) && element.get(filteredProperty).match(regEx);
@@ -37,6 +40,9 @@ Ember.SortableAndFilterableController = Ember.ArrayController.extend({
 			}
 			return false;
 		});
+
+		$.hib.hideSpinner("spinnerDiv");
+		return filteredElements;
 	}.property('filter', 'arrangedContent', 'arrangedContent.@each.isDeleted'),
 
 	actions: {
