@@ -337,9 +337,17 @@ App.ConsumersController = Ember.SortableAndFilterableController.extend({
 });
 
 App.DonorsController = Ember.SortableAndFilterableController.extend({
+	queryParams: ['donationStatus'],
+	donationStatus: null,
 	headerText: 'תרומות',
 	newModelText: 'תרומה חדשה',
 	hideTableOnMobile: false,
+	donationStatusHebrew: null,
+	onHebrewStatusChanges: function() {
+		var hebrewStatus = this.get('donationStatusHebrew');
+		var englishStatus = $.hib.donationStatusTypes.hebrewToEnglish[hebrewStatus];
+		this.set('donationStatus', englishStatus);
+	}.observes('donationStatusHebrew'),
 	initController: function() {
 		this._super();
 		var filteredProperties = this.get('filteredProperties');
@@ -349,6 +357,11 @@ App.DonorsController = Ember.SortableAndFilterableController.extend({
 		filteredProperties.pushObject('address.geoDisplayString');
 		filteredProperties.pushObject('area');
 		this.set('modelName', "donor");
+		if (this.get('donationStatus')) {
+			this.set('donationStatusHebrew', $.hib.donationStatusTypes.englishToHebrew[this.get('donationStatus')]);
+		} else {
+			this.set('donationStatusHebrew', $.hib.donationStatusTypes.englishToHebrew.available);
+		}
 	}.on('init')
 });
 
@@ -408,9 +421,16 @@ App.ConsumerController = App.SinglePersonWithItemController.extend({
 });
 
 App.DonorController = App.SinglePersonWithItemController.extend({
+	donationStatusHebrew: null,
+	onHebrewStatusChanges: function() {
+		var hebrewStatus = this.get('donationStatusHebrew');
+		var englishStatus = $.hib.donationStatusTypes.hebrewToEnglish[hebrewStatus];
+		this.set('model.donationStatus', englishStatus);
+	}.observes('donationStatusHebrew'),
 	initController: function() {
 		this._super();
 		this.set('modelName', 'donor');
+		this.set('donationStatusHebrew', $.hib.donationStatusTypes.englishToHebrew[this.get('model.donationStatus')]);
 	}.on('init')
 });
 

@@ -553,6 +553,14 @@
 <!-- Donor table - desktop view -->
 <script type="text/x-handlebars" id="donors">
   {{partial 'headerAndSearchRow'}}
+  <div id="donorsFilterRow" class="row">
+    <div class="col-md-1">
+      <label for="donationStatusDropdown">סטטוס הפריט:</label>
+    </div>
+    <div class="col-md-1">    
+      {{view "select" id="donationStatusDropdown" content=$.hib.donationStatusTypes.hebrew value=donationStatusHebrew class="form-control"}}
+    </div>
+  </div>
   <div class="row">
     <div class="col-md-12 main">
       <div {{bind-attr class=":deskopTableView controller.hideTableOnMobile:hidden-xs"}}>
@@ -561,6 +569,7 @@
             <thead>
               <tr>
                 <th {{action 'sortBy' 'area'}}>אזור</th>
+                <th>סטטוס</th>
                 <th {{action 'sortBy' 'name'}}>שם</th>
                 <th {{action 'sortBy' 'phoneNumber'}}>טלפון</th>
                 <th>עד מתי הפריט זמין</th>
@@ -593,6 +602,9 @@
   <tr {{bind-attr id=id}} {{bind-attr class=":nonHeaderTableRow controller.isBeingEdited:rowBeingEdited"}}>
     <td>
        {{view "select" class="form-control" content=$.hib.areas disabled=controller.isNotEdited value=area}}
+    </td>
+    <td>
+       {{view "select" class="form-control" content=$.hib.donationStatusTypes.hebrew value=donationStatusHebrew disabled=controller.isNotEdited}}
     </td>
     <td class="nameTd">
       {{input type="text" class="mediumWidth" disabled=controller.isNotEdited value=name}}

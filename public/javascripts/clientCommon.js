@@ -36,6 +36,26 @@ $.hib.carTypeImgUrls = {
 	'לא זמין': '/images/notAvailable.jpg'
 };
 
+$.hib.donationStatusTypes = {};
+
+$.hib.donationStatusTypes.englishToHebrew = {
+	'available': 'זמין',
+	'given': 'משוריין',
+	'promised': 'נמסר', 
+	'notRelevant': 'לא רלוונטי'
+};
+
+$.hib.donationStatusTypes.hebrewToEnglish = function() {
+	var donationStatusTypesHebrewToEnglish = {};
+	Object.keys($.hib.donationStatusTypes.englishToHebrew).forEach(function(englishStatus) {
+		var hebrewStatus = $.hib.donationStatusTypes.englishToHebrew[englishStatus];
+		donationStatusTypesHebrewToEnglish[hebrewStatus] = englishStatus;
+	});
+	return donationStatusTypesHebrewToEnglish;
+}();
+
+$.hib.donationStatusTypes.hebrew = Object.keys($.hib.donationStatusTypes.hebrewToEnglish);
+
 $.hib.itemCategories = [
 	'כיסאות', 'מיטה זוגית', 'מיטה זוגית + מזרן', 'מיטת יחיד', 'מיטת יחיד + מזרן', 'ארון בגדים', 'שולחן כתיבה', 'שולחן אוכל', 'שולחן אוכל + כיסאות', 'ספה', 'סלון', 'כיריים חשמליות', 'כיריים גז', 'טלויזיה שטוחה', 'טלויזיה רחבה (לא שטוחה)', 'תנור חימום \\ רדיאטור', 'מאוורר', 'מיקרוגל', 'טוסטר אובן', 'ציוד למטבח', 'שטיח', 'שואב אבק', 'צעצועים וספרים לילדים', 'ציוד לילדים ולתינוקות', 'אחר'
 ];

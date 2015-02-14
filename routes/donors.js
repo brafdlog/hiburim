@@ -7,9 +7,10 @@ var fs = require('fs-extra');
 var security = require('../security');
 var config = require('../config').Config;
 
-// Get all donors
+// Get donors by donation status.
 router.get('/', security.requireAccessPermission, function(req, resp) {	
-	donorDAO.getAllDonors(function(err, allDonorsArray) {
+	var donationStatus = req.query.donationStatus;
+	donorDAO.getDonorByDonationStatus(donationStatus, function(err, allDonorsArray) {
 		if (err) {
 			routesCommon.handleServerError(resp, err);
 		} else {

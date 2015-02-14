@@ -14,3 +14,14 @@
 #finishAddingItemsRow {
 	margin-top: 10px;	
 }
+
+#donorsFilterRow {
+	padding: 5px;
+	border-top-style: solid;
+	border-top-width: 1px;
+	border-top-color: gray;
+
+	border-bottom-style: solid;
+	border-bottom-width: 1px;
+	border-bottom-color: gray;
+}

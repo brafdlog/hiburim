@@ -27,7 +27,8 @@ App.Consumer = App.PersonWithItem.extend({
 });
 
 App.Donor = App.PersonWithItem.extend({
-
+	// possible values: available, given, promised, notRelevant
+	donationStatus: DS.attr('string', {defaultValue: 'available'}),
 });
 
 App.User = App.BaseModel.extend({

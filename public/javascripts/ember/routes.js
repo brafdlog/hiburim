@@ -54,8 +54,15 @@ App.ConsumerRoute = Ember.Route.extend({
 });
 
 App.DonorsRoute = Ember.Route.extend({
+	queryParams: {
+		donationStatus: {
+			// Refresh model when a transition happens and only query param changes
+			refreshModel: true
+		}
+	},
 	model: function(params) {
-		return this.store.find('donor');
+		var donationStatus = params.donationStatus || 'available';
+		return this.store.find('donor', {donationStatus: donationStatus});
 	}
 });
 
