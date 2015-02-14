@@ -80,6 +80,45 @@ $.hib.generateRandomNumber = function(upperLimit) {
 	return Math.random() * upperLimit;
 };
 
+$.hib.spinnerOptions = {
+	lines: 11, // The number of lines to draw
+	length: 0, // The length of each line
+	width: 7, // The line thickness
+	radius: 17, // The radius of the inner circle
+	corners: 1, // Corner roundness (0..1)
+	rotate: 63, // The rotation offset
+	direction: 1, // 1: clockwise, -1: counterclockwise
+	color: '#000', // #rgb or #rrggbb or array of colors
+	speed: 1, // Rounds per second
+	trail: 53, // Afterglow percentage
+	shadow: false, // Whether to render a shadow
+	hwaccel: false, // Whether to use hardware acceleration
+	className: 'spinner', // The CSS class to assign to the spinner
+	zIndex: 2e9, // The z-index (defaults to 2000000000)
+	top: '50%', // Top position relative to parent
+	left: '50%' // Left position relative to parent
+};
+
+$.hib.spinnerObjectCache = {};
+
+$.hib.displaySpinner = function(idOfSpinnerElement) {
+	var spinner = $.hib.spinnerObjectCache[idOfSpinnerElement];
+	if (!spinner) {
+		spinner = new Spinner($.hib.spinnerOptions);
+		$.hib.spinnerObjectCache[idOfSpinnerElement] = spinner;
+	}
+	var target = document.getElementById(idOfSpinnerElement);
+	spinner.spin(target);
+};
+
+$.hib.hideSpinner = function(idOfSpinnerElement) {
+	var spinner = $.hib.spinnerObjectCache[idOfSpinnerElement];
+	if (spinner) {
+		spinner.stop();
+		delete $.hib.spinnerObjectCache[idOfSpinnerElement];
+	}
+};
+
 /*
 	Makes the table editable if:
 		1. The table has the following classes in the right places:  

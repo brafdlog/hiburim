@@ -1,3 +1,11 @@
+Ember.Route.reopen({
+	afterModel: function(model, transition) {
+		this._super(model, transition);
+		// Hide the spinner if it was displayed
+		$.hib.hideSpinner("spinnerDiv");
+  }
+});
+
 // Defining auth error handling here so it will appy to
 // the whole app
 App.ApplicationRoute = Ember.Route.extend({
@@ -20,6 +28,11 @@ App.ApplicationRoute = Ember.Route.extend({
 				// Bubble this event onwards
 				return true;
 			}
+		},
+		loading: function(transition, originRoute) {
+			$.hib.displaySpinner("spinnerDiv");
+		    // Bubble this event onwards
+		    return true;
 		}
 	}
 });
