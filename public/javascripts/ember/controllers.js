@@ -12,15 +12,22 @@ Ember.SortableAndFilterableController = Ember.ArrayController.extend({
 
 	filteredElements: function() {
 		var filter = this.get('filter');
+
+		var allElements = this.get('arrangedContent');
+
+		// Don't run filter for just one or two letters
+		if (filter.length < 3) {
+			return allElements;
+		}
+
 		// Regex for contains ignore case
 		var regEx = new RegExp(filter, 'gi');
-		var elements = this.get('arrangedContent');
 		var filteredProperties = this.get('filteredProperties');
 
 		if (!filter || filteredProperties.length === 0) {
-			return elements;
+			return allElements;
 		}
-		return elements.filter(function(element) {
+		return allElements.filter(function(element) {
 			for (var i=0; i<filteredProperties.length; i++) {
 				var filteredProperty = filteredProperties[i];
 				var match = element.get(filteredProperty) && element.get(filteredProperty).match(regEx);
