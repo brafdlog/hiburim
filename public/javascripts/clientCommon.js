@@ -61,7 +61,7 @@ $.hib.itemCategories = [
 ];
 
 $.hib.areas = [
-	'ירושלים', 'תל אביב'
+	'ירושלים'
 ];
 
 // String ends with
