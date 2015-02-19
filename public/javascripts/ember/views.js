@@ -135,6 +135,8 @@ App.NewDonorView = Ember.View.extend({
 		this._super();
 		var addressInput = $('#newDonorAddress');
 		Ember.run.scheduleOnce('afterRender', this, function(){
+			$('.requiredField').off('blur').on('blur', $.hib.runFormValidation);
+
 			addressInput.geocomplete()
 			.bind("geocode:result", function(event, result){
 				var lat = result.geometry.location.lat();

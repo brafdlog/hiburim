@@ -45,6 +45,15 @@ $.hib.donationStatusTypes.englishToHebrew = {
 	'notRelevant': 'לא רלוונטי'
 };
 
+$.hib.runFormValidation = function() {
+	var formGroupParent = $(this).closest('.form-group');
+	if ($(this).val()) {
+		formGroupParent.removeClass('has-error');
+	} else {
+		formGroupParent.addClass('has-error');
+	}
+};
+
 $.hib.donationStatusTypes.hebrewToEnglish = function() {
 	var donationStatusTypesHebrewToEnglish = {};
 	Object.keys($.hib.donationStatusTypes.englishToHebrew).forEach(function(englishStatus) {

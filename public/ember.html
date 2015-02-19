@@ -432,13 +432,13 @@
             <div class="form-group">
               <label for="newDonorName" class="col-md-3 col-md-offset-1 control-label">שם</label>
               <div class="col-md-6">
-                {{input type="text" id="newDonorName" class="form-control" value=controller.model.name}}
+                {{input type="text" id="newDonorName" class="form-control requiredField" value=controller.model.name}}
               </div>
             </div>
             <div class="form-group">
               <label for="newDonorPhoneNumber" class="col-md-3 col-md-offset-1 control-label">טלפון</label>
               <div class="col-md-6">
-                {{input type="text" id="newDonorPhoneNumber" class="form-control" value=controller.model.phoneNumber}}
+                {{input type="text" id="newDonorPhoneNumber" class="form-control requiredField" value=controller.model.phoneNumber}}
               </div>
             </div>
           </div>
@@ -464,7 +464,7 @@
             <div class="form-group">
               <label for="newDonorItemDescription" class="col-md-3 col-md-offset-1 control-label">תיאור</label>
               <div class="col-md-6">
-                {{textarea id="newDonorItemDescription" class="form-control" value=controller.model.item.description cols="15" rows="5"}}
+                {{textarea id="newDonorItemDescription" class="form-control requiredField" value=controller.model.item.description cols="15" rows="5"}}
               </div>
             </div>
             <div class="form-group">
@@ -497,7 +497,7 @@
             <div class="form-group">
               <label for="newDonorAddress" class="col-md-3 col-md-offset-1 control-label">כתובת</label>
               <div class="col-md-6">
-                {{input type="text" id="newDonorAddress" class="form-control" value=controller.model.address.geoDisplayString}}
+                {{input type="text" id="newDonorAddress" class="form-control requiredField" value=controller.model.address.geoDisplayString}}
               </div>
             </div>
 

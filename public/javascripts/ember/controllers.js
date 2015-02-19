@@ -37,7 +37,7 @@ Ember.SortableAndFilterableController = Ember.ArrayController.extend({
 			}
 			return false;
 		});
-	}.property('filter', 'arrangedContent', 'arrangedContent.@each.isDeleted'),
+	}.property('filter', 'arrangedContent', 'arrangedContent.@each'),
 
 	actions: {
 		sortBy: function(property) {
@@ -447,6 +447,30 @@ App.NewDonorController = Ember.Controller.extend({
 	actions: {
 		createDonor: function() {
 			var that = this;
+
+			var missingFieldNames = [];
+
+			if (!this.get('model.address.geoDisplayString')) {
+				missingFieldNames.push('כתובת');
+			}
+
+			if (!this.get('model.name')) {
+				missingFieldNames.push('שם');
+			}
+
+			if (!this.get('model.phoneNumber')) {
+				missingFieldNames.push('טלפון');
+			}
+
+			if (!this.get('model.item.description')) {
+				missingFieldNames.push('תיאור הפריט');
+			}
+
+			if (missingFieldNames && missingFieldNames.length) {
+				alert('נא למלא את הפרטים הבאים: \n' + missingFieldNames.join('\n'));
+				return;
+			}
+
 			var donorAddress = $('#newDonorAddress').val();
 			// Ember doesn't detect the geocomplete autofill so I get it here manually
 			this.get('model.address').set('geoDisplayString', donorAddress);
