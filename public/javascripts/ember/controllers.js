@@ -467,6 +467,9 @@ App.NewDonorController = Ember.Controller.extend({
 			}
 
 			if (missingFieldNames && missingFieldNames.length) {
+				$.each($('.requiredField'), function(index, inputField) {
+					$.hib.runFormValidation.call(inputField);
+				});
 				alert('נא למלא את הפרטים הבאים: \n' + missingFieldNames.join('\n'));
 				return;
 			}
