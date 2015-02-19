@@ -16,6 +16,7 @@ App.Car = App.BaseModel.extend({
 App.PersonWithItem = App.BaseModel.extend({
 	name: DS.attr(), 
 	phoneNumber: DS.attr(),
+	email: DS.attr(),
 	convenientDates: DS.attr(),
 	item: DS.attr('raw'),
 	address: DS.attr('raw'),
