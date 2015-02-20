@@ -125,24 +125,25 @@
    <div class="navbar-collapse collapse">
     <ul class="nav navbar-nav navbar-right">
       <li>{{#link-to 'cars'}}רכבים{{/link-to}}</li>
-      <li>{{#link-to 'consumers'}}פניות{{/link-to}}</a></li>
-      <li>{{#link-to 'donors'}}תרומות רהיטים וציוד{{/link-to}}</a></li>
+      <li>{{#link-to 'consumers'}}פניות{{/link-to}}</li>
+      <li>{{#link-to 'donors'}}תרומות רהיטים וציוד{{/link-to}}</li>
       {{#if controller.loggedInUser.permissions.admin}}
-      <li>{{#link-to 'users'}}ניהול משתמשים{{/link-to}}</a></li>
+      <li>{{#link-to 'users'}}ניהול משתמשים{{/link-to}}</li>
       {{/if}}
     </ul>
     <ul class="nav navbar-nav navbar-left">      
       <li class="navbar-left"><a href="/logout">התנתק</a></li>
-    <ul>
+    </ul>
   </div>
   {{/if}}
 </div>
 </div>
 
 {{outlet}}
+</script>
 
 </body>
-</script>
+
 
 <script type="text/x-handlebars" id="login">
   <div class="container loginContainer">
@@ -311,6 +312,7 @@
         <button {{action "sendEmail" this}} type="button" class="btn btn-primary">שלח מייל</button>
       </div>
     </div>
+  </div>
   </div>
 </script>
 
@@ -711,9 +713,10 @@
   {{else}}
   <h1>אין תמונות</h1>
   {{/if}}
+  </div><!-- Closes column -->
   {{/unless}}
-</div>
-</div>
+
+</div><!-- Closes row? -->
 
 {{#if isCreation}}
 <div id="finishAddingItemsRow" class="row">
