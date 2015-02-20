@@ -4,7 +4,7 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res) {
- 	res.redirect("/ember.html#/cars");
+ 	res.redirect("/ember.html#/donors");
 });
 
 router.post('/login',
