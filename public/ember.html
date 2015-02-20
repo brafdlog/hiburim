@@ -579,6 +579,7 @@
                 <th>סטטוס</th>
                 <th {{action 'sortBy' 'name'}}>שם</th>
                 <th {{action 'sortBy' 'phoneNumber'}}>טלפון</th>
+                <th>מייל</th>
                 <th>עד מתי הפריט זמין</th>
                 <th {{action 'sortBy' 'item.category'}}>סוג הפריט</th>
                 <th>תיאור הפריט</th>
@@ -618,6 +619,9 @@
     </td>
     <td class="phoneNumberTd">
       {{input type="text" class="mediumWidth" disabled=controller.isNotEdited value=phoneNumber}}
+    </td>
+    <td class="emailTd">
+      {{input type="text" disabled=controller.isNotEdited value=email}}
     </td>
     <td class="convenientDatesTd">
       {{input type="text" disabled=controller.isNotEdited value=convenientDates}}
