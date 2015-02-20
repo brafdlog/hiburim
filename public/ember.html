@@ -687,7 +687,7 @@
         {{#each image in controller.imagesForView}}
         <div {{bind-attr class=":item image.isActive:active"}}>
           <div>
-           <span id="donorItemImageDeleteIcon" {{action 'deleteImage' image}} title="מחק" class="glyphicon glyphicon-remove deleteIcon"></span>
+            <button id="donorItemImageDeleteButton" type="button" {{action 'deleteImage' image}} class="btn btn-danger btn-sm">מחק תמונה</button>
          </div>
          <img {{bind-attr src=image.url}} alt="Item image" class="carouselImg">
        </div>
