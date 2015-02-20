@@ -9,7 +9,11 @@ function getAllElementsOfCollection(collectionName, callback) {
 
 function getElementsOfCollectionByQuery(collectionName, queryObject, callback) {
 	var collection = db.get(collectionName);
-	collection.find(queryObject, function(err, allElementsOfCollection) {
+	var queryOptions = {
+		"sort": [['creationDate','desc']]
+	};
+
+	collection.find(queryObject, queryOptions, function(err, allElementsOfCollection) {
 		_logMsg(err, "Loaded " + collectionName + " by query " + inspectObject(queryObject), "Failed loading " + collectionName + " by query " + inspectObject(queryObject));
 		if (_isFunction(callback)) {
 			callback(err, allElementsOfCollection);
