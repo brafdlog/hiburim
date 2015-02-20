@@ -629,7 +629,11 @@
        {{textarea class="form-control" value=item.description disabled=controller.isNotEdited cols="10" rows="3"}}
     </td>
     <td>
+      {{#if model.item.images}}
       {{#link-to 'donorItemImages' this}} <span class="glyphicon glyphicon-picture" aria-hidden="true"></span> {{/link-to}}
+      {{else}}
+      אין תמונות
+      {{/if}}   
     </td>
     <td class="addressTd">
       <a {{bind-attr href=controller.googleMapsUrl}} {{bind-attr hidden=controller.mapLinkNotActive}} target="_blank">
