@@ -54,7 +54,9 @@ App.SingleModelController = Ember.ObjectController.extend({
 	modelName: '',
 	isBeingEdited: false,
 	isNotEdited: Ember.computed.not('isBeingEdited'),
-
+	areas: $.hib.areas,
+	itemCategories: $.hib.itemCategories,
+	donationStatusTypesHebrew: $.hib.donationStatusTypes.hebrew,
 	initController: function() {
 		var isNew = this.get('model.isNew');
 		if (isNew) {
@@ -350,6 +352,7 @@ App.DonorsController = Ember.SortableAndFilterableController.extend({
 	newModelText: 'תרומה חדשה',
 	hideTableOnMobile: false,
 	donationStatusHebrew: null,
+	donationStatusTypesHebrew: $.hib.donationStatusTypes.hebrew,
 	onHebrewStatusChanges: function() {
 		var hebrewStatus = this.get('donationStatusHebrew');
 		var englishStatus = $.hib.donationStatusTypes.hebrewToEnglish[hebrewStatus];
@@ -450,6 +453,7 @@ App.DonorController = App.SinglePersonWithItemController.extend({
 App.NewDonorController = Ember.Controller.extend({
 	queryParams: ['previousDonorId'],
 	previousDonorId: null,
+	itemCategories: $.hib.itemCategories,
 	actions: {
 		createDonor: function() {
 			var that = this;

@@ -67,8 +67,8 @@
 
   </script>
 
-  <script src="/javascripts/ember/handlebars-v1.3.0.js"></script>
-  <script src="/javascripts/ember/ember-1.8.1.js"></script>
+  <script src="/javascripts/ember/ember.debug.js"></script>
+  <script src="/javascripts/ember/ember-template-compiler-1.10.0.js"></script>
   <script src="/javascripts/ember/ember-data.js"></script>
 
   <script src="/javascripts/bootstrap/bootstrap.js"></script>
@@ -230,7 +230,7 @@
       <img {{bind-attr src=controller.carTypeUrl}} {{bind-attr alt=carType}} {{bind-attr title=carType}} width="40px">
     </td>
     <td>
-       {{view "select" class="form-control" class="form-control" class="form-control" content=$.hib.areas disabled=controller.isNotEdited value=area}}
+       {{view "select" class="form-control" class="form-control" class="form-control" content=areas disabled=controller.isNotEdited value=area}}
     </td>
     <td class="nameTd">
       {{input type="text" disabled=controller.isNotEdited value=driverName}}
@@ -367,7 +367,7 @@
 <script type="text/x-handlebars" id="consumerRowTemplate">
   <tr {{bind-attr id=id}} {{bind-attr class=":nonHeaderTableRow controller.isBeingEdited:rowBeingEdited"}}>
     <td>
-       {{view "select" class="form-control" class="form-control" content=$.hib.areas disabled=controller.isNotEdited value=area}}
+       {{view "select" class="form-control" class="form-control" content=areas disabled=controller.isNotEdited value=area}}
     </td>
     <td class="nameTd">
       {{input type="text" class="mediumWidth" disabled=controller.isNotEdited value=name}}
@@ -379,7 +379,7 @@
       {{input type="text" disabled=controller.isNotEdited value=convenientDates}}
     </td>
     <td class="itemCategoryTd">
-    {{view "select" class="form-control" content=$.hib.itemCategories disabled=controller.isNotEdited value=item.category}}
+    {{view "select" class="form-control" content=itemCategories disabled=controller.isNotEdited value=item.category}}
     </td>
     <td class="itemDescriptionTd">
        {{textarea class="form-control" value=item.description disabled=controller.isNotEdited cols="10" rows="3"}}
@@ -466,7 +466,7 @@
             <div class="form-group">
               <label for="newDonorItemCategory" class="col-md-3 col-md-offset-1 control-label">סוג הפריט</label>
               <div class="col-md-6">
-                {{view "select" id="newDonorItemCategory" class="form-control" content=$.hib.itemCategories value=controller.model.item.category}}
+                {{view "select" id="newDonorItemCategory" class="form-control" content=itemCategories value=controller.model.item.category}}
               </div>
             </div>
             <div class="form-group">
@@ -498,7 +498,7 @@
             {{!-- <div class="form-group">
               <label for="selectNewDonorArea" class="col-md-3 col-md-offset-1 control-label">אזור</label>
               <div class="col-md-6">
-                {{view "select" class="form-control" id="selectNewDonorArea" content=$.hib.areas value=controller.model.area}}
+                {{view "select" class="form-control" id="selectNewDonorArea" content=areas value=controller.model.area}}
               </div>
             </div> --}}
 
@@ -567,7 +567,7 @@
       <label for="donationStatusDropdown">פילטור לפי סטטוס הפריט:</label>
     </div>
     <div class="col-md-1">    
-      {{view "select" id="donationStatusDropdown" content=$.hib.donationStatusTypes.hebrew value=donationStatusHebrew class="form-control"}}
+      {{view "select" id="donationStatusDropdown" content=donationStatusTypesHebrew value=donationStatusHebrew class="form-control"}}
     </div>
   </div>
   <div class="row">
@@ -611,10 +611,10 @@
 <script type="text/x-handlebars" id="donorRowTemplate">
   <tr {{bind-attr id=id}} {{bind-attr class=":nonHeaderTableRow controller.isBeingEdited:rowBeingEdited"}}>
     <td>
-       {{view "select" class="form-control" content=$.hib.areas disabled=controller.isNotEdited value=area}}
+       {{view "select" class="form-control" content=areas disabled=controller.isNotEdited value=area}}
     </td>
     <td>
-       {{view "select" class="form-control" content=$.hib.donationStatusTypes.hebrew value=donationStatusHebrew disabled=controller.isNotEdited}}
+       {{view "select" class="form-control" content=donationStatusTypesHebrew value=donationStatusHebrew disabled=controller.isNotEdited}}
     </td>
     <td class="nameTd">
       {{input type="text" class="mediumWidth" disabled=controller.isNotEdited value=name}}
@@ -629,7 +629,7 @@
       {{input type="text" disabled=controller.isNotEdited value=convenientDates}}
     </td>
     <td class="itemCategoryTd">
-      {{view "select" class="form-control" content=$.hib.itemCategories disabled=controller.isNotEdited value=item.category}}
+      {{view "select" class="form-control" content=itemCategories disabled=controller.isNotEdited value=item.category}}
     </td>
     <td class="itemDescriptionTd">
        {{textarea class="form-control" value=item.description disabled=controller.isNotEdited cols="10" rows="3"}}
