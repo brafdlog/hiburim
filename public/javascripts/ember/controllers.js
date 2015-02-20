@@ -369,7 +369,13 @@ App.DonorsController = Ember.SortableAndFilterableController.extend({
 		} else {
 			this.set('donationStatusHebrew', $.hib.donationStatusTypes.englishToHebrew.available);
 		}
-	}.on('init')
+	}.on('init'),
+	actions: {
+		// Override the parent implementation to transfer to new donor route
+		createModel: function() {
+			this.transitionToRoute('newDonor');
+		}
+	}
 });
 
 App.UsersController = Ember.SortableAndFilterableController.extend({
