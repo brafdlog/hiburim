@@ -25,3 +25,22 @@
 	border-bottom-width: 1px;
 	border-bottom-color: gray;
 }
+
+.donorRow {
+	padding: 10px;
+	padding-right: 30px;
+	border-bottom-color: gray;
+	border-bottom-style: solid;
+	border-bottom-width: 2px;
+}
+
+.donorRow:hover { 
+    background-color: #B9DAC9;
+    cursor: pointer;
+}
+
+.itemDescriptionParagraph {
+    overflow:hidden; 
+    text-overflow:ellipsis;
+    white-space:nowrap; 
+}
