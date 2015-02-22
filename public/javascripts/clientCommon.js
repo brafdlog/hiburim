@@ -7,6 +7,26 @@ $.hib.consts = {
 	momentTimeFormat: "H:mm"
 };
 
+$.hib.toDateStr = function(date) {
+	return moment(date).format($.hib.consts.momentDateFormat);
+};
+
+$.hib.toTimeStr = function(date) {
+	return moment(date).format($.hib.consts.momentTimeFormat);
+};
+
+$.hib.toDateTime = function(dateStr, timeStr) {
+	if (dateStr) {
+		var date = moment(dateStr, $.hib.consts.momentDateFormat);
+		if (timeStr) {
+			var time = moment(timeStr, $.hib.consts.momentTimeFormat);
+			date.hours(time.hours());
+			date.minutes(time.minutes());
+		}
+		return date.toDate();
+	}
+};
+
 $.hib.post = function(url, data, success, error) {
 	$.ajax({
 		type: "POST",

@@ -77,11 +77,11 @@ App.CarView = App.TableRowView.extend({
 App.CarEmailView = Ember.View.extend({
 	availableFromDateStr: function() {
 		var availableFromDateTime = this.get('controller.model.availableFromDateTime');
-		return moment(availableFromDateTime).format($.hib.consts.momentDateFormat);
+		return $.hib.toDateStr(availableFromDateTime);
 	}.property('controller.model.availableFromDateTime'),
 	availableFromTimeStr: function() {
 		var availableFromDateTime = this.get('controller.model.availableFromDateTime');
-		return moment(availableFromDateTime).format($.hib.consts.momentTimeFormat);
+		return $.hib.toTimeStr(availableFromDateTime);
 	}.property('controller.model.availableFromDateTime'),
 	didInsertElement: function() {
 		this._super();

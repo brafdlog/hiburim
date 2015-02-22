@@ -120,10 +120,9 @@ App.CarController = App.SingleModelController.extend({
 
 		var availableFromDateTime = this.get('model.availableFromDateTime');
 		if (availableFromDateTime) {
-			var availabeFromMoment = moment(availableFromDateTime);
-			var dateStr = availabeFromMoment.format($.hib.consts.momentDateFormat);
+			var dateStr = $.hib.toDateStr(availableFromDateTime);
 			this.set('availableFromDateStr', dateStr);
-			var timeStr = availabeFromMoment.format($.hib.consts.momentTimeFormat);
+			var timeStr = $.hib.toTimeStr(availableFromDateTime);
 			this.set('availableFromTimeStr', timeStr);
 		}
 	}.on('init'),
@@ -134,14 +133,9 @@ App.CarController = App.SingleModelController.extend({
 	updateAvailableFromDateFromStr: function() {
 		var dateStr = this.get('availableFromDateStr');
 		var timeStr = this.get('availableFromTimeStr');
-		if (dateStr) {
-			var date = moment(dateStr, $.hib.consts.momentDateFormat);
-			if (timeStr) {
-				var time = moment(timeStr, $.hib.consts.momentTimeFormat);
-				date.hours(time.hours());
-				date.minutes(time.minutes());
-			}
-			this.set('availableFromDateTime', date.toDate());
+		var date = $.hib.toDateTime(dateStr, timeStr);
+		if (date) {
+			this.set('availableFromDateTime', date);
 		}
 	}.observes('availableFromDateStr', 'availableFromTimeStr'),
 	updateAvailableUntilDate: function() {
