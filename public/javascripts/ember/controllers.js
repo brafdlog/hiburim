@@ -349,8 +349,10 @@ App.DonorsController = Ember.SortableAndFilterableController.extend({
 	donationStatusTypesHebrew: $.hib.donationStatusTypes.hebrew,
 	onHebrewStatusChanges: function() {
 		var hebrewStatus = this.get('donationStatusHebrew');
-		var englishStatus = $.hib.donationStatusTypes.hebrewToEnglish[hebrewStatus];
-		this.set('donationStatus', englishStatus);
+		if (hebrewStatus) {
+			var englishStatus = $.hib.donationStatusTypes.hebrewToEnglish[hebrewStatus];
+			this.set('donationStatus', englishStatus);
+		}
 	}.observes('donationStatusHebrew'),
 	initController: function() {
 		this._super();
