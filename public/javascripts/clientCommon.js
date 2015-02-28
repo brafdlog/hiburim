@@ -49,11 +49,15 @@ $.hib.handleSuccess = function(actionName, modelName, callback) {
 };
 
 $.hib.toDateStr = function(date) {
-	return moment(date).format($.hib.consts.momentDateFormat);
+	if (date) {
+		return moment(date).format($.hib.consts.momentDateFormat);	
+	}
 };
 
 $.hib.toTimeStr = function(date) {
-	return moment(date).format($.hib.consts.momentTimeFormat);
+	if (date) {
+		return moment(date).format($.hib.consts.momentTimeFormat);	
+	}
 };
 
 $.hib.toDateTime = function(dateStr, timeStr) {
