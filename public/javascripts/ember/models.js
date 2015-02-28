@@ -28,8 +28,8 @@ App.Consumer = App.PersonWithItem.extend({
 });
 
 App.Donor = App.PersonWithItem.extend({
-	// possible values: available, given, promised, notRelevant
-	donationStatus: DS.attr('string', {defaultValue: 'available'}),
+	// possible values: זמין, משוריין, נמסר, לא רלוונטי
+	donationStatus: DS.attr('string', {defaultValue: 'זמין'}),
 });
 
 App.User = App.BaseModel.extend({

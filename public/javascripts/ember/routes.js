@@ -78,7 +78,7 @@ App.DonorsRoute = Ember.Route.extend({
 		}
 	},
 	model: function(params) {
-		var donationStatus = params.donationStatus || 'available';
+		var donationStatus = params.donationStatus || 'זמין';
 		return this.store.find('donor', {donationStatus: donationStatus});
 	}
 });
@@ -86,6 +86,7 @@ App.DonorsRoute = Ember.Route.extend({
 App.DonorRoute = Ember.Route.extend({
 	model: function(params) {
 		return this.store.find('donor', params.donor_id);
+	},
 	afterModel: function(donor, transition) {
 	    if (donor) {
 	    	donor.set('isSelected', true);

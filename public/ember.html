@@ -591,7 +591,7 @@
     </div>
     <div class="col-md-1">
       <label for="donationStatusDropdown">סטטוס הפריט:</label>
-      {{view "select" id="donationStatusDropdown" content=donationStatusTypesHebrew value=donationStatusHebrew class="form-control"}}
+      {{view "select" id="donationStatusDropdown" content=statusTypes value=donationStatus class="form-control"}}
     </div>
   </div>
   <div class="row">
@@ -654,7 +654,7 @@
           <div class="form-group">
             <label for="donationStatus" class="control-label">סטטוס התרומה</label>
             <div class="">
-              {{view "select" id="donationStatus" class="form-control" content=hebrewStatusTypes value=hebrewStatusType}}
+              {{view "select" id="donationStatus" class="form-control" content=statusTypes value=controller.model.donationStatus}}
             </div>
           </div>
         </div>
