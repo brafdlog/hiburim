@@ -78,7 +78,7 @@ App.DonorsRoute = Ember.Route.extend({
 		}
 	},
 	model: function(params) {
-		var donationStatus = params.donationStatus || 'available';
+		var donationStatus = params.donationStatus || 'זמין';
 		return this.store.find('donor', {donationStatus: donationStatus});
 	}
 });
@@ -86,6 +86,28 @@ App.DonorsRoute = Ember.Route.extend({
 App.DonorRoute = Ember.Route.extend({
 	model: function(params) {
 		return this.store.find('donor', params.donor_id);
+	},
+	afterModel: function(donor, transition) {
+	    if (donor) {
+	    	donor.set('isSelected', true);
+	    }
+	},
+	actions: {
+		willTransition: function(transition) {
+			var that = this;
+			if (this.controller.get('model.isDirty')) {
+				transition.abort();
+				bootbox.confirm('יש פרטים שאינם שמורים. לצאת בכל זאת?', function(userWantsToExit) {
+					if (userWantsToExit) {
+						that.controller.set('model.isSelected', false);
+						that.controller.get('model').rollback();
+						transition.retry();
+					}
+				});
+			} else {
+				that.controller.set('model.isSelected', false);	
+			}
+    	}
 	}
 });
 

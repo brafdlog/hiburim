@@ -6,12 +6,12 @@ function getAllDonors(callback) {
 
 function getDonorByDonationStatus(status, callback) {
 	if (!status) {
-		status = 'available';
+		status = 'זמין';
 	}
 	var statusQueryObject = {donationStatus: status};
 	
 	// Nulls are considered available
-	if (status === 'available') {
+	if (status === 'זמין') {
 		var statusNullQuery = { donationStatus: { $exists: false } };
 		statusQueryObject = {$or: [statusQueryObject, statusNullQuery]};		
 	}

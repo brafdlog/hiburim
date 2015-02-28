@@ -56,7 +56,6 @@ App.SingleModelController = Ember.ObjectController.extend({
 	isNotEdited: Ember.computed.not('isBeingEdited'),
 	areas: $.hib.areas,
 	itemCategories: $.hib.itemCategories,
-	donationStatusTypesHebrew: $.hib.donationStatusTypes.hebrew,
 	initController: function() {
 		var isNew = this.get('model.isNew');
 		if (isNew) {
@@ -341,17 +340,11 @@ App.ConsumersController = Ember.SortableAndFilterableController.extend({
 
 App.DonorsController = Ember.SortableAndFilterableController.extend({
 	queryParams: ['donationStatus'],
-	donationStatus: null,
+	donationStatus: 'זמין',
 	headerText: 'תרומות',
 	newModelText: 'תרומה חדשה',
+	statusTypes: $.hib.donationStatusTypes.hebrew,
 	hideTableOnMobile: false,
-	donationStatusHebrew: null,
-	donationStatusTypesHebrew: $.hib.donationStatusTypes.hebrew,
-	onHebrewStatusChanges: function() {
-		var hebrewStatus = this.get('donationStatusHebrew');
-		var englishStatus = $.hib.donationStatusTypes.hebrewToEnglish[hebrewStatus];
-		this.set('donationStatus', englishStatus);
-	}.observes('donationStatusHebrew'),
 	initController: function() {
 		this._super();
 		var filteredProperties = this.get('filteredProperties');
@@ -361,11 +354,6 @@ App.DonorsController = Ember.SortableAndFilterableController.extend({
 		filteredProperties.pushObject('address.geoDisplayString');
 		filteredProperties.pushObject('area');
 		this.set('modelName', "donor");
-		if (this.get('donationStatus')) {
-			this.set('donationStatusHebrew', $.hib.donationStatusTypes.englishToHebrew[this.get('donationStatus')]);
-		} else {
-			this.set('donationStatusHebrew', $.hib.donationStatusTypes.englishToHebrew.available);
-		}
 	}.on('init'),
 	actions: {
 		// Override the parent implementation to transfer to new donor route
@@ -430,18 +418,26 @@ App.ConsumerController = App.SinglePersonWithItemController.extend({
 	}.on('init')
 });
 
-App.DonorController = App.SinglePersonWithItemController.extend({
-	donationStatusHebrew: null,
-	onHebrewStatusChanges: function() {
-		var hebrewStatus = this.get('donationStatusHebrew');
-		var englishStatus = $.hib.donationStatusTypes.hebrewToEnglish[hebrewStatus];
-		this.set('model.donationStatus', englishStatus);
-	}.observes('donationStatusHebrew'),
-	initController: function() {
-		this._super();
-		this.set('modelName', 'donor');
-		this.set('donationStatusHebrew', $.hib.donationStatusTypes.englishToHebrew[this.get('model.donationStatus')]);
-	}.on('init')
+App.DonorController = Ember.ObjectController.extend({
+	itemCategories: $.hib.itemCategories,
+	statusTypes: $.hib.donationStatusTypes.hebrew,
+	areas: $.hib.areas,
+	actions: {
+		updateDonor: function(donor) {
+			var that = this;
+			$.hib.updateModel(donor, 'donor', function() {
+				$('#updateDonorOkIcon').show();
+				setTimeout(function(){ $('#updateDonorOkIcon').hide(); }, 2000);
+				// that.transitionToRoute('donors');
+			});
+		},
+		deleteDonor: function(donor) {
+			var that = this;
+			$.hib.deleteModel(donor, 'donor', function() {
+				that.transitionToRoute('donors');
+			});
+		}	
+	}
 });
 
 App.NewDonorController = Ember.Controller.extend({

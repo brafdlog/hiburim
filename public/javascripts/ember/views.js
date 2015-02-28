@@ -125,10 +125,6 @@ App.ConsumerView = App.PersonWithItemView.extend({
 	templateName: 'consumerRowTemplate',
 });
 
-App.DonorView = App.PersonWithItemView.extend({
-	templateName: 'donorRowTemplate',
-});
-
 App.NewDonorView = Ember.View.extend({
 	didInsertElement : function(){
 		var that = this;

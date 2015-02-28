@@ -1,3 +1,8 @@
+
+Ember.Handlebars.registerBoundHelper('formatDate', function(date) {
+  return $.hib.toDateStr(date);
+});
+
 $.hib = {};
 
 $.hib.consts = {
@@ -5,6 +10,42 @@ $.hib.consts = {
 	pickATimeTimeFormat: "H:i",
 	momentDateFormat: "DD-MM-YYYY",
 	momentTimeFormat: "H:mm"
+};
+
+$.hib.updateModel = function(model, modelName, success, error) {
+	model.save().then(function() {
+		$.hib.handleSuccess('Updated', modelName, success);
+	}, function(failureReason) {
+		$.hib.handleFailure('update', modelName, failureReason, error);
+	});
+};
+
+$.hib.deleteModel = function(model, modelName, success, error) {
+	bootbox.confirm('האם למחוק?', function(userWantsToDelete) {
+		if (userWantsToDelete) {
+			model.deleteRecord();
+			model.save().then(function() {
+				$.hib.handleSuccess('Deleted', modelName, success);
+			}, function(failureReason) {
+				$.hib.handleFailure('Delete', modelName, failureReason, error);
+			});
+		}
+	});
+};
+
+$.hib.handleFailure = function(actionName, modelName, failureReason, callback) {
+	alert('Failed to ' + actionName + " " + modelName);
+	console.log('Failed to ' + actionName + " " + modelName + ". Reason: " + failureReason);
+	if (callback) {
+		callback();
+	}
+};
+
+$.hib.handleSuccess = function(actionName, modelName, callback) {
+	console.log(actionName + " " + modelName);
+	if (callback) {
+		callback();
+	}
 };
 
 $.hib.toDateStr = function(date) {
@@ -84,6 +125,8 @@ $.hib.donationStatusTypes.hebrewToEnglish = function() {
 }();
 
 $.hib.donationStatusTypes.hebrew = Object.keys($.hib.donationStatusTypes.hebrewToEnglish);
+
+$.hib.donationStatusTypes.english = Object.keys($.hib.donationStatusTypes.englishToHebrew);
 
 $.hib.itemCategories = [
 	'כיסאות', 'מיטה זוגית', 'מיטה זוגית + מזרן', 'מיטת יחיד', 'מיטת יחיד + מזרן', 'ארון בגדים', 'שולחן כתיבה', 'שולחן אוכל', 'שולחן אוכל + כיסאות', 'ספה', 'סלון', 'כיריים חשמליות', 'כיריים גז', 'טלויזיה שטוחה', 'טלויזיה רחבה (לא שטוחה)', 'תנור חימום \\ רדיאטור', 'מאוורר', 'מיקרוגל', 'טוסטר אובן', 'ציוד למטבח', 'שטיח', 'שואב אבק', 'צעצועים וספרים לילדים', 'ציוד לילדים ולתינוקות', 'אחר'

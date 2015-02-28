@@ -580,113 +580,184 @@
 
 <!-- Donor table - desktop view -->
 <script type="text/x-handlebars" id="donors">
-  {{partial 'headerAndSearchRow'}}
+  <div class="row">
+    <div class="col-md-2 col-md-offset-1">
+      <h1 id="donorsPageHeader" class="page-header">תרומות</h1>
+    </div>
+  </div>
   <div id="donorsFilterRow" class="row">
     <div class="col-md-1">
-      <label for="donationStatusDropdown">פילטור לפי סטטוס הפריט:</label>
+      <h3>פילטרים</h3>
     </div>
-    <div class="col-md-1">    
-      {{view "select" id="donationStatusDropdown" content=donationStatusTypesHebrew value=donationStatusHebrew class="form-control"}}
+    <div class="col-md-1">
+      <label for="donationStatusDropdown">סטטוס הפריט:</label>
+      {{view "select" id="donationStatusDropdown" content=statusTypes value=donationStatus class="form-control"}}
     </div>
   </div>
   <div class="row">
-    <div class="col-md-12 main">
-      <div {{bind-attr class=":deskopTableView controller.hideTableOnMobile:hidden-xs"}}>
-        <div class="table-responsive">
-          <table id="donorsTable" class="table table-striped">
-            <thead>
-              <tr>
-                <th {{action 'sortBy' 'area'}}>אזור</th>
-                <th>סטטוס</th>
-                <th {{action 'sortBy' 'name'}}>שם</th>
-                <th {{action 'sortBy' 'phoneNumber'}}>טלפון</th>
-                <th>מייל</th>
-                <th>עד מתי הפריט זמין</th>
-                <th {{action 'sortBy' 'item.category'}}>סוג הפריט</th>
-                <th>תיאור הפריט</th>
-                <th>תמונות</th>
-                <th>כתובת הפונה</th>
-                <th>קומה</th>
-                <th>מספר דירה</th>
-                <th>מעלית</th>
-                <th>חניה</th>
-                <th>הערות על הכתובת</th>
-                <th></th>
-              </tr>
-            </thead>
-            {{#each donor in filteredElements}}
-            {{render 'donor' donor}}
-            {{/each}}
-          </table>
-        </div>
+    <div id="donorRowsContainerColumn" {{bind-attr class=":col-md-5 model::empty"}}>
+      {{#each donor in model}}
+      {{#link-to 'donor' donor}}
+      <div {{bind-attr class=":row :donorRow donor.isSelected:selectedRow"}}>
+        <div class="col-md-3">
+            {{formatDate donor.creationDate}}
+          </div>
+          <div class="col-md-2">
+            {{donor.item.category}}
+          </div>
+          <div class="col-md-5">
+            <p class="itemDescriptionParagraph">
+              {{donor.item.description}}
+            </p> 
+          </div>
+          <div class="col-md-2 itemImagesLink">
+            {{#if donor.item.images}}
+            {{#link-to 'donorItemImages' donor}} <span class="glyphicon glyphicon-picture" aria-hidden="true"></span> {{/link-to}}
+            {{/if}}  
+          </div>
       </div>
+      {{/link-to}}
+      {{else}}
+      <h2>אין תרומות בסטטוס {{donationStatus}}</h2>
+      {{/each}}
     </div>
-    {{#if controller.hideTableOnMobile}}
-    <!-- Add here a partial for mobile donor view -->
-    {{/if}}
+    <div class="col-md-7">
+      {{outlet}}
+    </div>
   </div>
 </script>
 
-<script type="text/x-handlebars" id="donorRowTemplate">
-  <tr {{bind-attr id=id}} {{bind-attr class=":nonHeaderTableRow controller.isBeingEdited:rowBeingEdited"}}>
-    <td>
-       {{view "select" class="form-control" content=areas disabled=controller.isNotEdited value=area}}
-    </td>
-    <td>
-       {{view "select" class="form-control" content=donationStatusTypesHebrew value=donationStatusHebrew disabled=controller.isNotEdited}}
-    </td>
-    <td class="nameTd">
-      {{input type="text" class="mediumWidth" disabled=controller.isNotEdited value=name}}
-    </td>
-    <td class="phoneNumberTd">
-      {{input type="text" class="mediumWidth" disabled=controller.isNotEdited value=phoneNumber}}
-    </td>
-    <td class="emailTd">
-      {{input type="text" disabled=controller.isNotEdited value=email}}
-    </td>
-    <td class="convenientDatesTd">
-      {{input type="text" disabled=controller.isNotEdited value=convenientDates}}
-    </td>
-    <td class="itemCategoryTd">
-      {{view "select" class="form-control" content=itemCategories disabled=controller.isNotEdited value=item.category}}
-    </td>
-    <td class="itemDescriptionTd">
-       {{textarea class="form-control" value=item.description disabled=controller.isNotEdited cols="10" rows="3"}}
-    </td>
-    <td>
-      {{#if model.item.images}}
-      {{#link-to 'donorItemImages' this}} <span class="glyphicon glyphicon-picture" aria-hidden="true"></span> {{/link-to}}
-      {{else}}
-      אין תמונות
-      {{/if}}   
-    </td>
-    <td class="addressTd">
-      <a {{bind-attr href=controller.googleMapsUrl}} {{bind-attr hidden=controller.mapLinkNotActive}} target="_blank">
-        {{input type="text" class="addressInput" disabled=controller.isNotEdited value=address.geoDisplayString}}
-      </a>
-      <div {{bind-attr hidden=controller.mapLinkActive}}>
-        {{input type="text" class="addressInput" disabled=controller.isNotEdited value=address.geoDisplayString}}
+<script type="text/x-handlebars" id="donor">
+  <form id="donorDetailsForm">
+    <div id="donorTopRow" class="row">
+      <div class="col-md-4 col-md-offset-1 panelContainer">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">התורם</h3>
+          </div>
+          <div class="form-group">
+            <label for="donorNameInput" class="control-label">שם</label>
+            <div class="">
+              {{input type="text" id="donorNameInput" class="form-control" value=controller.model.name}}
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="newDonorPhoneNumber" class="control-label">טלפון</label>
+            <div class="">
+              {{input type="text" id="newDonorPhoneNumber" class="form-control" value=controller.model.phoneNumber}}
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="newDonorEmail" class="control-label">כתובת מייל</label>
+            <div class="">
+              {{input type="text" id="newDonorEmail" class="form-control" value=controller.model.email}}
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="donationStatus" class="control-label">סטטוס התרומה</label>
+            <div class="">
+              {{view "select" id="donationStatus" class="form-control" content=statusTypes value=controller.model.donationStatus}}
+            </div>
+          </div>
+        </div>
+      </div> {{!-- End of column --}}
+
+      <div class="col-md-5 col-md-offset-1 panelContainer">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">הפריט</h3>
+          </div>
+          <div class="form-group">
+            <label for="newDonorItemCategory" class="control-label">סוג הפריט</label>
+            <div class="">
+              {{view "select" id="newDonorItemCategory" class="form-control" content=itemCategories value=controller.model.item.category}}
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="newDonorItemDescription" class="control-label">תיאור</label>
+            <div class="">
+              {{textarea id="newDonorItemDescription" class="form-control requiredField" value=controller.model.item.description cols="15" rows="5"}}
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="newDonorConvenientDates" class="control-label">עד מתי אפשר לקחת את הפריט</label>
+            <div class="">
+              {{input type="text" id="newDonorConvenientDates" class="form-control" placeholder='גמיש,מיידי,בחודש הקרוב...' value=controller.model.convenientDates}}
+            </div>
+          </div>
+        </div>
+      </div> {{!-- End of column --}}
+    </div> {{!-- End of first form row --}}
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+        <div class="row panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">הכתובת</h3>
+          </div>
+          <div class="col-md-5 col-md-offset-1">
+            <div class="form-group">
+              <label for="selectNewDonorArea" class="control-label">אזור</label>
+              <div class="">
+                {{view "select" class="form-control" id="selectNewDonorArea" content=areas value=controller.model.area}}
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="newDonorAddress" class="control-label">כתובת</label>
+              <div class="">
+                {{input type="text" id="newDonorAddress" class="form-control requiredField" value=controller.model.address.geoDisplayString}}
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="newDonorAddressFloor" class="control-label">קומה</label>
+              <div class="">
+                {{input type="number" id="newDonorAddressFloor" class="form-control" value=controller.model.address.floor}}
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="newDonorAddressFlatNumber" class="control-label">מספר דירה</label>
+              <div class="">
+                {{input type="number" id="newDonorAddressFlatNumber" class="form-control" value=controller.model.address.flatNumber}}
+              </div>
+            </div>
+          </div> {{!-- End of column --}}
+          <div class="col-md-5">
+            <div class="form-group">
+              <label for="newDonorAddressHasElavator" class="control-label">מעלית</label>
+              <div class="">
+                {{input type="checkbox" id="newDonorAddressHasElavator" checked=controller.model.address.hasElavator}}
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="newDonorAddressHasParking" class="control-label">חניה</label>
+              <div class="">
+                {{input type="checkbox" id="newDonorAddressHasParking" checked=controller.model.address.hasParking}}
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="newDonorAddressDescription" class="control-label">הערות</label>
+              <div class="">
+                {{textarea id="newDonorAddressDescription" class="form-control" value=controller.model.address.description cols="15" rows="5"}}
+              </div>
+            </div>
+          </div> 
+        </div>{{!-- End of inner form row --}}
+      </div> {{!-- End of outer column --}}
+    </div> {{!-- End of second outer form row --}}
+    <div class="row">
+      <div class="col-md-2 col-md-offset-1">
+        <button type="button" {{action 'deleteDonor' this}} class="btn btn-danger">מחק תורם</button>  
       </div>
-    </td>
-    <td class="addressFloorTd">
-      {{input type="text" class="xSmallWidth" disabled=controller.isNotEdited value=address.floor}}
-    </td>
-    <td class="addressFlatNumberTd">
-      {{input type="text" class="xSmallWidth" disabled=controller.isNotEdited value=address.flatNumber}}
-    </td>
-    <td>
-      {{input type="checkbox" name="מעלית" disabled=controller.isNotEdited checked=address.hasElavator}}
-    </td>
-    <td>
-      {{input type="checkbox" name="חניה" disabled=controller.isNotEdited checked=address.hasParking}}
-    </td>
-    <td class="addressDescriptionTd">
-      {{textarea class="form-control" value=address.description disabled=controller.isNotEdited cols="10" rows="3"}}
-    </td>
-    <td>
-      {{partial 'editDeleteSaveIcons'}}
-    </td>
-  </tr>
+      <div class="col-md-1 col-md-offset-6">
+        {{#link-to 'donors'}}
+        <button type="button" class="btn btn-default">חזור</button>  
+        {{/link-to}}
+      </div>
+      <div class="col-md-2">
+        <button type="button" {{action 'updateDonor' this}} class="btn btn-primary">שמור</button>
+        <span id="updateDonorOkIcon" class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span>
+      </div>
+    </div>{{!-- End of third form row --}}
+  </form>
 </script>
 
 <script type="text/x-handlebars" id="donorItemImages">
