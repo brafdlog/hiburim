@@ -101,8 +101,8 @@ $.hib.donationStatusTypes = {};
 
 $.hib.donationStatusTypes.englishToHebrew = {
 	'available': 'זמין',
-	'given': 'משוריין',
-	'promised': 'נמסר', 
+	'given': 'נמסר',
+	'promised': 'משוריין', 
 	'notRelevant': 'לא רלוונטי'
 };
 
