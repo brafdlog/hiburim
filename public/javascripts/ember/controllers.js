@@ -340,7 +340,7 @@ App.ConsumersController = Ember.SortableAndFilterableController.extend({
 
 App.DonorsController = Ember.SortableAndFilterableController.extend({
 	queryParams: ['donationStatus'],
-	donationStatus: null,
+	donationStatus: 'זמין',
 	headerText: 'תרומות',
 	newModelText: 'תרומה חדשה',
 	statusTypes: $.hib.donationStatusTypes.hebrew,
