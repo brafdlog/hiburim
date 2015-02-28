@@ -6,7 +6,7 @@ Ember.Route.reopen({
   }
 });
 
-// Defining auth error handling here so it will appy to
+// Defining auth error handling here so it will apply to
 // the whole app
 App.ApplicationRoute = Ember.Route.extend({
 	// Set logged in user
@@ -20,11 +20,15 @@ App.ApplicationRoute = Ember.Route.extend({
 	},
 	actions: {
 		error: function(errorReason, transition) {
+			// Hide the spinner if it was displayed
+			$.hib.hideSpinner("spinnerDiv");
+			
 			if (errorReason && errorReason.status == 401) {
 				console.log('Authentication error: ' + JSON.stringify(errorReason));
 				this.transitionTo('login');
 			} else {
 				console.log('Error: ' + JSON.stringify(errorReason));
+				bootbox.alert("קרתה תקלה. אנא נסו שנית");
 				// Bubble this event onwards
 				return true;
 			}
