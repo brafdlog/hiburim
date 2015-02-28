@@ -339,6 +339,8 @@ App.ConsumersController = Ember.SortableAndFilterableController.extend({
 });
 
 App.DonorsController = Ember.SortableAndFilterableController.extend({
+	sortProperties: ['creationDate'],
+  	sortAscending: false,
 	queryParams: ['donationStatus'],
 	donationStatus: 'זמין',
 	headerText: 'תרומות',
