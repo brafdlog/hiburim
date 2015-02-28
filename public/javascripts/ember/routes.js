@@ -94,8 +94,20 @@ App.DonorRoute = Ember.Route.extend({
 	},
 	actions: {
 		willTransition: function(transition) {
-    		this.controller.set('model.isSelected', false);
-    	}	
+			var that = this;
+			if (this.controller.get('model.isDirty')) {
+				transition.abort();
+				bootbox.confirm('יש פרטים שאינם שמורים. לצאת בכל זאת?', function(userWantsToExit) {
+					if (userWantsToExit) {
+						that.controller.set('model.isSelected', false);
+						that.controller.get('model').rollback();
+						transition.retry();
+					}
+				});
+			} else {
+				that.controller.set('model.isSelected', false);	
+			}
+    	}
 	}
 });
 
