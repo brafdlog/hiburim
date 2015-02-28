@@ -125,21 +125,6 @@ App.ConsumerView = App.PersonWithItemView.extend({
 	templateName: 'consumerRowTemplate',
 });
 
-App.DonorView = Ember.View.extend({
-	templateName: 'donorRowTemplate',
-	didInsertElement : function(){
-		this._super();
-		var that = this;
-		Ember.run.scheduleOnce('afterRender', this, function(){
-			var creationDate = this.get('controller.model.creationDate');
-			if (creationDate) {
-				var creationDateStr = $.hib.toDateStr(creationDate);
-				this.set('controller.creationDateStr', creationDateStr);
-			}
-		});
-	}
-});
-
 App.NewDonorView = Ember.View.extend({
 	didInsertElement : function(){
 		var that = this;

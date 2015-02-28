@@ -432,18 +432,37 @@ App.ConsumerController = App.SinglePersonWithItemController.extend({
 	}.on('init')
 });
 
-App.DonorController = App.SinglePersonWithItemController.extend({
-	donationStatusHebrew: null,
-	onHebrewStatusChanges: function() {
-		var hebrewStatus = this.get('donationStatusHebrew');
-		var englishStatus = $.hib.donationStatusTypes.hebrewToEnglish[hebrewStatus];
-		this.set('model.donationStatus', englishStatus);
-	}.observes('donationStatusHebrew'),
-	initController: function() {
-		this._super();
-		this.set('modelName', 'donor');
-		this.set('donationStatusHebrew', $.hib.donationStatusTypes.englishToHebrew[this.get('model.donationStatus')]);
-	}.on('init')
+App.DonorController = Ember.ObjectController.extend({
+	itemCategories: $.hib.itemCategories,
+	areas: $.hib.areas,
+	hebrewStatusTypes: $.hib.donationStatusTypes.hebrew,
+	hebrewStatusType: function() {
+		var englishStatus = this.get('model.donationStatus');
+		if (englishStatus) {
+			return $.hib.donationStatusTypes.englishToHebrew[englishStatus];
+		}
+	}.property('model.donationStatus'),
+	actions: {
+		updateDonor: function(donor) {
+			var that = this;
+			var hebrewStatus = this.get('hebrewStatusType');
+			if (hebrewStatus) {
+				var englishStatus = $.hib.donationStatusTypes.hebrewToEnglish[hebrewStatus];
+				donor.set('donationStatus', englishStatus);
+			}
+			$.hib.updateModel(donor, 'donor', function() {
+				$('#updateDonorOkIcon').show();
+				setTimeout(function(){ $('#updateDonorOkIcon').hide(); }, 2000);
+				// that.transitionToRoute('donors');
+			});
+		},
+		deleteDonor: function(donor) {
+			var that = this;
+			$.hib.deleteModel(donor, 'donor', function() {
+				that.transitionToRoute('donors');
+			});
+		}	
+	}
 });
 
 App.NewDonorController = Ember.Controller.extend({

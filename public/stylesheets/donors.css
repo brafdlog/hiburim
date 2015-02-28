@@ -34,8 +34,25 @@
 	border-bottom-width: 2px;
 }
 
+#donorRowsContainerColumn:not(.empty) {
+	border-left-color: black;
+	border-left-style: solid;
+	border-left-width: 3px;
+	border-top-color: gray;
+	border-top-style: solid;
+	border-top-width: 2px;
+}
+
+#donorRowsContainerColumn a {
+	color: black;
+}
+
+#donorRowsContainerColumn .itemImagesLink a {
+	color: #428bca;
+}
+
 .donorRow:hover { 
-    background-color: #B9DAC9;
+   /* background-color: #B9DAC9;*/
     cursor: pointer;
 }
 
@@ -43,4 +60,40 @@
     overflow:hidden; 
     text-overflow:ellipsis;
     white-space:nowrap; 
+}
+
+.panelContainer {
+	padding-left: 15px;
+	padding-right: 15px;
+}
+
+#donorsFilterRow {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+div .selectedRow {
+	background-color: #B9DAC9;
+}
+
+#updateDonorOkIcon {
+	color: green;
+	font-size: 1.2em;
+	display: none;
+}
+
+#donorDetailsForm {
+	border-style: solid;
+	border-color: grey;
+	border-width: 1px;
+	margin-left: 4px;
+	padding: 5px;
+}
+
+#donorsFilterRow h3 {
+	margin-top: 0;
+}
+
+#donorsPageHeader {
+	margin-bottom: 0;
 }

@@ -86,6 +86,15 @@ App.DonorsRoute = Ember.Route.extend({
 App.DonorRoute = Ember.Route.extend({
 	model: function(params) {
 		return this.store.find('donor', params.donor_id);
+	afterModel: function(donor, transition) {
+	    if (donor) {
+	    	donor.set('isSelected', true);
+	    }
+	},
+	actions: {
+		willTransition: function(transition) {
+    		this.controller.set('model.isSelected', false);
+    	}	
 	}
 });
 
