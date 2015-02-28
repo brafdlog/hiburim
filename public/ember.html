@@ -596,7 +596,7 @@
   </div>
   <div class="row">
     <div id="donorRowsContainerColumn" {{bind-attr class=":col-md-5 model::empty"}}>
-      {{#each donor in model}}
+      {{#each donor in arrangedContent}}
       {{#link-to 'donor' donor}}
       <div {{bind-attr class=":row :donorRow donor.isSelected:selectedRow"}}>
         <div class="col-md-3">
