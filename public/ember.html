@@ -596,6 +596,20 @@
   </div>
   <div class="row">
     <div id="donorRowsContainerColumn" {{bind-attr class=":col-md-5 model::empty"}}>
+      <div id="donorTitleRow" class="row">
+        <div class="col-md-3">
+          <h5>תאריך יצירה</h5>
+        </div>
+        <div class="col-md-2">
+          <h5>סוג הפריט</h5>
+        </div>
+        <div class="col-md-5">
+          <h5>תיאור הפריט</h5>
+        </div>
+        <div class="col-md-2">
+          <h5>תמונות</h5>
+        </div>
+      </div>
       {{#each donor in arrangedContent}}
       {{#link-to 'donor' donor}}
       <div {{bind-attr class=":row :donorRow donor.isSelected:selectedRow"}}>

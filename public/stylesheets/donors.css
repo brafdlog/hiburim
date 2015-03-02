@@ -26,20 +26,26 @@
 	border-bottom-color: gray;
 }
 
+#donorTitleRow {
+	color: #61645E;
+	padding-right: 30px;
+	background-color: #CBCBCB;
+}
+
+#donorTitleRow h5 {
+	font-weight: bold;
+}
+
 .donorRow {
+	margin-top: 3px;
+	background-color: #F1F1F1;
 	padding: 10px;
 	padding-right: 30px;
-	border-bottom-color: gray;
-	border-bottom-style: solid;
-	border-bottom-width: 2px;
 }
 
 #donorRowsContainerColumn:not(.empty) {
-	border-left-color: black;
 	border-left-style: solid;
 	border-left-width: 3px;
-	border-top-color: gray;
-	border-top-style: solid;
 	border-top-width: 2px;
 }
 
