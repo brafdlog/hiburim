@@ -29,12 +29,12 @@ function getSingleElementOfCollection(collectionName, elementId, callback) {
 function getSingleElementOfCollectionByQuery(collectionName, queryObject, callback) {
 	var collection = db.get(collectionName);
 	collection.find(queryObject, function(err, foundElementsArray) {
-		_logMsg(err, "Loaded element by query: " + inspectObject(queryObject) + " from collection " + collectionName, 
+		_logMsg(err, "Loaded element by query: " + inspectObject(queryObject) + " from collection " + collectionName,
 			"Failed loading element by query: " + inspectObject(queryObject) + " from collection " + collectionName + ". Error ");
 
 		if (_isFunction(callback)) {
 			if (foundElementsArray && foundElementsArray.length === 1) {
-				callback(err, foundElementsArray[0]);	
+				callback(err, foundElementsArray[0]);
 				return;
 			}
 			if (foundElementsArray.length > 1) {
@@ -42,7 +42,7 @@ function getSingleElementOfCollectionByQuery(collectionName, queryObject, callba
 				console.log(err);
 				callback(err);
 			} else { // if there is no element for the given query
-				callback(err);	
+				callback(err);
 			}
 		}
 	});
@@ -54,7 +54,7 @@ function createElement(collectionName, elementToCreate, callback) {
 	elementToCreate.creationDate = now;
 	elementToCreate.modificationDate = now;
 	collection.insert(elementToCreate, function (err, createdElement) {
-		_logMsg(err, "Created element with id " + createdElement._id + " in collection " + collectionName, 
+		_logMsg(err, "Created element with id " + createdElement._id + " in collection " + collectionName,
 			"Failed creating " + collectionName + ". Error ");
 
 		if (_isFunction(callback)) {
@@ -68,11 +68,11 @@ function updateElement(collectionName, updatedElement, callback) {
 	var now = new Date();
 	updatedElement.modificationDate = now;
 	collection.updateById(updatedElement._id, updatedElement, function(err) {
-		_logMsg(err, "Updated element with id " + updatedElement._id + " from collection " + collectionName, 
+		_logMsg(err, "Updated element with id " + updatedElement._id + " from collection " + collectionName,
 			"Failed updating element with id " + updatedElement._id + " from collection " + collectionName);
 		if(_isFunction(callback)) {
 			callback(err);
-		}	
+		}
 	});
 }
 
@@ -82,7 +82,7 @@ function deleteElement(collectionName, elementIdToDelete, callback) {
 	getSingleElementOfCollection(collectionName, elementIdToDelete, function(err, elementToDelete) {
 		// Need to check this. If elementToDelete is undefined the delete call will delete the whole collection!
 		if (!elementToDelete) {
-			var errorString = "Failed deleting element with id " + elementIdToDelete + " from collection " + collectionName + 
+			var errorString = "Failed deleting element with id " + elementIdToDelete + " from collection " + collectionName +
 			". getElement on that id did not return an element";
 			console.log(errorString);
 			if (!err) {
@@ -92,11 +92,11 @@ function deleteElement(collectionName, elementIdToDelete, callback) {
 			return;
 		}
 		collection.remove(elementToDelete, function (err) {
-			_logMsg(err, "Deleted element with id " + elementIdToDelete + " from collection " + collectionName, 
+			_logMsg(err, "Deleted element with id " + elementIdToDelete + " from collection " + collectionName,
 				"Failed deleteing element with id " + elementIdToDelete + " from collection " + collectionName);
 			if(_isFunction(callback)) {
 				callback(err);
-			}				
+			}
 		});
 	});
 }
