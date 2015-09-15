@@ -555,7 +555,7 @@ App.LoginController = Ember.Controller.extend({
 						}
 					});
 					
-					that.transitionToRoute('cars');
+					that.transitionToRoute('donors');
 				},
 				error: function(jqXHR, status, errorThrown) {
 					bootbox.alert('הפרטים שהוזנו אינם נכונים. אנא נסו שנית');
