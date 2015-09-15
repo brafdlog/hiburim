@@ -7,6 +7,8 @@
   },
   "scripts": {
     "start": "node server.js",
+    "start-watch": "nodemon server.js",
+    "debug": "node-debug server.js",
     "test": "mocha"
   },
   "main": "server.js",
