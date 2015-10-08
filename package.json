@@ -21,7 +21,7 @@
     "debug": "~2.0.0",
     "hbs": "~2.7.0",
     "mongodb": "~2.0",
-    "monk": "~0.9.0",
+    "monk": "~1.0.1",
     "underscore": "~1.7.0",
     "compression": "*",
     "nodemailer": "~1.3.0",
@@ -32,7 +32,7 @@
     "s3": "~4.3.1",
     "passport": "~0.2.1",
     "connect-flash": "~0.1.1",
-    "connect-mongo": "~0.4.1",
+    "connect-mongo": "~0.8.2",
     "express-session": "~1.9.3",
     "passport-local": "~1.0.0",
     "bcrypt": "~0.8.0"
