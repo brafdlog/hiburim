@@ -1,17 +1,17 @@
 var development = {
   appAddress: '127.0.0.1:3000',
- ***REMOVED***
+// ***REMOVED***
   env: process.env.NODE_ENV || 'development',
   serverProvider: process.env.SERVER_PROVIDER,
   hostIp: getServerConfig(process.env.SERVER_PROVIDER).hostIp,
   serverPort: getServerConfig(process.env.SERVER_PROVIDER).port,
 
   session: {
-   ***REMOVED***
+  // ***REMOVED***
   },
 
   cookie: {
-   ***REMOVED***
+  // ***REMOVED***
   },
 
   // What permissions a user gets when created
@@ -34,13 +34,13 @@ var development = {
   	useRealData: true,
     maxUploadImageSize: 5, //MB
     // This is not a real id - don't want tracking on development
-   ***REMOVED***
+   //***REMOVED***
   }
 };
 
 var production = {
   appAddress : 'hiburim.herokuapp.com',
- ***REMOVED***
+ //***REMOVED***
   env: process.env.NODE_ENV || 'production',
   serverProvider: process.env.SERVER_PROVIDER,
   hostIp: getServerConfig(process.env.SERVER_PROVIDER).hostIp,
@@ -48,11 +48,11 @@ var production = {
   s3Bucket: 'hiburim',
 
   session: {
-   ***REMOVED***
+ //  ***REMOVED***
   },
 
   cookie: {
-   ***REMOVED***
+  // ***REMOVED***
   },
 
   // What permissions a user gets when created
@@ -72,7 +72,7 @@ var production = {
   	// as opposed to fixture data
   	useRealData: true,
     maxUploadImageSize: 5, //MB
-   ***REMOVED***
+  // ***REMOVED***
   }
 };
 

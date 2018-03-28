@@ -5,8 +5,8 @@ var config = require('../config').Config;
 
 var s3Client = s3.createClient({
 	s3Options: {
-		***REMOVED***,
-		***REMOVED***
+		//***REMOVED***,
+		//***REMOVED***
 	}
 });
 

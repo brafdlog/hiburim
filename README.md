@@ -1,3 +1,5 @@
-The OpenShift `nodejs` cartridge documentation can be found at:
+An admin app for the `hiburim` non-profit organizationץ
 
-http://openshift.github.io/documentation/oo_cartridge_guide.html#nodejs
+This was migrated from a private bitbucket repository.
+
+It will not work as is because passwords and keys have been removed from the repository.
